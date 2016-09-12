@@ -13,13 +13,15 @@ public class npc
     [HideInInspector]
     public int pathType, indexer = 0, editor = 0;
 
-    public float speed, damage, health;
+    public float speed, damage, health, walkRadius;
 
     public Transform path, manager, target;
 
     public List<Transform> waypoints = new List<Transform>();
 
-    public bool loop, waiting;
+    public bool loop, waiting, inCombat;
+
+    public Vector3 randomTarget, randomDirection;
 
     public void GetStates()
     {
@@ -33,6 +35,11 @@ public class npc
             case aiManager.PathType.Stationary:
                 {
                     pathType = 1;
+                    break;
+                }
+            case aiManager.PathType.Wander:
+                {
+                    pathType = 2;
                     break;
                 }
         }
@@ -55,46 +62,87 @@ public class npc
     {
         //pick next target based on pathType.
         //pick random far position when near combat, when this fails, duck and hide
-        if (pathType == 0)//If pathtype = path
+
+        if (inCombat == false)
         {
-            if (target == null)
+            if (pathType == 0)//If pathtype = path
             {
-                target = waypoints[0];
-                NavMeshAgent agent = manager.GetComponent<NavMeshAgent>();
-                agent.SetDestination(target.position);
+                if (target == null)
+                {
+                    target = waypoints[0];
+                    NavMeshAgent agent = manager.GetComponent<NavMeshAgent>();
+                    agent.SetDestination(target.position);
+                }
+
+                float distanceToTarget = Vector3.Distance(manager.position, target.position);
+
+                if (distanceToTarget < 1.5)
+                {
+                    if (target.GetComponent<node>().waitTime != 0.0)
+                    {
+                        waiting = true;
+                        yield return new WaitForSeconds(target.GetComponent<node>().waitTime);
+                        waiting = false;
+                    }
+
+                    if (indexer == 0)
+                    {
+                        editor = 1;
+                    }
+                    else if (indexer == waypoints.Count - 1 && loop == false)
+                    {
+                        editor = -1;
+                    }
+                    else if (indexer == waypoints.Count - 1 && loop == true)
+                    {
+                        indexer = -1;
+                    }
+
+                    indexer = indexer + editor;
+                    target = waypoints[indexer];
+                    NavMeshAgent agent = manager.GetComponent<NavMeshAgent>();
+                    agent.SetDestination(target.position);
+                }
             }
 
-            float distanceToTarget = Vector3.Distance(manager.position, target.position);
-        
-            if (distanceToTarget < 1.5)
+            else if (pathType == 2) //If pathType = wander.
             {
-                if(target.GetComponent<node>().waitTime != 0.0)
+                if (manager.GetComponent<aiManager>().wanderInArea == false)
                 {
-                    Debug.Log("Waiting for " + target.GetComponent<node>().waitTime + " seconds Sir!");
-                    waiting = true;
-                    yield return new WaitForSeconds(target.GetComponent<node>().waitTime);
-                    waiting = false;
-                    Debug.Log("Moving sir!");
+                    randomDirection = Random.insideUnitSphere * walkRadius;
+                }
+                else
+                {
+                    randomDirection = manager.GetComponent<aiManager>().wanderArea.GetComponent<area>().point(walkRadius);
                 }
 
-                if (indexer == 0)
+                if (randomTarget == Vector3.zero)
                 {
-                    editor = 1;
-                }
-                else if (indexer == waypoints.Count - 1 && loop == false)
-                {
-                    editor = -1;
-                }
-                else if (indexer == waypoints.Count - 1 && loop == true)
-                {
-                    indexer = -1;
+                    randomDirection += manager.position;
+                    NavMeshHit hit;
+                    NavMesh.SamplePosition(randomDirection, out hit, walkRadius, 1);
+                    randomTarget = hit.position;
+
+                    NavMeshAgent agent = manager.GetComponent<NavMeshAgent>();
+                    agent.SetDestination(randomTarget);
                 }
 
-                indexer = indexer + editor;
-                target = waypoints[indexer];
-                NavMeshAgent agent = manager.GetComponent<NavMeshAgent>();
-                agent.SetDestination(target.position);
-            } 
+                float distanceToTarget = Vector3.Distance(manager.position, randomTarget);
+
+                if (distanceToTarget < 1.5)
+                {
+                    randomDirection += manager.position;
+                    NavMeshHit hit;
+                    NavMesh.SamplePosition(randomDirection, out hit, walkRadius, 1);
+                    randomTarget = hit.position;
+                    NavMeshAgent agent = manager.GetComponent<NavMeshAgent>();
+                    agent.SetDestination(randomTarget);
+                }
+            }
+        }
+        else
+        {
+            //randomize between running, or ducking out of fear.
         }
     }
 

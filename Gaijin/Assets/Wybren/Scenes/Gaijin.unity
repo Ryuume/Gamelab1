@@ -246,12 +246,15 @@ MonoBehaviour:
   npcType: 0
   allyType: 0
   priority: 0
-  pathType: 0
+  pathType: 2
   speed: 3.5
   damage: 0
   health: 0
+  wanderRadius: 47
   path: {fileID: 1867907200}
+  wanderArea: {fileID: 0}
   loopPath: 0
+  wanderInArea: 0
 --- !u!195 &237014769
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -325,7 +328,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 237014767}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -6.7775393, y: 1.47, z: -3.0645103}
+  m_LocalPosition: {x: -8.6, y: 1.47, z: -5.66}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -1270,7 +1273,7 @@ Transform:
   - {fileID: 1381053211}
   - {fileID: 1558114579}
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 7
 --- !u!1 &998767896
 GameObject:
   m_ObjectHideFlags: 0
@@ -1596,6 +1599,45 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1163144136}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &1220543689
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 1220543691}
+  - 114: {fileID: 1220543690}
+  m_Layer: 0
+  m_Name: Area
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1220543690
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1220543689}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd465bc562d94864d932892f17991348, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &1220543691
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1220543689}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 11.43}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 10
 --- !u!1 &1324709715
 GameObject:
   m_ObjectHideFlags: 0
@@ -1665,7 +1707,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 9
+  m_RootOrder: 8
 --- !u!1 &1351129626
 GameObject:
   m_ObjectHideFlags: 0
@@ -1921,7 +1963,7 @@ Transform:
   - {fileID: 2085719521}
   - {fileID: 36721754}
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 9
 --- !u!1 &1528938896
 GameObject:
   m_ObjectHideFlags: 0
@@ -2365,17 +2407,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e4a24405191655c4f854e50c68362606, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mode: 0
+  mode: 1
   enemyType: 0
   npcType: 0
   allyType: 0
   priority: 0
-  pathType: 0
+  pathType: 2
   speed: 3.5
   damage: 0
   health: 0
+  wanderRadius: 25
   path: {fileID: 1522455580}
-  loopPath: 1
+  wanderArea: {fileID: 1220543691}
+  loopPath: 0
+  wanderInArea: 1
 --- !u!195 &1857227440
 NavMeshAgent:
   m_ObjectHideFlags: 0

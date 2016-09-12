@@ -21,7 +21,7 @@ public class aiManager : MonoBehaviour
 
     public enum Priority { HighestDamage, LowestDamage, HighestHealth, LowestHealth }
 
-    public enum PathType { Path, Stationary }
+    public enum PathType { Path, Stationary, Wander }
 
     public Mode mode = new Mode();
 
@@ -33,11 +33,11 @@ public class aiManager : MonoBehaviour
 
     public PathType pathType = new PathType();
 
-    public float speed, damage, health;
+    public float speed, damage, health, wanderRadius;
 
-    public Transform path;
+    public Transform path, wanderArea;
 
-    public bool loopPath;
+    public bool loopPath, wanderInArea;
 
     public enemy eUpdate;
     public npc npcUpdate;
@@ -95,6 +95,7 @@ public class aiManager : MonoBehaviour
                                 generic.health = health;
                                 generic.speed = speed;
                                 generic.loop = loopPath;
+                                generic.walkRadius = wanderRadius; 
                                 generic.GetStates();
                                 npcUpdate = generic;
                                 break;
@@ -139,7 +140,7 @@ public class aiManager : MonoBehaviour
         }
     }
 
-    public void Update()
+    public void FixedUpdate()
     {
         switch (mode)
         {

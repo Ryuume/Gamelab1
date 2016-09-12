@@ -134,6 +134,8 @@ public class enemy
         }
         else
         {
+            //make a targeter that targets nearby enemys.
+
             if (attackPattern == 0) //If attackpattern = HighestDamage
             {
 
