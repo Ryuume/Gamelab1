@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 
-public class enemy
+public class Enemy
 {
     //TODO
     //1. Movement with animation
@@ -25,14 +25,14 @@ public class enemy
 
     public void Update()
     {
-        switch (manager.GetComponent<aiManager>().enemyType)
+        switch (manager.GetComponent<AIManager>().enemyType)
         {
-            case aiManager.EnemyType.Ranged:
+            case AIManager.EnemyType.Ranged:
                 {
                     Ranged();
                     break;
                 }
-            case aiManager.EnemyType.Melee:
+            case AIManager.EnemyType.Melee:
                 {
                     Melee();
                     break;
@@ -42,44 +42,44 @@ public class enemy
 
     public void GetStates()
     {
-        switch (manager.GetComponent<aiManager>().priority)
+        switch (manager.GetComponent<AIManager>().priority)
         {
-            case aiManager.Priority.HighestDamage:
+            case AIManager.Priority.HighestDamage:
                 {
                     attackPattern = 0;
                     break;
                 }
-            case aiManager.Priority.LowestDamage:
+            case AIManager.Priority.LowestDamage:
                 {
                     attackPattern = 1;
                     break;
                 }
-            case aiManager.Priority.HighestHealth:
+            case AIManager.Priority.HighestHealth:
                 {
                     attackPattern = 2;
                     break;
                 }
-            case aiManager.Priority.LowestHealth:
+            case AIManager.Priority.LowestHealth:
                 {
                     attackPattern = 3;
                     break;
                 }
         }
 
-        switch (manager.GetComponent<aiManager>().pathType)
+        switch (manager.GetComponent<AIManager>().pathType)
         {
-            case aiManager.PathType.Path:
+            case AIManager.PathType.Path:
                 {
                     pathType = 0;
                     break;
                 }
-            case aiManager.PathType.Stationary:
+            case AIManager.PathType.Stationary:
                 {
                     pathType = 1;
                     break;
                 }
         }
-        path = manager.GetComponent<aiManager>().path;
+        path = manager.GetComponent<AIManager>().path;
 
         foreach (Transform child in path)
         {

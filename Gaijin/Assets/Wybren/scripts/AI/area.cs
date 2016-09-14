@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class area : MonoBehaviour {
+public class Area : MonoBehaviour {
 
 	public Vector3 point (float walkRadius)
     {

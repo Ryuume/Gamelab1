@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class camFollow : MonoBehaviour {
+public class CamFollow : MonoBehaviour {
 
     public Transform playerPos;
     public int height = 7, distance = 3;

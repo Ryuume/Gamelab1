@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class wallFade : MonoBehaviour
+public class WallFade : MonoBehaviour
 {
     [HideInInspector]
     public List<Transform> hiddenObjects = new List<Transform>();
@@ -38,7 +38,7 @@ public class wallFade : MonoBehaviour
                 hiddenObjects.Add(currentHit);
 
                 //Starts the class FadeInFadeOut (this class makes the object fade away), and gives it all neccesary information.
-                fadeInFadeOut fade = new fadeInFadeOut();
+                FadeInFadeOut fade = new FadeInFadeOut();
                 fade.fadeAmount = fadeAmount;
                 fade.fadeTime = fadeTime;
                 fade.hiddenObjects = hiddenObjects;
@@ -55,7 +55,7 @@ public class wallFade : MonoBehaviour
                         if (child.gameObject.tag == "OccluderChild")
                         {
                             hiddenObjects.Add(child);
-                            fadeInFadeOut childFade = new fadeInFadeOut();
+                            FadeInFadeOut childFade = new FadeInFadeOut();
                             childFade.isChild = true;
                             childFade.fadeAmount = fadeAmount;
                             childFade.fadeTime = fadeTime;
@@ -101,7 +101,7 @@ public class wallFade : MonoBehaviour
                 hiddenObjects.RemoveAt(i);
 
                 //Just as when an item is first found, the "FadeInFadeOut" class is constructed and gets the neccesary information supplied.
-                fadeInFadeOut fade = new fadeInFadeOut();
+                FadeInFadeOut fade = new FadeInFadeOut();
                 fade.fadeAmount = fadeAmount;
                 fade.fadeTime = fadeTime;
                 fade.hiddenObjects = hiddenObjects;
@@ -119,7 +119,7 @@ public class wallFade : MonoBehaviour
                         if (child.gameObject.tag == "OccluderChild")
                         {
                             hiddenObjects.Remove(child);
-                            fadeInFadeOut childFade = new fadeInFadeOut();
+                            FadeInFadeOut childFade = new FadeInFadeOut();
                             childFade.fadeAmount = fadeAmount;
                             childFade.fadeTime = fadeTime;
                             childFade.hiddenObjects = hiddenObjects;

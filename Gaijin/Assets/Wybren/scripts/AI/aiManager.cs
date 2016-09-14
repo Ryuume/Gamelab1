@@ -2,7 +2,7 @@
 using System.Collections;
 
 [RequireComponent (typeof (NavMeshAgent))]
-public class aiManager : MonoBehaviour
+public class AIManager : MonoBehaviour
 {
     //MUSTS
     //1. allows UX Designer to assign mode of AI. (enemy, npc, ally) &
@@ -37,11 +37,11 @@ public class aiManager : MonoBehaviour
 
     public Transform path, wanderArea;
 
-    public bool loopPath, wanderInArea;
+    public bool loopPath, wanderInArea, inCombat;
 
-    public enemy eUpdate;
-    public npc npcUpdate;
-    public ally aUpdate;
+    public Enemy eUpdate;
+    public Npc npcUpdate;
+    public Ally aUpdate;
 
     public void Start()
     {
@@ -54,7 +54,7 @@ public class aiManager : MonoBehaviour
                     {
                         case EnemyType.Ranged:
                             {
-                                enemy eRanged = new enemy();
+                                Enemy eRanged = new Enemy();
                                 eRanged.manager = transform;
                                 eRanged.path = path;
                                 eRanged.health = health;
@@ -67,7 +67,7 @@ public class aiManager : MonoBehaviour
                             }
                         case EnemyType.Melee:
                             {
-                                enemy eMelee = new enemy();
+                                Enemy eMelee = new Enemy();
                                 eMelee.manager = transform;
                                 eMelee.path = path;
                                 eMelee.health = health;
@@ -89,13 +89,13 @@ public class aiManager : MonoBehaviour
                     {
                         case NpcType.Generic:
                             {
-                                npc generic = new npc();
+                                Npc generic = new Npc();
                                 generic.manager = transform;
                                 generic.path = path;
                                 generic.health = health;
                                 generic.speed = speed;
                                 generic.loop = loopPath;
-                                generic.walkRadius = wanderRadius; 
+                                generic.walkRadius = wanderRadius;
                                 generic.GetStates();
                                 npcUpdate = generic;
                                 break;
@@ -111,7 +111,7 @@ public class aiManager : MonoBehaviour
                     {
                         case AllyType.Ranged:
                             {
-                                ally aRanged = new ally();
+                                Ally aRanged = new Ally();
                                 aRanged.manager = transform;
                                 aRanged.path = path;
                                 aRanged.health = health;
@@ -123,7 +123,7 @@ public class aiManager : MonoBehaviour
                             }
                         case AllyType.Melee:
                             {
-                                ally aMelee = new ally();
+                                Ally aMelee = new Ally();
                                 aMelee.manager = transform;
                                 aMelee.path = path;
                                 aMelee.health = health;
@@ -170,6 +170,7 @@ public class aiManager : MonoBehaviour
                     {
                         case NpcType.Generic:
                             {
+                                npcUpdate.inCombat = inCombat;
                                 npcUpdate.Generic();
                                 break;
                             }

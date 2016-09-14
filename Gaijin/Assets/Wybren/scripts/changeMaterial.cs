@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class changeMaterial{
+public class ChangeMaterial{
 
     //8 lines of code that change the render setting to Opaque (Found on the internet, goes above my head for now)
 	public void ChangeToOpaque (Material material)

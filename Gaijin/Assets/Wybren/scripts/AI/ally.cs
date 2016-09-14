@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class ally
+public class Ally
 {
     //TODO
     //1. Movement with animation
@@ -20,14 +20,14 @@ public class ally
 
     public void Update()
     {
-        switch (manager.GetComponent<aiManager>().allyType)
+        switch (manager.GetComponent<AIManager>().allyType)
         {
-            case aiManager.AllyType.Ranged:
+            case AIManager.AllyType.Ranged:
                 {
                     Ranged();
                     break;
                 }
-            case aiManager.AllyType.Melee:
+            case AIManager.AllyType.Melee:
                 {
                     Melee();
                     break;
@@ -37,24 +37,24 @@ public class ally
 
     public void GetStates()
     {
-        switch (manager.GetComponent<aiManager>().priority)
+        switch (manager.GetComponent<AIManager>().priority)
         {
-            case aiManager.Priority.HighestDamage:
+            case AIManager.Priority.HighestDamage:
                 {
                     attackPattern = 0;
                     break;
                 }
-            case aiManager.Priority.LowestDamage:
+            case AIManager.Priority.LowestDamage:
                 {
                     attackPattern = 1;
                     break;
                 }
-            case aiManager.Priority.HighestHealth:
+            case AIManager.Priority.HighestHealth:
                 {
                     attackPattern = 2;
                     break;
                 }
-            case aiManager.Priority.LowestHealth:
+            case AIManager.Priority.LowestHealth:
                 {
                     attackPattern = 3;
                     break;

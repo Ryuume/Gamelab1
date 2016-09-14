@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class fadeInFadeOut
+public class FadeInFadeOut
 {
     public List<Transform> hiddenObjects;
     public float fadeAmount, fadeTime;
@@ -14,7 +14,7 @@ public class fadeInFadeOut
         Material material = currentHit.GetComponent<Renderer>().material;
 
         //Constructs a "changeMaterial" class. This class chances the render mode.
-        changeMaterial change = new changeMaterial();
+        ChangeMaterial change = new ChangeMaterial();
         //Calls "ChangeToFade" in the constructed class. This void changes the material's render mode from "Opaque" to "Fade"
         change.ChangeToFade(material);
 
@@ -84,7 +84,7 @@ public class fadeInFadeOut
         material.color = resetColor;
 
         //Constructs a "changeMaterial" class. This class chances the render mode.
-        changeMaterial change = new changeMaterial();
+        ChangeMaterial change = new ChangeMaterial();
         //Calls "ChangeToFade" in the constructed class. This void changes the material's render mode from "Fade" to "Opaque" 
         change.ChangeToOpaque(material);
     }

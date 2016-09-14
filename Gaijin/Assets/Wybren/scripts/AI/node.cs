@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class node : MonoBehaviour {
+public class Node : MonoBehaviour {
 
     public float waitTime;
 }

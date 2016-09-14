@@ -250,11 +250,12 @@ MonoBehaviour:
   speed: 3.5
   damage: 0
   health: 0
-  wanderRadius: 47
+  wanderRadius: 25
   path: {fileID: 1867907200}
   wanderArea: {fileID: 0}
   loopPath: 0
   wanderInArea: 0
+  inCombat: 0
 --- !u!195 &237014769
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -2416,11 +2417,12 @@ MonoBehaviour:
   speed: 3.5
   damage: 0
   health: 0
-  wanderRadius: 25
-  path: {fileID: 1522455580}
+  wanderRadius: 10
+  path: {fileID: 1867907200}
   wanderArea: {fileID: 1220543691}
   loopPath: 0
   wanderInArea: 1
+  inCombat: 0
 --- !u!195 &1857227440
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -2916,6 +2918,10 @@ Prefab:
     - target: {fileID: 496262, guid: 7737647c22c1fc64a88d5cd030c352ce, type: 2}
       propertyPath: m_LocalRotation.w
       value: -0.11041513
+      objectReference: {fileID: 0}
+    - target: {fileID: 149790, guid: 7737647c22c1fc64a88d5cd030c352ce, type: 2}
+      propertyPath: m_TagString
+      value: Player
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 7737647c22c1fc64a88d5cd030c352ce, type: 2}

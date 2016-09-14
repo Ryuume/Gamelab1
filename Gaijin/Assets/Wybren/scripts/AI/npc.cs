@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Collections;
 
-public class npc
+public class Npc
 {
     //TODO
     //1. Movement with animations
@@ -19,25 +19,25 @@ public class npc
 
     public List<Transform> waypoints = new List<Transform>();
 
-    public bool loop, waiting, inCombat;
+    public bool loop, waiting, inCombat, ducking;
 
     public Vector3 randomTarget, randomDirection;
 
     public void GetStates()
     {
-        switch (manager.GetComponent<aiManager>().pathType)
+        switch (manager.GetComponent<AIManager>().pathType)
         {
-            case aiManager.PathType.Path:
+            case AIManager.PathType.Path:
                 {
                     pathType = 0;
                     break;
                 }
-            case aiManager.PathType.Stationary:
+            case AIManager.PathType.Stationary:
                 {
                     pathType = 1;
                     break;
                 }
-            case aiManager.PathType.Wander:
+            case AIManager.PathType.Wander:
                 {
                     pathType = 2;
                     break;
@@ -78,10 +78,10 @@ public class npc
 
                 if (distanceToTarget < 1.5)
                 {
-                    if (target.GetComponent<node>().waitTime != 0.0)
+                    if (target.GetComponent<Node>().waitTime != 0.0)
                     {
                         waiting = true;
-                        yield return new WaitForSeconds(target.GetComponent<node>().waitTime);
+                        yield return new WaitForSeconds(target.GetComponent<Node>().waitTime);
                         waiting = false;
                     }
 
@@ -107,13 +107,13 @@ public class npc
 
             else if (pathType == 2) //If pathType = wander.
             {
-                if (manager.GetComponent<aiManager>().wanderInArea == false)
+                if (manager.GetComponent<AIManager>().wanderInArea == false)
                 {
                     randomDirection = Random.insideUnitSphere * walkRadius;
                 }
                 else
                 {
-                    randomDirection = manager.GetComponent<aiManager>().wanderArea.GetComponent<area>().point(walkRadius);
+                    randomDirection = manager.GetComponent<AIManager>().wanderArea.GetComponent<Area>().point(walkRadius);
                 }
 
                 if (randomTarget == Vector3.zero)
@@ -143,6 +143,38 @@ public class npc
         else
         {
             //randomize between running, or ducking out of fear.
+            int randomNumber = Random.Range(0, 1);
+
+            if(randomNumber == 0)
+            {
+                //run
+                ducking = true;
+                Transform player = GameObject.FindGameObjectWithTag("Player").transform;
+                Vector3 direction = player.position - manager.position;
+                direction = -direction;
+
+                Vector3 runTarget = direction * Random.Range(5, 10);
+
+                NavMeshHit hit;
+                NavMesh.SamplePosition(runTarget, out hit, walkRadius, 1);
+                runTarget = hit.position;
+
+                NavMeshAgent agent = manager.GetComponent<NavMeshAgent>();
+                agent.SetDestination(runTarget);
+                target = null;
+                randomTarget = Vector3.zero;
+            }
+            else if (randomNumber == 1)
+            {
+                //duck & hide
+                ducking = true;
+                NavMeshAgent agent = manager.GetComponent<NavMeshAgent>();
+                agent.destination = manager.position;
+                Debug.Log("HAAAAAAAAAAAALLLPP! *ducks*");
+                target = null;
+                randomTarget = Vector3.zero;
+                //call animation * sound effect.
+            }
         }
     }
 
@@ -152,9 +184,14 @@ public class npc
         //Move based on pathtype
         //react to player & allies with sound effect / animation / both
         //Run away from battle / duck and hide.
-        if (waiting == false)
+        if (inCombat == false)
         {
-            manager.GetComponent<aiManager>().StartAICoroutine(Targeter());
+            ducking = false;
         }
-;    }
+
+        if (waiting == false && ducking == false)
+        {
+            manager.GetComponent<AIManager>().StartAICoroutine(Targeter());
+        }
+    }
 }
