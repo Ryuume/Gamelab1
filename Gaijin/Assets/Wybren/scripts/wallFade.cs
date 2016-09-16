@@ -130,4 +130,49 @@ public class WallFade : MonoBehaviour
             }
         }
 	}
+
+    public void OnCollisionEnter(Collision col)
+    {
+        print(col.gameObject);
+        if (col.gameObject.layer == mask)
+        {
+            //Grabs the hit that the forloop is currently at.
+            Transform currentHit = col.transform;
+
+            //Checks if the selected hit from the array is not already in the "hiddenObjects" list.
+            if (!hiddenObjects.Contains(currentHit))
+            {
+                //adds the hit to the list.
+                hiddenObjects.Add(currentHit);
+
+                //Starts the class FadeInFadeOut (this class makes the object fade away), and gives it all neccesary information.
+                FadeInFadeOut fade = new FadeInFadeOut();
+                fade.fadeAmount = fadeAmount;
+                fade.fadeTime = fadeTime;
+                fade.hiddenObjects = hiddenObjects;
+
+                //Starts the "Fadeout" Coroutine in the "FadeInFadeOut" class. (Coroutine is neccesary for delaying the fade (WaitForSeconds))
+                //Supplies the Coroutine with the object that needs to be faded out.
+                StartCoroutine(fade.Fadeout(currentHit));
+
+                //Does the same thing as above for every child if includeChilds is on, as long as they are marked for fading. (see tag).
+                if (includeChilds == true)
+                {
+                    foreach (Transform child in currentHit)
+                    {
+                        if (child.gameObject.tag == "OccluderChild")
+                        {
+                            hiddenObjects.Add(child);
+                            FadeInFadeOut childFade = new FadeInFadeOut();
+                            childFade.isChild = true;
+                            childFade.fadeAmount = fadeAmount;
+                            childFade.fadeTime = fadeTime;
+                            childFade.hiddenObjects = hiddenObjects;
+                            StartCoroutine(fade.Fadeout(child));
+                        }
+                    }
+                }
+            }
+        }
+    }
 }

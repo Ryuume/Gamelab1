@@ -18,23 +18,6 @@ public class Ally
 
     public Transform path, manager;
 
-    public void Update()
-    {
-        switch (manager.GetComponent<AIManager>().allyType)
-        {
-            case AIManager.AllyType.Ranged:
-                {
-                    Ranged();
-                    break;
-                }
-            case AIManager.AllyType.Melee:
-                {
-                    Melee();
-                    break;
-                }
-        }
-    }
-
     public void GetStates()
     {
         switch (manager.GetComponent<AIManager>().priority)

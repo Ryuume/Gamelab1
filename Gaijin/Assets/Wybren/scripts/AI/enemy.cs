@@ -13,7 +13,7 @@ public class Enemy
     //7. make speed, health, damage and all that adaptable so the manager can set them.
 
     [HideInInspector]
-    public int attackPattern, pathType, aIType, indexer = 0, editor = 0;
+    public int attackPattern, aIType, indexer = 0, editor = 0;
 
     public float speed, damage, health;
 
@@ -23,62 +23,10 @@ public class Enemy
 
     public List<Transform> waypoints = new List<Transform>();
 
-    public void Update()
-    {
-        switch (manager.GetComponent<AIManager>().enemyType)
-        {
-            case AIManager.EnemyType.Ranged:
-                {
-                    Ranged();
-                    break;
-                }
-            case AIManager.EnemyType.Melee:
-                {
-                    Melee();
-                    break;
-                }
-        }
-    }
+    public NavMeshAgent agent;
 
     public void GetStates()
     {
-        switch (manager.GetComponent<AIManager>().priority)
-        {
-            case AIManager.Priority.HighestDamage:
-                {
-                    attackPattern = 0;
-                    break;
-                }
-            case AIManager.Priority.LowestDamage:
-                {
-                    attackPattern = 1;
-                    break;
-                }
-            case AIManager.Priority.HighestHealth:
-                {
-                    attackPattern = 2;
-                    break;
-                }
-            case AIManager.Priority.LowestHealth:
-                {
-                    attackPattern = 3;
-                    break;
-                }
-        }
-
-        switch (manager.GetComponent<AIManager>().pathType)
-        {
-            case AIManager.PathType.Path:
-                {
-                    pathType = 0;
-                    break;
-                }
-            case AIManager.PathType.Stationary:
-                {
-                    pathType = 1;
-                    break;
-                }
-        }
         path = manager.GetComponent<AIManager>().path;
 
         foreach (Transform child in path)
@@ -99,58 +47,71 @@ public class Enemy
     {
         if (inCombat == false)
         {
-            if (pathType == 0)//If pathtype = path
+            switch (manager.GetComponent<AIManager>().pathType)
             {
-                if (target == null)
-                {
-                    target = waypoints[0];
-                    NavMeshAgent agent = manager.GetComponent<NavMeshAgent>();
-                    agent.SetDestination(target.position);
-                }
-
-                float distanceToTarget = Vector3.Distance(manager.position, target.position);
-
-                if (distanceToTarget < 1.5)
-                {
-                    if (indexer == 0)
+                case AIManager.PathType.Path:
                     {
-                        editor = 1;
-                    }
-                    else if (indexer == waypoints.Count - 1 && loop == false)
-                    {
-                        editor = -1;
-                    }
-                    else if (indexer == waypoints.Count - 1 && loop == true)
-                    {
-                        indexer = -1;
-                    }
+                        if (target == null)
+                        {
+                            target = waypoints[0];
+                            agent.SetDestination(target.position);
+                        }
 
-                    indexer = indexer + editor;
-                    target = waypoints[indexer];
-                    NavMeshAgent agent = manager.GetComponent<NavMeshAgent>();
-                    agent.SetDestination(target.position);
-                }
+                        float distanceToTarget = Vector3.Distance(manager.position, target.position);
+
+                        if (distanceToTarget < 1.5)
+                        {
+                            if (indexer == 0)
+                            {
+                                editor = 1;
+                            }
+                            else if (indexer == waypoints.Count - 1 && loop == false)
+                            {
+                                editor = -1;
+                            }
+                            else if (indexer == waypoints.Count - 1 && loop == true)
+                            {
+                                indexer = -1;
+                            }
+
+                            indexer = indexer + editor;
+                            target = waypoints[indexer];
+                            agent.SetDestination(target.position);
+                        }
+                        break;
+                    }
+                case AIManager.PathType.Stationary:
+                    {
+                        //play stationary animation(s).
+                        break;
+                    }
             }
         }
         else
         {
             //make a targeter that targets nearby enemys.
-
-            if (attackPattern == 0) //If attackpattern = HighestDamage
+            switch (manager.GetComponent<AIManager>().priority)
             {
-
-            }
-            else if (attackPattern == 1) //If attackpattern = LowestDamage
-            {
-
-            }
-            else if (attackPattern == 2) //If attackpattern = HighestHealth
-            {
-
-            }
-            else if (attackPattern == 3) //If attackpattern = LowestHealth
-            {
-
+                case AIManager.Priority.HighestDamage:
+                    {
+                        attackPattern = 0;
+                        break;
+                    }
+                case AIManager.Priority.LowestDamage:
+                    {
+                        attackPattern = 1;
+                        break;
+                    }
+                case AIManager.Priority.HighestHealth:
+                    {
+                        attackPattern = 2;
+                        break;
+                    }
+                case AIManager.Priority.LowestHealth:
+                    {
+                        attackPattern = 3;
+                        break;
+                    }
             }
         }
     }
