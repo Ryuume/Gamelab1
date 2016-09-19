@@ -42,7 +42,7 @@ public class AIManager : MonoBehaviour
     public Enemy eUpdate;
     public Npc npcUpdate;
     public Ally aUpdate;
-
+    
     public void Start()
     {
         switch (mode)
@@ -50,10 +50,20 @@ public class AIManager : MonoBehaviour
             //Enemy's
             case Mode.enemy:
                 {
+                    UnitBehaviour enemy = new UnitBehaviour();
+                    enemy.manager = transform;
+                    enemy.loop = loopPath;
+
+                    foreach (Transform child in path)
+                    {
+                        enemy.waypoints.Add(child);
+                    }
+
                     switch (enemyType)
                     {
                         case EnemyType.Ranged:
                             {
+                                /*
                                 Enemy eRanged = new Enemy();
                                 eRanged.manager = transform;
                                 eRanged.path = path;
@@ -63,10 +73,13 @@ public class AIManager : MonoBehaviour
                                 eRanged.loop = loopPath;
                                 eRanged.GetStates();
                                 eUpdate = eRanged;
+                                */
                                 break;
+                                
                             }
                         case EnemyType.Melee:
                             {
+                                /*
                                 Enemy eMelee = new Enemy();
                                 eMelee.manager = transform;
                                 eMelee.path = path;
@@ -76,7 +89,9 @@ public class AIManager : MonoBehaviour
                                 eMelee.loop = loopPath;
                                 eMelee.GetStates();
                                 eUpdate = eMelee;
+                                */
                                 break;
+                                
                             }
                     }
                     break;
@@ -85,10 +100,13 @@ public class AIManager : MonoBehaviour
             //Npc's
             case Mode.npc:
                 {
+                    UnitBehaviour npc = new UnitBehaviour();
+
                     switch (npcType)
                     {
                         case NpcType.Generic:
                             {
+                                /*
                                 Npc generic = new Npc();
                                 generic.manager = transform;
                                 generic.path = path;
@@ -98,6 +116,7 @@ public class AIManager : MonoBehaviour
                                 generic.walkRadius = wanderRadius;
                                 generic.GetStates();
                                 npcUpdate = generic;
+                                */
                                 break;
                             }
                     }
@@ -107,10 +126,13 @@ public class AIManager : MonoBehaviour
             //Ally's
             case Mode.ally:
                 {
+                    UnitBehaviour ally = new UnitBehaviour();
+
                     switch (allyType)
                     {
                         case AllyType.Ranged:
                             {
+                                /*
                                 Ally aRanged = new Ally();
                                 aRanged.manager = transform;
                                 aRanged.path = path;
@@ -119,10 +141,12 @@ public class AIManager : MonoBehaviour
                                 aRanged.speed = speed;
                                 aRanged.GetStates();
                                 aUpdate = aRanged;
+                                */
                                 break;
                             }
                         case AllyType.Melee:
                             {
+                                /*
                                 Ally aMelee = new Ally();
                                 aMelee.manager = transform;
                                 aMelee.path = path;
@@ -131,6 +155,7 @@ public class AIManager : MonoBehaviour
                                 aMelee.speed = speed;
                                 aMelee.GetStates();
                                 aUpdate = aMelee;
+                                */
                                 break;
                             }
                     }
@@ -205,4 +230,5 @@ public class AIManager : MonoBehaviour
     {
         StartCoroutine(coroutineMethod);
     }
+    
 }
