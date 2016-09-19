@@ -2,16 +2,14 @@
 %TAG !u! tag:unity3d.com,2011:
 --- !u!21 &2100000
 Material:
-  serializedVersion: 6
+  serializedVersion: 4
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_Name: ParticleDuststorm
   m_Shader: {fileID: 203, guid: 0000000000000000f000000000000000, type: 0}
   m_ShaderKeywords: 
-  m_LightmapFlags: 5
   m_CustomRenderQueue: -1
-  stringTagMap: {}
   m_SavedProperties:
     serializedVersion: 2
     m_TexEnvs:
@@ -26,7 +24,7 @@ Material:
       data:
         first:
           name: _InvFade
-        second: 0.25
+        second: .25
     m_Colors:
       data:
         first:
@@ -35,7 +33,7 @@ Material:
       data:
         first:
           name: _TintColor
-        second: {r: 0.69685584, g: 0.5514706, b: 1, a: 0.07058824}
+        second: {r: .801470578, g: .74457103, b: .68360728, a: .0705882385}
 --- !u!1002 &2100001
 EditorExtensionImpl:
   serializedVersion: 6
