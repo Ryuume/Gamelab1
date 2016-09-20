@@ -15,6 +15,18 @@ public class Ally
 
     public Transform manager;
 
+    public bool inCombat = false;
+
+    public UnitBehaviour unit;
+
+    public Ally(Transform ai, float setDamage, float setHealth, UnitBehaviour behaviour)
+    {
+        manager = ai;
+        damage = setDamage;
+        health = setHealth;
+        unit = behaviour;
+    }
+
     public void Ranged()
     {
         //TODO
@@ -23,7 +35,15 @@ public class Ally
         //Archer shoots physics based arrows and a raycast, if raycast hits player, arrow gets fired. IF arrow hits player, damage is done, and arrow sticks around for 10 - 20 seconds.
         //If attacked by another target, which is closer to the AI than the ai's target, switch target to the nearest attacking AI.
 
-        
+        if (inCombat == true)
+        {
+            unit.Targeter();
+        }
+
+        else if (inCombat == false)
+        {
+            unit.AllyMove();
+        }
     }
 
     public void Melee()
@@ -33,6 +53,14 @@ public class Ally
         //Unit shoots a raycast and plays the animation when in range, if raycast is hit, damage to the target is done.
         //If attacked by another target, which is closer to the AI than the ai's target, switch target to the nearest attacking AI.
 
-        
+        if (inCombat == true)
+        {
+            unit.Targeter();
+        }
+
+        else if (inCombat == false)
+        {
+            unit.AllyMove();
+        }
     }
 }

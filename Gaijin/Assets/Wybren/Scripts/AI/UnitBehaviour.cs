@@ -6,16 +6,30 @@ public class UnitBehaviour
 {
     //All Variables for movement.
     public int indexer = 0, editor = 0;
-    public float walkRadius;
+    public float walkRadius, speed;
     public Transform manager, target;
     public List<Transform> waypoints = new List<Transform>();
-    public bool loop, waiting;
+    public bool loop, waiting, ducking;
     public Vector3 randomTarget, randomDirection;
 
     //All Variables for attacking.
     public int attackPattern;
 
-    public virtual IEnumerator Move()
+    public UnitBehaviour(float walkR, float aiSpeed, Transform ai, Transform path, bool loopPath)
+    {
+        walkRadius = walkR;
+        manager = ai;
+
+        foreach(Transform child in path)
+        {
+            waypoints.Add(child);
+        }
+
+        speed = aiSpeed;
+        loop = loopPath;
+    }
+
+    public IEnumerator Move()
     {
         if (waiting == false)
         {
@@ -110,7 +124,26 @@ public class UnitBehaviour
         }
     }
 
-    public virtual void Targeter()
+    public void AllyMove()
+    {
+        Transform player = GameObject.FindGameObjectWithTag("Player").transform;
+
+        float distanceToPlayer = Vector3.Distance(manager.position, player.position);
+
+        if (distanceToPlayer > 4)
+        {
+            NavMeshAgent agent = manager.GetComponent<NavMeshAgent>();
+            agent.speed = speed;
+            agent.SetDestination(player.position);
+        }
+        else
+        {
+            NavMeshAgent agent = manager.GetComponent<NavMeshAgent>();
+            agent.speed = 0;
+        }
+    }
+
+    public void Targeter()
     {
         //make a targeter that targets nearby enemys.
         switch (manager.GetComponent<AIManager>().priority)
@@ -137,4 +170,49 @@ public class UnitBehaviour
                 }
         }
     }
+
+    public void NpcRun()
+    {
+        //pick next target based on pathType.
+        //pick random far position when near combat, when this fails, duck and hide
+        if (ducking == false)
+        {         //randomize between running, or ducking out of fear.
+            int randomNumber = Random.Range(0, 2);
+
+            if (randomNumber == 0 || randomNumber == 1)
+            {
+                //run
+                ducking = true;
+                Transform player = GameObject.FindGameObjectWithTag("Player").transform;
+                Vector3 direction = player.position - manager.position;
+                direction = -direction;
+
+                Debug.Log("run");
+
+                Vector3 runTarget = direction * Random.Range(5, 10);
+
+                NavMeshHit hit;
+                NavMesh.SamplePosition(runTarget, out hit, walkRadius, 1);
+                runTarget = hit.position;
+
+                NavMeshAgent agent = manager.GetComponent<NavMeshAgent>();
+                agent.SetDestination(runTarget);
+                target = null;
+                randomTarget = Vector3.zero;
+            }
+            else if (randomNumber == 2)
+            {
+                ducking = true;
+                //duck & hide
+                NavMeshAgent agent = manager.GetComponent<NavMeshAgent>();
+                agent.destination = manager.position;
+                Debug.Log("HAAAAAAAAAAAALLLPP! *ducks*");
+                target = null;
+                randomTarget = Vector3.zero;
+                //call animation * sound effect.
+            }
+        }
+    }
+
+
 }

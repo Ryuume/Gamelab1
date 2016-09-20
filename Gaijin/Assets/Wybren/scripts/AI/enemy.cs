@@ -12,18 +12,21 @@ public class Enemy
     //6. Have different types of pathfinding (wander, stationary until player in range, or with a path made by UX Designer)
     //7. make speed, health, damage and all that adaptable so the manager can set them.
 
-    [HideInInspector]
-    public int attackPattern, aIType, indexer = 0, editor = 0;
-
     public float speed, damage, health;
 
-    public Transform path, manager, target;
+    public Transform manager;
 
-    public bool inCombat = false, loop;
+    public bool inCombat = false;
 
-    public List<Transform> waypoints = new List<Transform>();
+    public UnitBehaviour unit;
 
-    public NavMeshAgent agent;
+    public Enemy(Transform ai, float setDamage, float setHealth, UnitBehaviour behaviour)
+    {
+        manager = ai;
+        damage = setDamage;
+        health = setHealth;
+        unit = behaviour;
+    }
 
     public void Ranged()
     {
@@ -33,8 +36,15 @@ public class Enemy
         //Archer shoots physics based arrows and a raycast, if raycast hits player, arrow gets fired. IF arrow hits player, damage is done, and arrow sticks around for 10 - 20 seconds.
         //If attacked by another target, which is closer to the AI than the ai's target, switch target to the nearest attacking AI.
 
+        if (inCombat == true)
+        {
+            unit.Targeter();
+        }
 
-        //Targeter();
+        else if (inCombat == false)
+        {
+            manager.GetComponent<AIManager>().StartAICoroutine(unit.Move());
+        }
     }
 
     public void Melee()
@@ -44,7 +54,14 @@ public class Enemy
         //Unit shoots a raycast and plays the animation when in range, if raycast is hit, damage to the target is done.
         //If attacked by another target, which is closer to the AI than the ai's target, switch target to the nearest attacking AI.
 
+        if (inCombat == true)
+        {
+            unit.Targeter();
+        }
 
-        //Targeter();
+        else if (inCombat == false)
+        {
+            manager.GetComponent<AIManager>().StartAICoroutine(unit.Move());
+        }
     }
 }

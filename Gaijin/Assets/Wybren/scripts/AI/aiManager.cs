@@ -45,121 +45,31 @@ public class AIManager : MonoBehaviour
     
     public void Start()
     {
+        GetComponent<NavMeshAgent>().speed = speed;
+        UnitBehaviour unit = new UnitBehaviour(wanderRadius, speed, transform, path, loopPath);
         switch (mode)
         {
             //Enemy's
             case Mode.enemy:
                 {
-                    UnitBehaviour enemy = new UnitBehaviour();
-                    enemy.manager = transform;
-                    enemy.loop = loopPath;
-
-                    foreach (Transform child in path)
-                    {
-                        enemy.waypoints.Add(child);
-                    }
-
-                    switch (enemyType)
-                    {
-                        case EnemyType.Ranged:
-                            {
-                                /*
-                                Enemy eRanged = new Enemy();
-                                eRanged.manager = transform;
-                                eRanged.path = path;
-                                eRanged.health = health;
-                                eRanged.damage = damage;
-                                eRanged.speed = speed;
-                                eRanged.loop = loopPath;
-                                eRanged.GetStates();
-                                eUpdate = eRanged;
-                                */
-                                break;
-                                
-                            }
-                        case EnemyType.Melee:
-                            {
-                                /*
-                                Enemy eMelee = new Enemy();
-                                eMelee.manager = transform;
-                                eMelee.path = path;
-                                eMelee.health = health;
-                                eMelee.damage = damage;
-                                eMelee.speed = speed;
-                                eMelee.loop = loopPath;
-                                eMelee.GetStates();
-                                eUpdate = eMelee;
-                                */
-                                break;
-                                
-                            }
-                    }
-                    break;
+                    Enemy enemy = new Enemy(transform, damage, health, unit);
+                    eUpdate = enemy;
+                    break; 
                 }
 
             //Npc's
             case Mode.npc:
                 {
-                    UnitBehaviour npc = new UnitBehaviour();
-
-                    switch (npcType)
-                    {
-                        case NpcType.Generic:
-                            {
-                                /*
-                                Npc generic = new Npc();
-                                generic.manager = transform;
-                                generic.path = path;
-                                generic.health = health;
-                                generic.speed = speed;
-                                generic.loop = loopPath;
-                                generic.walkRadius = wanderRadius;
-                                generic.GetStates();
-                                npcUpdate = generic;
-                                */
-                                break;
-                            }
-                    }
+                    Npc npc = new Npc(transform, unit);
+                    npcUpdate = npc;
                     break;
                 }
 
             //Ally's
             case Mode.ally:
                 {
-                    UnitBehaviour ally = new UnitBehaviour();
-
-                    switch (allyType)
-                    {
-                        case AllyType.Ranged:
-                            {
-                                /*
-                                Ally aRanged = new Ally();
-                                aRanged.manager = transform;
-                                aRanged.path = path;
-                                aRanged.health = health;
-                                aRanged.damage = damage;
-                                aRanged.speed = speed;
-                                aRanged.GetStates();
-                                aUpdate = aRanged;
-                                */
-                                break;
-                            }
-                        case AllyType.Melee:
-                            {
-                                /*
-                                Ally aMelee = new Ally();
-                                aMelee.manager = transform;
-                                aMelee.path = path;
-                                aMelee.health = health;
-                                aMelee.damage = damage;
-                                aMelee.speed = speed;
-                                aMelee.GetStates();
-                                aUpdate = aMelee;
-                                */
-                                break;
-                            }
-                    }
-
+                    Ally ally = new Ally(transform, damage, health, unit);
+                    aUpdate = ally;
                     break;
                 }
         }
@@ -195,8 +105,8 @@ public class AIManager : MonoBehaviour
                     {
                         case NpcType.Generic:
                             {
-                                npcUpdate.inCombat = inCombat;
                                 npcUpdate.Generic();
+                                npcUpdate.inCombat = inCombat;
                                 break;
                             }
                     }
@@ -230,5 +140,4 @@ public class AIManager : MonoBehaviour
     {
         StartCoroutine(coroutineMethod);
     }
-    
 }
