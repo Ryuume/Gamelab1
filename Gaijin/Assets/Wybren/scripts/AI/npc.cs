@@ -24,7 +24,7 @@ public class Npc
         unit = behaviour;
     }
 
-    public void Generic()
+    public void Active()
     {
         //TODO
         //Move based on pathtype

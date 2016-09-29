@@ -13,9 +13,9 @@ public class AIManager : MonoBehaviour
     //6. Calls correct class and sends neccesarry information along with them.
     //7. OPTIONAL: When UX Designer has selected NPC: Dialogue, give designer option to insert dialogue file.
 
-    public enum Mode { enemy, npc, ally }
+    public enum Mode { enemy, demon, npc, ally }
 
-    public enum EnemyType { Ranged, Melee }
+    public enum EnemyType { Guard, Archer, Scout, Assasin, Samurai }
     public enum NpcType { Generic }
     public enum AllyType { Ranged, Melee }
 
@@ -33,28 +33,51 @@ public class AIManager : MonoBehaviour
 
     public PathType pathType = new PathType();
 
-    public float speed, damage, health, wanderRadius;
+    public float speed, combatSpeed, damage, health, wanderRadius;
 
     public Transform path, wanderArea;
 
     public bool loopPath, wanderInArea, inCombat;
 
-    public Enemy eUpdate;
-    public Npc npcUpdate;
-    public Ally aUpdate;
+    public float spottingTime, suspiciousSpottingTime;
+
+    [HideInInspector]
+    public bool seeingSomething, suspicious, visible;
+    [HideInInspector]
+    public float seenWhilstSuspicious, seenTime, suspiciousCooldown, combatCooldown;
+    [HideInInspector]
+    public Transform target;
+
+    Enemy eUpdate;
+    Demon dUpdate;
+    Npc npcUpdate;
+    Ally aUpdate;
     
     public void Start()
     {
         GetComponent<NavMeshAgent>().speed = speed;
+        if(path == null)
+        {
+            path = transform;
+        }
+
         UnitBehaviour unit = new UnitBehaviour(wanderRadius, speed, transform, path, loopPath);
+
         switch (mode)
         {
             //Enemy's
             case Mode.enemy:
                 {
-                    Enemy enemy = new Enemy(transform, damage, health, unit);
+                    Enemy enemy = new Enemy(transform, combatSpeed, damage, health, unit);
                     eUpdate = enemy;
                     break; 
+                }
+
+            case Mode.demon:
+                {
+                    Demon demon = new Demon(transform, combatSpeed, damage, health, unit);
+                    dUpdate = demon;
+                    break;
                 }
 
             //Npc's
@@ -68,71 +91,136 @@ public class AIManager : MonoBehaviour
             //Ally's
             case Mode.ally:
                 {
-                    Ally ally = new Ally(transform, damage, health, unit);
+                    Ally ally = new Ally(transform, combatSpeed, damage, health, unit);
                     aUpdate = ally;
                     break;
                 }
         }
     }
 
-    public void FixedUpdate()
+    public void CountUp()
+    {
+        if (suspicious != true)
+        {
+            seenTime += Time.deltaTime * 1;
+        }
+        else if (suspicious == true && inCombat != true)
+        {
+            seenWhilstSuspicious += Time.deltaTime * 1;
+        }
+    }
+
+    public void Update()
     {
         switch (mode)
         {
             //Enemy's
             case Mode.enemy:
                 {
-                    switch (enemyType)
+                    if (visible == true)
                     {
-                        case EnemyType.Ranged:
+                        eUpdate.visible = true;
+                        GetComponent<NavMeshAgent>().speed = 0;
+                        float targetDistance = Vector3.Distance(target.position, transform.position);
+
+                        if (seenTime > (spottingTime * targetDistance / 6) && suspicious == false)
+                        {
+                            print("I saw something");
+
+                            NavMeshHit hit;
+                            NavMesh.SamplePosition(target.position, out hit, walkRadius, 1);
+                            eUpdate.sTarget = hit.position;
+
+                            suspicious = true;
+                        }
+                        if(suspicious == true)
+                        {
+                            if(seenWhilstSuspicious > (suspiciousSpottingTime * targetDistance / 3) && inCombat == false)
                             {
-                                eUpdate.Ranged();
-                                break;
+                                print("I see him!");
+                                eUpdate.target = target;
+                                inCombat = true;
                             }
-                        case EnemyType.Melee:
-                            {
-                                eUpdate.Melee();
-                                break;
-                            }
+                        }
                     }
+                    else
+                    {
+                        eUpdate.visible = false;
+                        GetComponent<NavMeshAgent>().speed = speed;
+
+                        if (seenTime > 0)
+                        {
+                            seenTime -= Time.deltaTime * 1;
+                        }
+                        if (seenWhilstSuspicious > 0)
+                        {
+                            seenWhilstSuspicious -= Time.deltaTime * 1;
+                        } 
+                        if (inCombat == true && suspicious == true) // this one too
+                        {
+                            combatCooldown += Time.deltaTime * 1;
+                            if (combatCooldown > 10)
+                            {
+                                print("I lost him! Start searching!");
+                                combatCooldown = 0;
+                                inCombat = false;
+                            }
+                        }
+                        if (suspicious == true && inCombat == false)
+                        {
+                            suspiciousCooldown += Time.deltaTime * 1;
+                            if (suspiciousCooldown > 12)
+                            {
+                                print("I must be imagining things");
+                                suspiciousCooldown = 0;
+                                suspicious = false;
+                            }
+                        }
+                    }
+                    
+                    break;
+                }
+        }
+        
+        
+    }
+
+    public void FixedUpdate()
+    {
+        switch (mode)
+        {
+             //Enemy's
+             case Mode.enemy:
+                {
+                    eUpdate.Active();
+                    eUpdate.suspicious = suspicious;
+                    eUpdate.inCombat = inCombat;
+                    break;
+                }
+
+            case Mode.demon:
+                {
+                    dUpdate.Active();
+                    dUpdate.suspicious = suspicious;
+                    dUpdate.inCombat = inCombat;
                     break;
                 }
 
             //Npc's
             case Mode.npc:
                 {
-                    switch (npcType)
-                    {
-                        case NpcType.Generic:
-                            {
-                                npcUpdate.Generic();
-                                npcUpdate.inCombat = inCombat;
-                                break;
-                            }
-                    }
+                    npcUpdate.Active();
+                    npcUpdate.inCombat = inCombat;
                     break;
                 }
 
             //Ally's
             case Mode.ally:
                 {
-                    switch (allyType)
-                    {
-                        case AllyType.Ranged:
-                            {
-                                aUpdate.Ranged();
-                                break;
-                            }
-                        case AllyType.Melee:
-                            {
-                                aUpdate.Melee();
-                                break;
-                            }
-                    }
-
+                    aUpdate.Active();
+                    aUpdate.inCombat = inCombat;
                     break;
                 }
-
         }
     }
 

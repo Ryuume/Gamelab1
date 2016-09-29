@@ -38,7 +38,7 @@ public class UnitBehaviour
                 //Makes following a path possible.
                 case AIManager.PathType.Path:
                     {
-                        if (target == null)
+                        if (target == null || target == manager.transform)
                         {
                             target = waypoints[0];
                             NavMeshAgent agent = manager.GetComponent<NavMeshAgent>();
@@ -96,7 +96,7 @@ public class UnitBehaviour
                             randomDirection = manager.GetComponent<AIManager>().wanderArea.GetComponent<Area>().point(walkRadius);
                         }
 
-                        if (randomTarget == Vector3.zero)
+                        if (randomTarget == Vector3.zero || randomTarget == manager.transform.position)
                         {
                             randomDirection += manager.position;
                             NavMeshHit hit;
@@ -143,34 +143,6 @@ public class UnitBehaviour
         }
     }
 
-    public void Targeter()
-    {
-        //make a targeter that targets nearby enemys.
-        switch (manager.GetComponent<AIManager>().priority)
-        {
-            case AIManager.Priority.HighestDamage:
-                {
-                    attackPattern = 0;
-                    break;
-                }
-            case AIManager.Priority.LowestDamage:
-                {
-                    attackPattern = 1;
-                    break;
-                }
-            case AIManager.Priority.HighestHealth:
-                {
-                    attackPattern = 2;
-                    break;
-                }
-            case AIManager.Priority.LowestHealth:
-                {
-                    attackPattern = 3;
-                    break;
-                }
-        }
-    }
-
     public void NpcRun()
     {
         //pick next target based on pathType.
@@ -213,6 +185,4 @@ public class UnitBehaviour
             }
         }
     }
-
-
 }

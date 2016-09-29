@@ -2,6 +2,9 @@
 using System.Collections;
 using System.Collections.Generic;
 
+
+//Quick note: I didn't come up with this script myself. I understand what is going on, but the script was made by "Sebastian Lague" (https://www.youtube.com/watch?v=rQG9aUWarwE).
+
 public class FieldOfView : MonoBehaviour
 {
     public float viewRadius;
@@ -20,23 +23,20 @@ public class FieldOfView : MonoBehaviour
     public MeshFilter viewMeshFilter;
     Mesh viewMesh;
 
+    AIManager manager;
+
     void Start()
     {
         viewMesh = new Mesh();
         viewMesh.name = "View Mesh";
         viewMeshFilter.mesh = viewMesh;
 
-        StartCoroutine("FindTargetsWithDelay", .2f);
+        manager = transform.GetComponent<AIManager>();
     }
 
-
-    IEnumerator FindTargetsWithDelay(float delay)
+    void Update()
     {
-        while (true)
-        {
-            yield return new WaitForSeconds(delay);
-            FindVisibleTargets();
-        }
+        FindVisibleTargets();
     }
 
     void LateUpdate()
@@ -59,8 +59,26 @@ public class FieldOfView : MonoBehaviour
                 if (!Physics.Raycast(transform.position, dirToTarget, dstToTarget, obstacleMask))
                 {
                     visibleTargets.Add(target);
+                    if(manager.target == null)
+                    {
+                        manager.target = target;
+                    }
+                    manager.visible = true;
+                    manager.CountUp();
+                }
+                else
+                {
+                    manager.visible = false;
                 }
             }
+            else
+            {
+                manager.visible = false;
+            }
+        }
+        if(targetsInViewRadius.Length == 0)
+        {
+            manager.visible = false;
         }
     }
 

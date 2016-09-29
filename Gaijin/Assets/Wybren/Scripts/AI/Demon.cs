@@ -7,7 +7,7 @@ public class Demon
 
     public Transform manager;
 
-    public bool inCombat = false;
+    public bool inCombat = false, suspicious = false, visible = false;
 
     public UnitBehaviour unit;
 

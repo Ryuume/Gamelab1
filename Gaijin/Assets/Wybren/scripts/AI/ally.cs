@@ -19,15 +19,16 @@ public class Ally
 
     public UnitBehaviour unit;
 
-    public Ally(Transform ai, float setDamage, float setHealth, UnitBehaviour behaviour)
+    public Ally(Transform ai, float combatSpeed, float setDamage, float setHealth, UnitBehaviour behaviour)
     {
         manager = ai;
+        speed = combatSpeed;
         damage = setDamage;
         health = setHealth;
         unit = behaviour;
     }
 
-    public void Ranged()
+    public void Active()
     {
         //TODO
         //Ranged unit runs towards target, when he gets in fire distance, he stops, and fires at the target. When target gets even closer to the archer, to a certain point he keeps shooting, and then pulls out a sword / dagger?
@@ -37,7 +38,7 @@ public class Ally
 
         if (inCombat == true)
         {
-            unit.Targeter();
+            Combat();
         }
 
         else if (inCombat == false)
@@ -46,21 +47,8 @@ public class Ally
         }
     }
 
-    public void Melee()
+    public void Combat()
     {
-        //TODO
-        //Melee unit runs towards target, and uses a set of attack animations when he gets withing range of the target.
-        //Unit shoots a raycast and plays the animation when in range, if raycast is hit, damage to the target is done.
-        //If attacked by another target, which is closer to the AI than the ai's target, switch target to the nearest attacking AI.
 
-        if (inCombat == true)
-        {
-            unit.Targeter();
-        }
-
-        else if (inCombat == false)
-        {
-            unit.AllyMove();
-        }
     }
 }
