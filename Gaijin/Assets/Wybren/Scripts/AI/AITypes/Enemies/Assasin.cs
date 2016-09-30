@@ -5,7 +5,7 @@ public class Assasin
 {
     public float speed, damage, health;
 
-    public Transform manager;
+    public Transform manager, target;
 
     public Assasin(Transform ai, float combatSpeed, float setDamage, float setHealth)
     {

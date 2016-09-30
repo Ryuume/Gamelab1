@@ -336,11 +336,11 @@ MonoBehaviour:
   npcType: 0
   allyType: 0
   priority: 0
-  pathType: 2
+  pathType: 0
   speed: 3.5
-  combatSpeed: 0
-  damage: 0
-  health: 0
+  combatSpeed: 4
+  damage: 10
+  health: 100
   wanderRadius: 25
   path: {fileID: 1867907200}
   wanderArea: {fileID: 865357204}
@@ -3894,7 +3894,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 11469404, guid: 7737647c22c1fc64a88d5cd030c352ce, type: 2}
       propertyPath: m_MoveSpeedMultiplier
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 11469404, guid: 7737647c22c1fc64a88d5cd030c352ce, type: 2}
       propertyPath: m_AnimSpeedMultiplier

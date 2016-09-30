@@ -77,6 +77,14 @@ public class Enemy
         else if (inCombat == false && visible == false && suspicious == false)
         {
             manager.GetComponent<AIManager>().StartAICoroutine(unit.Move());
+            Debug.Log(1);
+        }
+        else if (visible == true)
+        {
+            Quaternion targetRotation = Quaternion.LookRotation(manager.GetComponent<AIManager>().target.position - manager.position);
+
+            // Smoothly rotate towards the target point.
+            manager.rotation = Quaternion.Slerp(manager.rotation, targetRotation, 10 * Time.deltaTime);
         }
 
         if (suspicious == true && inCombat == false)
@@ -98,32 +106,32 @@ public class Enemy
         {
             case AIManager.EnemyType.Guard:
                 {
-                    gUpdate.Active();
                     gUpdate.target = target;
+                    gUpdate.Active();
                     break;
                 }
             case AIManager.EnemyType.Archer:
                 {
-                    aUpdate.Active();
                     aUpdate.target = target;
+                    aUpdate.Active();
                     break; 
                 }
             case AIManager.EnemyType.Scout:
                 {
-                    sUpdate.Active();
                     sUpdate.target = target;
+                    sUpdate.Active();
                     break;
                 }
             case AIManager.EnemyType.Assasin:
                 {
-                    asUpdate.Active();
                     asUpdate.target = target;
+                    asUpdate.Active();
                     break;
                 }
             case AIManager.EnemyType.Samurai:
                 {
-                    saUpdate.Active();
                     saUpdate.target = target;
+                    saUpdate.Active();
                     break;
                 }
         }

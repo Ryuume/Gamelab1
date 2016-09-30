@@ -38,7 +38,7 @@ public class UnitBehaviour
                 //Makes following a path possible.
                 case AIManager.PathType.Path:
                     {
-                        if (target == null || target == manager.transform)
+                        if (target == null)
                         {
                             target = waypoints[0];
                             NavMeshAgent agent = manager.GetComponent<NavMeshAgent>();
@@ -96,7 +96,7 @@ public class UnitBehaviour
                             randomDirection = manager.GetComponent<AIManager>().wanderArea.GetComponent<Area>().point(walkRadius);
                         }
 
-                        if (randomTarget == Vector3.zero || randomTarget == manager.transform.position)
+                        if (randomTarget == Vector3.zero)
                         {
                             randomDirection += manager.position;
                             NavMeshHit hit;

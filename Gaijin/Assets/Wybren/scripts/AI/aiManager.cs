@@ -128,8 +128,11 @@ public class AIManager : MonoBehaviour
                             print("I saw something");
 
                             NavMeshHit hit;
-                            NavMesh.SamplePosition(target.position, out hit, walkRadius, 1);
+                            NavMesh.SamplePosition(target.position, out hit, 10, 1);
                             eUpdate.sTarget = hit.position;
+
+                            eUpdate.unit.target = null;
+                            eUpdate.unit.randomTarget = Vector3.zero;
 
                             suspicious = true;
                         }
@@ -163,6 +166,11 @@ public class AIManager : MonoBehaviour
                             {
                                 print("I lost him! Start searching!");
                                 combatCooldown = 0;
+
+                                NavMeshHit hit;
+                                NavMesh.SamplePosition(target.position, out hit, 10, 1);
+                                eUpdate.sTarget = hit.position;
+
                                 inCombat = false;
                             }
                         }
@@ -177,12 +185,9 @@ public class AIManager : MonoBehaviour
                             }
                         }
                     }
-                    
                     break;
                 }
-        }
-        
-        
+        } 
     }
 
     public void FixedUpdate()

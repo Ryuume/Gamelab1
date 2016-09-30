@@ -5,7 +5,7 @@ public class Samurai
 {
     public float speed, damage, health;
 
-    public Transform manager;
+    public Transform manager, target;
 
     public Samurai(Transform ai, float combatSpeed, float setDamage, float setHealth)
     {

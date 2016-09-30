@@ -5,7 +5,7 @@ public class Scout
 {
     public float speed, damage, health;
 
-    public Transform manager;
+    public Transform manager, target;
 
     public Scout(Transform ai, float combatSpeed, float setDamage, float setHealth)
     {

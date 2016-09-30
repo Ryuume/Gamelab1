@@ -5,7 +5,7 @@ public class Archer
 {
     public float speed, damage, health;
 
-    public Transform manager;
+    public Transform manager, target;
 
     public Archer(Transform ai, float combatSpeed, float setDamage, float setHealth)
     {
