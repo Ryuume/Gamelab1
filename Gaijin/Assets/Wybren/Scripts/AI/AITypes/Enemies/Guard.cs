@@ -25,7 +25,7 @@ public class Guard
 
         float distanceToTarget = Vector3.Distance(target.position, manager.position);
 
-        if (distanceToTarget > 2)
+        if (distanceToTarget > 2.5)
         {
             agent.speed = speed;
             agent.SetDestination(target.position);
@@ -33,10 +33,6 @@ public class Guard
         else
         {
             agent.speed = 0;
-            Quaternion targetRotation = Quaternion.LookRotation(target.position - manager.position);
-
-            // Smoothly rotate towards the target point.
-            manager.rotation = Quaternion.Slerp(manager.rotation, targetRotation, 10 * Time.deltaTime);
         }    
     }
 }

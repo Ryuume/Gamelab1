@@ -171,6 +171,7 @@ public class AIManager : MonoBehaviour
                                 NavMesh.SamplePosition(target.position, out hit, 10, 1);
                                 eUpdate.sTarget = hit.position;
 
+                                target = null;
                                 inCombat = false;
                             }
                         }

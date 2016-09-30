@@ -10,7 +10,7 @@ public class UnitBehaviour
     public Transform manager, target;
     public List<Transform> waypoints = new List<Transform>();
     public bool loop, waiting, ducking;
-    public Vector3 randomTarget, randomDirection;
+    public Vector3 randomTarget, randomDirection, searchTarget, searchDirection;
 
     //All Variables for attacking.
     public int attackPattern;
@@ -183,6 +183,39 @@ public class UnitBehaviour
                 randomTarget = Vector3.zero;
                 //call animation * sound effect.
             }
+        }
+    }
+
+    public void SearchArea(Vector3 searchArea)
+    {
+        if (searchTarget == Vector3.zero)
+        {
+            searchDirection = Random.insideUnitSphere * walkRadius / 2;
+            searchDirection = searchDirection + searchArea;
+
+            searchDirection += manager.position;
+            NavMeshHit hit;
+            NavMesh.SamplePosition(searchDirection, out hit, 10, 1);
+            searchTarget = hit.position;
+
+            NavMeshAgent agent = manager.GetComponent<NavMeshAgent>();
+            agent.SetDestination(searchTarget);
+        }
+
+        float distanceToTarget = Vector3.Distance(manager.position, searchTarget);
+
+        if (distanceToTarget < 1.5)
+        {
+            searchDirection = Random.insideUnitSphere * walkRadius / 2;
+            searchDirection = searchDirection + searchArea;
+
+            searchDirection += manager.position;
+            NavMeshHit hit;
+            NavMesh.SamplePosition(searchDirection, out hit, 10, 1);
+            searchTarget = hit.position;
+
+            NavMeshAgent agent = manager.GetComponent<NavMeshAgent>();
+            agent.SetDestination(searchTarget);
         }
     }
 }

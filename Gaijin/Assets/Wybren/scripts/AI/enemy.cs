@@ -17,7 +17,7 @@ public class Enemy
 
     public Vector3 sTarget;
 
-    public bool inCombat = false, visible = false, suspicious = false;
+    public bool inCombat = false, visible = false, suspicious = false, lastLocReached;
 
     public UnitBehaviour unit;
 
@@ -77,7 +77,6 @@ public class Enemy
         else if (inCombat == false && visible == false && suspicious == false)
         {
             manager.GetComponent<AIManager>().StartAICoroutine(unit.Move());
-            Debug.Log(1);
         }
         else if (visible == true)
         {
@@ -96,8 +95,22 @@ public class Enemy
     public void Suspicious()
     {
         //walk to target position (given by AIManager when suspicious is set to true)
-        manager.GetComponent<NavMeshAgent>().SetDestination(sTarget);
-        manager.GetComponent<NavMeshAgent>().speed = manager.GetComponent<AIManager>().speed;
+        float distance = Vector3.Distance(sTarget, manager.position);
+        if (distance > 1.5 && lastLocReached == false)
+        {
+            manager.GetComponent<NavMeshAgent>().SetDestination(sTarget);
+            manager.GetComponent<NavMeshAgent>().speed = manager.GetComponent<AIManager>().speed;
+        }
+        else if(distance < 1.5)
+        {
+            lastLocReached = true;
+            
+        }
+        if (lastLocReached == true)
+        {
+            unit.SearchArea(sTarget);
+        }
+
     }
 
     public void Combat()

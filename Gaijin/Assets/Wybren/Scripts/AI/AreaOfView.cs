@@ -5,8 +5,8 @@ using System.Collections.Generic;
 
 //Quick note: I didn't come up with this script myself. I understand what is going on, but the script was made by "Sebastian Lague" (https://www.youtube.com/watch?v=rQG9aUWarwE).
 
-[RequireComponent (typeof(AreaOfView))]
-public class FieldOfView : MonoBehaviour
+[RequireComponent(typeof(FieldOfView))]
+public class AreaOfView : MonoBehaviour
 {
     public float viewRadius;
 
@@ -47,7 +47,6 @@ public class FieldOfView : MonoBehaviour
 
     void FindVisibleTargets()
     {
-        visibleTargets.Clear();
         Collider[] targetsInViewRadius = Physics.OverlapSphere(transform.position, viewRadius, targetMask);
 
         for (int i = 0; i < targetsInViewRadius.Length; i++)
@@ -59,27 +58,14 @@ public class FieldOfView : MonoBehaviour
                 float dstToTarget = Vector3.Distance(transform.position, target.position);
                 if (!Physics.Raycast(transform.position, dirToTarget, dstToTarget, obstacleMask))
                 {
-                    visibleTargets.Add(target);
-                    if(manager.target == null)
-                    {
-                        manager.target = target;
-                    }
-                    manager.visible = true;
-                    manager.CountUp();
-                }
-                else
-                {
-                    manager.visible = false;
+                    Vector3 targetPos = target.position;
+                    targetPos.y = transform.position.y;
+                    Quaternion targetRotation = Quaternion.LookRotation(targetPos - transform.position);
+
+                    // Smoothly rotate towards the target point.
+                    transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, 10 * Time.deltaTime);
                 }
             }
-            else
-            {
-                manager.visible = false;
-            }
-        }
-        if(targetsInViewRadius.Length == 0)
-        {
-            manager.visible = false;
         }
     }
 
