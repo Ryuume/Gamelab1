@@ -195,7 +195,7 @@ public class UnitBehaviour
 
             searchDirection += manager.position;
             NavMeshHit hit;
-            NavMesh.SamplePosition(searchDirection, out hit, 10, 1);
+            NavMesh.SamplePosition(searchDirection, out hit, 5, 1);
             searchTarget = hit.position;
 
             NavMeshAgent agent = manager.GetComponent<NavMeshAgent>();
@@ -211,7 +211,7 @@ public class UnitBehaviour
 
             searchDirection += manager.position;
             NavMeshHit hit;
-            NavMesh.SamplePosition(searchDirection, out hit, 10, 1);
+            NavMesh.SamplePosition(searchDirection, out hit, 5, 1);
             searchTarget = hit.position;
 
             NavMeshAgent agent = manager.GetComponent<NavMeshAgent>();

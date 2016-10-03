@@ -8,18 +8,18 @@ using System.Collections.Generic;
 [RequireComponent (typeof(AreaOfView))]
 public class FieldOfView : MonoBehaviour
 {
-    public float viewRadius;
+    public float viewRadius = 9f;
 
     [Range(0, 360)]
-    public float viewAngle;
+    public float viewAngle = 60f;
 
     public LayerMask targetMask, obstacleMask;
 
     [HideInInspector]
     public List<Transform> visibleTargets = new List<Transform>();
 
-    public float meshResolution, edgeDstThreshold;
-    public int edgeResolveIterations;
+    public float meshResolution = .4f, edgeDstThreshold = .5f;
+    public int edgeResolveIterations = 4;
 
     public MeshFilter viewMeshFilter;
     Mesh viewMesh;
@@ -54,10 +54,10 @@ public class FieldOfView : MonoBehaviour
         {
             Transform target = targetsInViewRadius[i].transform;
             Vector3 dirToTarget = (target.position - transform.position).normalized;
-            if (Vector3.Angle(transform.forward, dirToTarget) < viewAngle / 2)
+            if (Vector3.Angle(transform.forward, dirToTarget) < viewAngle / 2 + 1)
             {
                 float dstToTarget = Vector3.Distance(transform.position, target.position);
-                if (!Physics.Raycast(transform.position, dirToTarget, dstToTarget, obstacleMask))
+                if (!Physics.Raycast(transform.position, dirToTarget, dstToTarget + 1, obstacleMask))
                 {
                     visibleTargets.Add(target);
                     if(manager.target == null)

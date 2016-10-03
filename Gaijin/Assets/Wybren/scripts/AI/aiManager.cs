@@ -48,7 +48,8 @@ public class AIManager : MonoBehaviour
     [HideInInspector]
     public Transform target;
 
-    Enemy eUpdate;
+    [HideInInspector]
+    public Enemy eUpdate;
     Demon dUpdate;
     Npc npcUpdate;
     Ally aUpdate;

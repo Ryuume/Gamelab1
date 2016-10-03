@@ -78,13 +78,6 @@ public class Enemy
         {
             manager.GetComponent<AIManager>().StartAICoroutine(unit.Move());
         }
-        else if (visible == true)
-        {
-            Quaternion targetRotation = Quaternion.LookRotation(manager.GetComponent<AIManager>().target.position - manager.position);
-
-            // Smoothly rotate towards the target point.
-            manager.rotation = Quaternion.Slerp(manager.rotation, targetRotation, 10 * Time.deltaTime);
-        }
 
         if (suspicious == true && inCombat == false)
         {

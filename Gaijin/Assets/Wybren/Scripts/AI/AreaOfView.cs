@@ -8,18 +8,18 @@ using System.Collections.Generic;
 [RequireComponent(typeof(FieldOfView))]
 public class AreaOfView : MonoBehaviour
 {
-    public float viewRadius;
+    public float viewRadius = 2.6f;
 
     [Range(0, 360)]
-    public float viewAngle;
+    public float viewAngle = 300f;
 
     public LayerMask targetMask, obstacleMask;
 
     [HideInInspector]
     public List<Transform> visibleTargets = new List<Transform>();
 
-    public float meshResolution, edgeDstThreshold;
-    public int edgeResolveIterations;
+    public float meshResolution = .28f, edgeDstThreshold = .5f;
+    public int edgeResolveIterations = 4;
 
     public MeshFilter viewMeshFilter;
     Mesh viewMesh;
@@ -53,17 +53,19 @@ public class AreaOfView : MonoBehaviour
         {
             Transform target = targetsInViewRadius[i].transform;
             Vector3 dirToTarget = (target.position - transform.position).normalized;
-            if (Vector3.Angle(transform.forward, dirToTarget) < viewAngle / 2)
+            if (Vector3.Angle(-transform.forward, dirToTarget) < viewAngle / 2)
             {
                 float dstToTarget = Vector3.Distance(transform.position, target.position);
                 if (!Physics.Raycast(transform.position, dirToTarget, dstToTarget, obstacleMask))
                 {
+                    manager.eUpdate.visible = true;
+                    GetComponent<NavMeshAgent>().speed = 0;
                     Vector3 targetPos = target.position;
                     targetPos.y = transform.position.y;
                     Quaternion targetRotation = Quaternion.LookRotation(targetPos - transform.position);
 
                     // Smoothly rotate towards the target point.
-                    transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, 10 * Time.deltaTime);
+                    transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, 7 * Time.deltaTime);
                 }
             }
         }
@@ -79,7 +81,7 @@ public class AreaOfView : MonoBehaviour
 
         for (int i = 0; i <= stepCount; i++)
         {
-            float angle = transform.eulerAngles.y - viewAngle / 2 + stepAngleSize * i;
+            float angle = transform.eulerAngles.y + 180 - viewAngle / 2 + stepAngleSize * i;
             ViewCastInfo newViewCast = ViewCast(angle);
 
             if (i > 0)
