@@ -97,10 +97,10 @@ public class Enemy
         else if(distance < 1.5)
         {
             lastLocReached = true;
-            
+            unit.searchTarget = Vector3.zero;
         }
         if (lastLocReached == true)
-        {
+        { 
             unit.SearchArea(sTarget);
         }
 

@@ -204,7 +204,7 @@ public class UnitBehaviour
 
         float distanceToTarget = Vector3.Distance(manager.position, searchTarget);
 
-        if (distanceToTarget < 1.5)
+        if (distanceToTarget < 2)
         {
             searchDirection = Random.insideUnitSphere * walkRadius / 2;
             searchDirection = searchDirection + searchArea;
