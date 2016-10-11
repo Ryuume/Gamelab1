@@ -20,27 +20,34 @@ public class AIManager : MonoBehaviour
     public enum AllyType { Ranged, Melee }
 
     public enum Priority { HighestDamage, LowestDamage, HighestHealth, LowestHealth }
-
     public enum PathType { Path, Stationary, Wander }
 
     public Mode mode = new Mode();
-
     public EnemyType enemyType = new EnemyType();
     public NpcType npcType = new NpcType();
     public AllyType allyType = new AllyType();
-
     public Priority priority = new Priority();
-
     public PathType pathType = new PathType();
 
-    public float speed, combatSpeed, damage, health, wanderRadius;
+    [Header("AI Settings")]
+    public float speed;
+    public float combatSpeed, damage, fireDelay, health, wanderRadius;
 
-    public Transform path, wanderArea;
-
+    [Header("Movement Settings")]
+    public Transform path;
+    public Transform wanderArea;
     public bool loopPath, wanderInArea, inCombat;
 
-    public float spottingTime, suspiciousSpottingTime;
+    [Header("Stealth Settings")]
+    public float spottingTime;
+    public float suspiciousSpottingTime;
 
+    [Header("Ranged Settings")]
+    [Tooltip("Add and arrow or other projectile here so the ranged units know what to shoot.")]
+    public GameObject projectile;
+
+    [HideInInspector]
+    public Collision collision;
     [HideInInspector]
     public bool seeingSomething, suspicious, visible;
     [HideInInspector]
@@ -69,14 +76,14 @@ public class AIManager : MonoBehaviour
             //Enemy's
             case Mode.enemy:
                 {
-                    Enemy enemy = new Enemy(transform, combatSpeed, damage, health, unit);
+                    Enemy enemy = new Enemy(transform, combatSpeed, damage, fireDelay, health, unit);
                     eUpdate = enemy;
                     break; 
                 }
 
             case Mode.demon:
                 {
-                    Demon demon = new Demon(transform, combatSpeed, damage, health, unit);
+                    Demon demon = new Demon(transform, combatSpeed, damage, fireDelay, health, unit);
                     dUpdate = demon;
                     break;
                 }
@@ -92,11 +99,11 @@ public class AIManager : MonoBehaviour
             //Ally's
             case Mode.ally:
                 {
-                    Ally ally = new Ally(transform, combatSpeed, damage, health, unit);
+                    Ally ally = new Ally(transform, combatSpeed, damage, fireDelay, health, unit);
                     aUpdate = ally;
                     break;
                 }
-        }
+      }
     }
 
     public void CountUp()
@@ -143,6 +150,8 @@ public class AIManager : MonoBehaviour
                             {
                                 print("I see him!");
                                 eUpdate.target = target;
+                                GetComponent<FieldOfView>().draw = false;
+                                GetComponent<AreaOfView>().draw = false;
                                 inCombat = true;
                             }
                         }
@@ -160,22 +169,6 @@ public class AIManager : MonoBehaviour
                         {
                             seenWhilstSuspicious -= Time.deltaTime * 1;
                         } 
-                        if (inCombat == true && suspicious == true) // this one too
-                        {
-                            combatCooldown += Time.deltaTime * 1;
-                            if (combatCooldown > 10)
-                            {
-                                print("I lost him! Start searching!");
-                                combatCooldown = 0;
-
-                                NavMeshHit hit;
-                                NavMesh.SamplePosition(target.position, out hit, 10, 1);
-                                eUpdate.sTarget = hit.position;
-
-                                target = null;
-                                inCombat = false;
-                            }
-                        }
                         if (suspicious == true && inCombat == false)
                         {
                             suspiciousCooldown += Time.deltaTime * 1;
@@ -234,5 +227,15 @@ public class AIManager : MonoBehaviour
     public void StartAICoroutine(IEnumerator coroutineMethod)
     {
         StartCoroutine(coroutineMethod);
+    }
+
+    public void OnCollisionEnter(Collision col)
+    {
+        collision = col;
+    }
+
+    public void Destroy()
+    {
+        Destroy(gameObject);
     }
 }

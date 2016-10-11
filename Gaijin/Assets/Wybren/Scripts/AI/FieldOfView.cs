@@ -21,6 +21,9 @@ public class FieldOfView : MonoBehaviour
     public float meshResolution = .4f, edgeDstThreshold = .5f;
     public int edgeResolveIterations = 4;
 
+    [HideInInspector]
+    public bool draw = true;
+
     public MeshFilter viewMeshFilter;
     Mesh viewMesh;
 
@@ -42,7 +45,13 @@ public class FieldOfView : MonoBehaviour
 
     void LateUpdate()
     {
-        DrawFieldOfView();
+        if (draw == true)
+        {
+            DrawFieldOfView();
+        }else
+        {
+            Destroy(viewMesh);
+        }
     }
 
     void FindVisibleTargets()

@@ -19,7 +19,7 @@ public class Ally
 
     public UnitBehaviour unit;
 
-    public Ally(Transform ai, float combatSpeed, float setDamage, float setHealth, UnitBehaviour behaviour)
+    public Ally(Transform ai, float combatSpeed, float setDamage, float setFireRate, float setHealth, UnitBehaviour behaviour)
     {
         manager = ai;
         speed = combatSpeed;

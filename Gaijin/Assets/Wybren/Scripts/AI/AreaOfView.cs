@@ -22,7 +22,11 @@ public class AreaOfView : MonoBehaviour
     public int edgeResolveIterations = 4;
 
     public MeshFilter viewMeshFilter;
+
     Mesh viewMesh;
+
+    [HideInInspector]
+    public bool draw = true;
 
     AIManager manager;
 
@@ -42,7 +46,13 @@ public class AreaOfView : MonoBehaviour
 
     void LateUpdate()
     {
-        DrawFieldOfView();
+        if (draw == true)
+        {
+            DrawFieldOfView();
+        }else
+        {
+            Destroy(viewMesh);
+        }
     }
 
     void FindVisibleTargets()

@@ -3,17 +3,18 @@ using System.Collections;
 
 public class Guard
 {
-    public float speed, damage, health;
+    public float speed, damage, fireRate, health;
 
     public Transform manager, target;
 
     NavMeshAgent agent;
 
-    public Guard(Transform ai, float combatSpeed, float setDamage, float setHealth)
+    public Guard(Transform ai, float combatSpeed, float setDamage, float setFireRate, float setHealth)
     {
         manager = ai;
         speed = combatSpeed;
         damage = setDamage;
+        fireRate = setFireRate;
         health = setHealth;
 
         agent = manager.GetComponent<NavMeshAgent>();
