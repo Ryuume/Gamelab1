@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 public class Archer
 {
-    public float speed, damage, fireRate, health, timer, shortestDistance, projectileSpeed = 25f;
+    public float speed, damage, fireRate, health, timer, shortestDistance, projectileSpeed = 20f;
 
     public List<float> distances = new List<float>();
     public List<Vector3> locations = new List<Vector3>();
@@ -50,7 +50,7 @@ public class Archer
         //arrow has its own script, which arches the arrow in the direction its moving, and sends a message upward to the object it hits.
         float distanceToTarget = Vector3.Distance(target.position, manager.position);
 
-        if (distanceToTarget > 12 && recalculatedPath == false)
+        if (distanceToTarget > 10 && recalculatedPath == false)
         {
             Move();
         }else if (distanceToTarget < 4 && recalculatedPath == false)
@@ -58,7 +58,7 @@ public class Archer
             MoveAway();
         }
 
-        if (distanceToTarget < 13)
+        if (distanceToTarget < 13 && distanceToTarget > 3)
         {
             InCombat();
         }
@@ -66,7 +66,6 @@ public class Archer
 
     public void Move()
     {
-        agent.Resume();
         agent.speed = speed;
         agent.SetDestination(target.position);
     }
@@ -80,10 +79,6 @@ public class Archer
     {
         if (manager.GetComponent<AIManager>().visible == true)
         {
-            if(agent.destination == target.position)
-            {
-                agent.speed = 0;
-            }
             Vector3 targetPos = target.position;
             targetPos.y = manager.position.y;
             Quaternion targetRotation = Quaternion.LookRotation(targetPos - manager.position);
@@ -174,7 +169,7 @@ public class Archer
         
         float x = (targetHit - source).magnitude;
         float y = targetHit.y + x/6;
-        float v = projectileSpeed;
+        float v = projectileSpeed * x/6;
         float g = Physics.gravity.y;
         float v2 = v * v;
         float v4 = v2 * v2;

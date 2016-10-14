@@ -31,7 +31,7 @@ public class AIManager : MonoBehaviour
 
     [Header("AI Settings")]
     public float speed;
-    public float combatSpeed, damage, fireDelay, health, wanderRadius;
+    public float combatSpeed, damage, attackDelay, health, wanderRadius;
 
     [Header("Movement Settings")]
     public Transform path;
@@ -76,14 +76,14 @@ public class AIManager : MonoBehaviour
             //Enemy's
             case Mode.enemy:
                 {
-                    Enemy enemy = new Enemy(transform, combatSpeed, damage, fireDelay, health, unit);
+                    Enemy enemy = new Enemy(transform, combatSpeed, damage, attackDelay, health, unit);
                     eUpdate = enemy;
                     break; 
                 }
 
             case Mode.demon:
                 {
-                    Demon demon = new Demon(transform, combatSpeed, damage, fireDelay, health, unit);
+                    Demon demon = new Demon(transform, combatSpeed, damage, attackDelay, health, unit);
                     dUpdate = demon;
                     break;
                 }
@@ -99,7 +99,7 @@ public class AIManager : MonoBehaviour
             //Ally's
             case Mode.ally:
                 {
-                    Ally ally = new Ally(transform, combatSpeed, damage, fireDelay, health, unit);
+                    Ally ally = new Ally(transform, combatSpeed, damage, attackDelay, health, unit);
                     aUpdate = ally;
                     break;
                 }

@@ -3,7 +3,7 @@ using System.Collections;
 
 public class Guard
 {
-    public float speed, damage, fireRate, health;
+    public float speed, damage, fireRate, health, timer;
 
     public Transform manager, target;
 
@@ -26,18 +26,40 @@ public class Guard
 
         if (distanceToTarget > 3)
         {
-            agent.speed = speed;
-            agent.SetDestination(target.position);
+            Move();
         } 
         else
         {
-            agent.speed = 0;
-            Vector3 targetPos = target.position;
-            targetPos.y = manager.position.y;
-            Quaternion targetRotation = Quaternion.LookRotation(targetPos - manager.position);
-
-            // Smoothly rotate towards the target point.
-            manager.rotation = Quaternion.Slerp(manager.rotation, targetRotation, 3 * Time.deltaTime);
+            Attack();
         }    
+    }
+
+    void Move()
+    {
+        agent.speed = speed;
+        agent.SetDestination(target.position);
+    }
+
+    void InCombat()
+    {
+        agent.speed = 0;
+        Vector3 targetPos = target.position;
+        targetPos.y = manager.position.y;
+        Quaternion targetRotation = Quaternion.LookRotation(targetPos - manager.position);
+
+        // Smoothly rotate towards the target point.
+        manager.rotation = Quaternion.Slerp(manager.rotation, targetRotation, 3 * Time.deltaTime);
+        timer += 1 * Time.deltaTime;
+        if (timer > fireRate)
+        {
+            Attack();
+            Debug.Log("attack");
+            timer = 0;
+        }
+    }
+
+    void Attack()
+    {
+
     }
 }

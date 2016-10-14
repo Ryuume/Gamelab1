@@ -74,9 +74,9 @@ public class Scout
             {
                 if (manager.GetComponent<AIManager>().collision.relativeVelocity.magnitude > 10)
                 {
-                    Debug.Log("Hit wall, I ded.");
+                    //Debug.Log("Hit wall, I ded.");
                     charging = false;
-                    manager.GetComponent<AIManager>().Destroy();
+                    //manager.GetComponent<AIManager>().Destroy();
                 }
             }
         }
