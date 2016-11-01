@@ -36,7 +36,10 @@ public class AIManager : MonoBehaviour
     [Header("Movement Settings")]
     public Transform path;
     public Transform wanderArea;
-    public bool loopPath, wanderInArea, inCombat;
+    public bool loopPath, wanderInArea;
+
+    [HideInInspector]
+    public bool inCombat;
 
     [Header("Stealth Settings")]
     public float spottingTime;
