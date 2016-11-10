@@ -232,20 +232,20 @@ MonoBehaviour:
   allyType: 0
   priority: 0
   pathType: 0
-  speed: 3.5
-  combatSpeed: 6
-  damage: 10
+  speed: 0
+  combatSpeed: 0
+  damage: 0
   attackDelay: 0
-  health: 100
-  wanderRadius: 25
-  path: {fileID: 1522455580}
+  health: 0
+  wanderRadius: 0
+  path: {fileID: 0}
   wanderArea: {fileID: 0}
-  loopPath: 1
+  loopPath: 0
   wanderInArea: 0
   inCombat: 0
-  spottingTime: 0.6
-  suspiciousSpottingTime: 0.5
-  projectile: {fileID: 1000010899694434, guid: 15fda5739dc597e48bd96b6877c8eb57, type: 2}
+  spottingTime: 0
+  suspiciousSpottingTime: 0
+  projectile: {fileID: 0}
   seeingSomething: 0
   suspicious: 0
   visible: 0
@@ -838,19 +838,19 @@ MonoBehaviour:
   allyType: 0
   priority: 0
   pathType: 0
-  speed: 3.5
-  combatSpeed: 4
-  damage: 10
+  speed: 0
+  combatSpeed: 0
+  damage: 0
   attackDelay: 0
-  health: 100
-  wanderRadius: 25
-  path: {fileID: 1867907200}
+  health: 0
+  wanderRadius: 0
+  path: {fileID: 0}
   wanderArea: {fileID: 0}
-  loopPath: 1
-  wanderInArea: 1
+  loopPath: 0
+  wanderInArea: 0
   inCombat: 0
-  spottingTime: 3
-  suspiciousSpottingTime: 0.5
+  spottingTime: 0
+  suspiciousSpottingTime: 0
   projectile: {fileID: 0}
   seeingSomething: 0
   suspicious: 0
@@ -1303,6 +1303,101 @@ Transform:
   m_Children: []
   m_Father: {fileID: 984007857}
   m_RootOrder: 4
+--- !u!1 &689522294
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 689522299}
+  - 33: {fileID: 689522298}
+  - 65: {fileID: 689522297}
+  - 23: {fileID: 689522296}
+  - 114: {fileID: 689522295}
+  m_Layer: 0
+  m_Name: Cube
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &689522295
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 689522294}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a36952463fe40dc43bc4834395adbed1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetMask:
+    serializedVersion: 2
+    m_Bits: 1024
+--- !u!23 &689522296
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 689522294}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_Materials:
+  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  m_SubsetIndices: 
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_PreserveUVs: 1
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_SelectedWireframeHidden: 0
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingOrder: 0
+--- !u!65 &689522297
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 689522294}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!33 &689522298
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 689522294}
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!4 &689522299
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 689522294}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.35, y: 0.45, z: -18.91}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_Children:
+  - {fileID: 1725033956}
+  m_Father: {fileID: 0}
+  m_RootOrder: 12
 --- !u!1 &716961633
 GameObject:
   m_ObjectHideFlags: 0
@@ -2102,7 +2197,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &930940400
 Transform:
   m_ObjectHideFlags: 0
@@ -2194,25 +2289,25 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mode: 0
-  enemyType: 1
+  enemyType: 0
   npcType: 0
   allyType: 0
   priority: 0
   pathType: 0
-  speed: 3.5
-  combatSpeed: 6
-  damage: 10
-  attackDelay: 2
-  health: 100
-  wanderRadius: 25
-  path: {fileID: 1522455580}
+  speed: 0
+  combatSpeed: 0
+  damage: 0
+  attackDelay: 0
+  health: 0
+  wanderRadius: 0
+  path: {fileID: 0}
   wanderArea: {fileID: 0}
-  loopPath: 1
+  loopPath: 0
   wanderInArea: 0
   inCombat: 0
-  spottingTime: 0.6
-  suspiciousSpottingTime: 0.5
-  projectile: {fileID: 1000010899694434, guid: 15fda5739dc597e48bd96b6877c8eb57, type: 2}
+  spottingTime: 0
+  suspiciousSpottingTime: 0
+  projectile: {fileID: 0}
   seeingSomething: 0
   suspicious: 0
   visible: 0
@@ -2541,7 +2636,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 998767896}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b4e32cbf2c42b834a916f767ee95c707, type: 3}
   m_Name: 
@@ -2616,10 +2711,10 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 998767896}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.23, z: -17.73}
+  m_LocalRotation: {x: 0.39713123, y: 0.30997548, z: -0.14454393, w: 0.8516508}
+  m_LocalPosition: {x: -5.21, y: 13.5, z: -24.46}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 50, y: 40, z: 0}
   m_Children:
   - {fileID: 2023718639}
   m_Father: {fileID: 0}
@@ -3170,7 +3265,7 @@ GameObject:
   - 4: {fileID: 1324709718}
   - 218: {fileID: 1324709717}
   - 154: {fileID: 1324709716}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Terrain
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3905,25 +4000,25 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mode: 0
-  enemyType: 1
+  enemyType: 0
   npcType: 0
   allyType: 0
   priority: 0
   pathType: 0
-  speed: 3.5
-  combatSpeed: 6
-  damage: 10
-  attackDelay: 2
-  health: 100
-  wanderRadius: 25
-  path: {fileID: 1522455580}
+  speed: 0
+  combatSpeed: 0
+  damage: 0
+  attackDelay: 0
+  health: 0
+  wanderRadius: 0
+  path: {fileID: 0}
   wanderArea: {fileID: 0}
-  loopPath: 1
+  loopPath: 0
   wanderInArea: 0
   inCombat: 0
-  spottingTime: 0.6
-  suspiciousSpottingTime: 0.5
-  projectile: {fileID: 1000010899694434, guid: 15fda5739dc597e48bd96b6877c8eb57, type: 2}
+  spottingTime: 0
+  suspiciousSpottingTime: 0
+  projectile: {fileID: 0}
   seeingSomething: 0
   suspicious: 0
   visible: 0
@@ -4271,25 +4366,25 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mode: 0
-  enemyType: 2
+  enemyType: 0
   npcType: 0
   allyType: 0
   priority: 0
   pathType: 0
-  speed: 3.5
-  combatSpeed: 6
-  damage: 10
-  attackDelay: 3
-  health: 100
-  wanderRadius: 25
-  path: {fileID: 1522455580}
+  speed: 0
+  combatSpeed: 0
+  damage: 0
+  attackDelay: 0
+  health: 0
+  wanderRadius: 0
+  path: {fileID: 0}
   wanderArea: {fileID: 0}
-  loopPath: 1
+  loopPath: 0
   wanderInArea: 0
   inCombat: 0
-  spottingTime: 0.6
-  suspiciousSpottingTime: 0.5
-  projectile: {fileID: 1000010899694434, guid: 15fda5739dc597e48bd96b6877c8eb57, type: 2}
+  spottingTime: 0
+  suspiciousSpottingTime: 0
+  projectile: {fileID: 0}
   seeingSomething: 0
   suspicious: 0
   visible: 0
@@ -4421,6 +4516,85 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
+--- !u!1 &1725033955
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 1725033956}
+  - 33: {fileID: 1725033959}
+  - 65: {fileID: 1725033958}
+  - 23: {fileID: 1725033957}
+  m_Layer: 0
+  m_Name: Cube
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1725033956
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1725033955}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0.64}
+  m_LocalScale: {x: 0.3750761, y: 0.28247565, z: 1}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_Children: []
+  m_Father: {fileID: 689522299}
+  m_RootOrder: 0
+--- !u!23 &1725033957
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1725033955}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_Materials:
+  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  m_SubsetIndices: 
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_PreserveUVs: 1
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_SelectedWireframeHidden: 0
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingOrder: 0
+--- !u!65 &1725033958
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1725033955}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!33 &1725033959
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1725033955}
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1 &1795177340
 GameObject:
   m_ObjectHideFlags: 0
@@ -4572,13 +4746,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e4a24405191655c4f854e50c68362606, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mode: 3
+  mode: 0
   enemyType: 0
   npcType: 0
   allyType: 0
   priority: 0
   pathType: 0
-  speed: 3.5
+  speed: 0
   combatSpeed: 0
   damage: 0
   attackDelay: 0

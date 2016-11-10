@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class EventManager : MonoBehaviour
+public class QuestManager : MonoBehaviour
 {
     //TODO
     //OPTION 1: Keep realtime database of every event not yet triggered (all of them when you load a fresh save)

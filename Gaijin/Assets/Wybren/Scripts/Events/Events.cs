@@ -12,4 +12,9 @@ public class Events : MonoBehaviour {
     //-Cutscene (play cutscene)
     //-Trap (Spikes, door closing, ect)
     //-Sound effect (Play music, sound, ect)
+
+    public enum eventType { Checkpoint, Ambush, MoveCam, Cutscene, Trap, SoundEffect};
+
+    public eventType type = new eventType();
+
 }
