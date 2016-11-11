@@ -10,8 +10,10 @@
 
 		_NormalMap("Normal", 2D) = "bump" {}
 
-		_ScreenGradient("ScreenGradient", 2D) = "black" {}
-		//_DissolvePercentage("DissolvePercentage", Range(-1.5,1.5)) = 0.0
+		_Color1("Bottom Color", Color) = (0,0,0,1)
+			_Color2("Top Color", Color) = (1,1,1,1)
+		_DissolvePercentage("DissolveDistance", Range(0,10)) = 6.0
+		_DissolvePercentage2("DissolveDistance2", Range(0,30)) = 6.0
 
 		_Octaves("Octaves", Float) = 8.0
 		_Frequency("Frequency", Float) = 1.0
@@ -19,6 +21,8 @@
 		_Lacunarity("Lacunarity", Float) = 1.92
 		_Persistence("Persistence", Float) = 0.8
 		_Offset("Offset", Vector) = (0.0, 0.0, 0.0, 0.0)
+			_Size("Radius", Range(0,3)) = 0.0
+			_Intensity("Intensity", Range(0,1)) = 0.0
 	}
 
 		CGINCLUDE
@@ -126,16 +130,19 @@
 
 		ENDCG
 
+
 	SubShader
 	{
-		Cull Off
-
 		Tags{ "RenderType" = "Opaque" }
 		LOD 200
-
+		
+		Cull Off
+	
+		
+		//Blend SrcAlpha OneMinusSrcAlpha
 		CGPROGRAM
-
-		#pragma surface surf Standard fullforwardshadows
+		
+		#pragma surface surf Standard fullforwardshadows 
 
 		#pragma glsl
 		#pragma target 3.0
@@ -151,10 +158,17 @@
 		sampler2D _Metallic;
 		sampler2D _NormalMap;
 		sampler2D _ScreenGradient;
+		
 		fixed4 _Color;
 		float _Scale;
-		//float _DissolvePercentage;
+		float _DissolvePercentage;
+		float _DissolvePercentage2;
 		half _Glossiness;
+		half _Size;
+		half _Intensity;
+		fixed4 _Color1;
+		fixed4 _Color2;
+
 
 		struct Input
 		{
@@ -164,28 +178,38 @@
 			float3 worldPos;
 			float3 worldNormal; INTERNAL_DATA
 			float4 screenPos;
+			float eyeDepth;
+			float2 depth : TEXCOORD0;
 		};
 
+		
 
 		void surf(Input IN, inout SurfaceOutputStandard o)
 		{
+			const float pi = 3.14159;
+			const float tau = pi * 2;
 			float2 screenUV = IN.screenPos.xy / IN.screenPos.w;
-			fixed4 s = tex2D(_ScreenGradient, screenUV);
+			float sinX = clamp(0.0, 1.0, cos(clamp(0.0, pi, screenUV.x * pi - (0.5 * pi))));
+			float sinY = clamp(0.0, 1.0, cos(clamp(0.0, pi, screenUV.y * pi - (0.5 * pi))));
+			float2 moddedUV = float2(sinX, sinY) * _Intensity;
+			//float2 moddedUV2 = float2(cos(moddedUV.x * (pi * 2) * screenUV.y) * 1, 1);
+			// Albedo comes from a texture tinted by color
+			fixed4 x = saturate(lerp(_Color1, _Color2, pow(moddedUV.x, _Size)) * lerp(_Color1, _Color2, pow(moddedUV.y, _Size)));
 
-			float dist = length(_WorldSpaceCameraPos - IN.worldPos);
+
+			float dist = length(0 - IN.screenPos.z);
 			half viewDist = length(dist);
-			half falloff = saturate((viewDist - 12) / (2 - 12));
-			float _Dissolve = (s.a) * falloff;
+			half falloff = saturate((viewDist - _DissolvePercentage2) / (_DissolvePercentage - _DissolvePercentage2));
+			float _Dissolve = x.r * (falloff);
 
 			float gradient = PerlinNormal(IN.worldPos, _Octaves, _Offset, _Frequency, _Amplitude, _Lacunarity, _Persistence);
 
-			float result = ((_Dissolve - 0) / (1 - 0)) * (1.5 - -1.5) + -1.5;
+			float dissolve = (((_Dissolve) - 0) * (1 - 0)) * (1.5 - -1.5) + -1.5;
 
-			clip(gradient - result);
+			clip(gradient - dissolve);
 
 			fixed4 c = tex2D(_MainTex, IN.uv_MainTex);
 			o.Albedo = c.rgb * _Color;
-
 			fixed4 m = tex2D(_Metallic, IN.uv_MainTex);
 			o.Metallic = m.rgb;
 
@@ -195,7 +219,7 @@
 			fixed3 n = UnpackNormal(tex2D(_NormalMap, IN.uv_MainTex));
 			o.Normal = n;
 
-			o.Alpha = c.a;
+			o.Alpha = 1;
 		}
 		ENDCG
 		}
