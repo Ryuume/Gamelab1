@@ -153,7 +153,7 @@ Material:
       second: 1
     - first:
         name: _Size
-      second: 2.01
+      second: 2.04
     - first:
         name: _SmoothnessTextureChannel
       second: 0
