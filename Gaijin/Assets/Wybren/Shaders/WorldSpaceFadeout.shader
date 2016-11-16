@@ -12,17 +12,17 @@
 
 		_Color1("Bottom Color", Color) = (0,0,0,1)
 			_Color2("Top Color", Color) = (1,1,1,1)
-		_DissolvePercentage("DissolveDistance", Range(0,10)) = 6.0
-		_DissolvePercentage2("DissolveDistance2", Range(0,30)) = 6.0
+		_DissolvePercentage("DissolveDistance", Range(0,10)) = 5.19
+		_DissolvePercentage2("DissolveDistance2", Range(0,30)) = 11.9
 
-		_Octaves("Octaves", Float) = 8.0
-		_Frequency("Frequency", Float) = 1.0
+		_Octaves("Octaves", Float) = 1
+		_Frequency("Frequency", Float) = 2.0
 		_Amplitude("Amplitude", Float) = 1.0
-		_Lacunarity("Lacunarity", Float) = 1.92
+		_Lacunarity("Lacunarity", Float) = 1
 		_Persistence("Persistence", Float) = 0.8
 		_Offset("Offset", Vector) = (0.0, 0.0, 0.0, 0.0)
-			_Size("Radius", Range(0,3)) = 0.0
-			_Intensity("Intensity", Range(0,1)) = 0.0
+			_Size("Radius", Range(0,3)) = 2.04
+			_Intensity("Intensity", Range(0,1)) = 1.0
 	}
 
 		CGINCLUDE
@@ -186,6 +186,15 @@
 
 		void surf(Input IN, inout SurfaceOutputStandard o)
 		{
+			float dist = length(0 - IN.screenPos.z);
+			half viewDist = length(dist);
+			half falloff = saturate((viewDist - _DissolvePercentage2) / (_DissolvePercentage - _DissolvePercentage2));
+
+			if (falloff <= 2)
+			{
+				_Size /= (falloff * 2);
+			}
+
 			const float pi = 3.14159;
 			const float tau = pi * 2;
 			float2 screenUV = IN.screenPos.xy / IN.screenPos.w;
@@ -197,9 +206,7 @@
 			fixed4 x = saturate(lerp(_Color1, _Color2, pow(moddedUV.x, _Size)) * lerp(_Color1, _Color2, pow(moddedUV.y, _Size)));
 
 
-			float dist = length(0 - IN.screenPos.z);
-			half viewDist = length(dist);
-			half falloff = saturate((viewDist - _DissolvePercentage2) / (_DissolvePercentage - _DissolvePercentage2));
+			
 			float _Dissolve = x.r * (falloff);
 
 			float gradient = PerlinNormal(IN.worldPos, _Octaves, _Offset, _Frequency, _Amplitude, _Lacunarity, _Persistence);
