@@ -1,6 +1,11 @@
 fileFormatVersion: 2
+<<<<<<< HEAD:Gaijin/Assets/Nathaly/Particles/Basic Aura/Textures/glow_00177.png.meta
 guid: 5bd90bc699d585f41a78bccc7d5dbf3f
 timeCreated: 1479131052
+=======
+guid: 9d129db3b680900429173b926fdae488
+timeCreated: 1479390067
+>>>>>>> 0a314341ad1e4100488b02fdd19242909360b11c:Gaijin/Assets/Nathaly/Particles/Basic Aura/Textures/glow_00177.png.meta
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName: {}

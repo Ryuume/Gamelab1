@@ -1,6 +1,11 @@
 fileFormatVersion: 2
+<<<<<<< HEAD:Gaijin/Assets/Nathaly/Particles/Basic Aura/Materials/Dust.mat.meta
 guid: a5706de52dac2b24bae49e9e211d9f6a
 timeCreated: 1479392305
+=======
+guid: ff02d23bf7369214799127a5871a9286
+timeCreated: 1479390115
+>>>>>>> 0a314341ad1e4100488b02fdd19242909360b11c:Gaijin/Assets/Nathaly/Particles/Basic Aura/Materials/Dust.mat.meta
 licenseType: Free
 NativeFormatImporter:
   userData: 

@@ -1,6 +1,11 @@
 fileFormatVersion: 2
+<<<<<<< HEAD:Gaijin/Assets/Nathaly/Particles/Basic Aura/Textures/path_00270.png.meta
 guid: 5e687fa8150033842bb5ddfd5370112f
 timeCreated: 1479131053
+=======
+guid: b58b9d8cdd39a3b419011f50b196f933
+timeCreated: 1479390071
+>>>>>>> 0a314341ad1e4100488b02fdd19242909360b11c:Gaijin/Assets/Nathaly/Particles/Basic Aura/Textures/path_00270.png.meta
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName: {}

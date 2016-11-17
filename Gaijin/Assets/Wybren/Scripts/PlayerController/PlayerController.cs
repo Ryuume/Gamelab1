@@ -15,24 +15,28 @@ public class PlayerController : MonoBehaviour
     RaycastHit hit;
 
     public LayerMask targetMask;
-    public Transform camera;
+    public Transform refDir, feet, head;
 
     Vector3 mousePos, top, bottom, left, right;
     enum lookState { top, bottom, left, right }
     lookState currentState;
 
+    public float speed, length;
+    public float xSpeed, zSpeed;
+
     public void Start()
     {
         currentState = lookState.top;
 
-        top = camera.forward;
-        bottom = -camera.forward;
-        left = -camera.right;
-        right = camera.right;
+        top = refDir.forward;
+        bottom = -refDir.forward;
+        left = -refDir.right;
+        right = refDir.right;
     }
 
     public void Update()
     {
+        Move();
         lookStates();
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
@@ -48,16 +52,109 @@ public class PlayerController : MonoBehaviour
 
 
 
-        if (Physics.Raycast(ray, out hit, targetMask))
+        if (Physics.Raycast(ray, out hit, Mathf.Infinity, targetMask))
         {
             Vector3 targetPos = hit.point;
-            targetPos.y = transform.position.y;
+            targetPos.y = head.position.y;
             Debug.DrawLine(transform.position, targetPos, Color.blue);
             if (Vector3.Distance(transform.position, targetPos) > .5f)
-            {
+            { 
+                targetPos.y = head.position.y;
+                Quaternion targetRotation = Quaternion.LookRotation(targetPos - head.position);
+                head.rotation = Quaternion.Slerp(head.rotation, targetRotation, 4 * Time.deltaTime);
+                targetPos.y = feet.position.y;
                 mousePos = targetPos;
             }
         }
+    }
+
+    void Move()
+    {
+        if (Physics.Raycast(transform.position, right, length) == false)
+        {
+            if (Input.GetButton("Right"))
+            {
+
+                //transform.Translate(right * speed * Time.deltaTime);
+                if(xSpeed < 1f)
+                {
+                    xSpeed += 0.1f;
+                }
+            }
+        }
+
+        //Checkt of er muren aan de linkerkant van de speler zitten, zoniet mag de speler lopen.
+        if (Physics.Raycast(transform.position, left, length) == false)
+        {
+            if (Input.GetButton("Left"))
+            {
+
+                //transform.Translate(left * speed * Time.deltaTime);
+                if (xSpeed > -1f)
+                {
+                    xSpeed -= 0.1f;
+                }
+            }
+        }
+
+        //Checkt of er muren voor de de speler zitten, zoniet mag de speler lopen.
+        if (Physics.Raycast(transform.position, top, length) == false)
+        {
+            if (Input.GetButton("Up"))
+            {
+
+                //transform.Translate(top * speed * Time.deltaTime);
+                if (zSpeed < 1f)
+                {
+                    zSpeed += 0.1f;
+                }
+            }
+        }
+
+        //Checkt of er muren achter de speler zitten, zoniet mag de speler lopen.
+        if (Physics.Raycast(transform.position, bottom, length) == false)
+        {
+            if (Input.GetButton("Down"))
+            {
+
+                //transform.Translate(bottom * speed * Time.deltaTime);
+                if (zSpeed > -1f)
+                {
+                    zSpeed -= 0.1f;
+                }
+            }
+        }
+        if (!Input.GetButton("Right") && !Input.GetButton("Left"))
+        {
+            if(xSpeed > 0f)
+            {
+                xSpeed -= 0.1f;
+            }else if (xSpeed < 0f)
+            {
+                xSpeed += 0.1f;
+            }
+            if(xSpeed < 0.1f && xSpeed > -0.1f)
+            {
+                xSpeed = 0;
+            }
+        }
+        if (!Input.GetButton("Up") && !Input.GetButton("Down"))
+        {
+            if (zSpeed > 0f)
+            {
+                zSpeed -= 0.1f;
+            }else if (zSpeed < 0f)
+            {
+                zSpeed += 0.1f;
+            }
+            if (zSpeed < 0.1f && zSpeed > -0.1f)
+            {
+                zSpeed = 0;
+            }
+        }
+
+        transform.Translate((speed * xSpeed * Time.deltaTime), 0, (speed * zSpeed * Time.deltaTime));
+        //transform.GetComponent<Rigidbody>().velocity = new Vector3((speed * xSpeed * Time.deltaTime), 0, (speed * zSpeed * Time.deltaTime));
     }
 
     public void lookStates()
@@ -67,21 +164,25 @@ public class PlayerController : MonoBehaviour
             case lookState.top:
                 {
                     State1();
+                    SwitchState1();
                     break;
                 }
             case lookState.bottom:
                 {
                     State3();
+                    SwitchState3();
                     break;
                 }
             case lookState.left:
                 {
                     State4();
+                    SwitchState4();
                     break;
                 }
             case lookState.right:
                 {
                     State2();
+                    SwitchState2();
                     break;
                 }
         }
@@ -89,7 +190,7 @@ public class PlayerController : MonoBehaviour
         
     }
 
-    void State1()
+    void SwitchState1()
     {
         Vector3 targetDir = (mousePos - transform.position);
         float angle = Vector3.Angle(new Vector3(0, 0, 1), targetDir);
@@ -100,7 +201,6 @@ public class PlayerController : MonoBehaviour
         {
             angle = (-angle);
         }
-        print(angle);
 
         if (angle > 45)
         {
@@ -110,8 +210,7 @@ public class PlayerController : MonoBehaviour
             currentState = lookState.left;
         }
     }
-
-    void State2()
+    void SwitchState2()
     {
         Vector3 targetDir = (mousePos - transform.position);
         float angle = Vector3.Angle(new Vector3(1, 0, 0), targetDir);
@@ -122,7 +221,6 @@ public class PlayerController : MonoBehaviour
         {
             angle = (-angle);
         }
-        print(angle);
 
         if (angle > 45)
         {
@@ -132,8 +230,7 @@ public class PlayerController : MonoBehaviour
             currentState = lookState.top;
         }
     }
-
-    void State3()
+    void SwitchState3()
     {
         Vector3 targetDir = (mousePos - transform.position);
         float angle = Vector3.Angle(new Vector3(0, 0, -1), targetDir);
@@ -144,7 +241,6 @@ public class PlayerController : MonoBehaviour
         {
             angle = (-angle);
         }
-        print(angle);
 
         if (angle > 45)
         {
@@ -154,7 +250,7 @@ public class PlayerController : MonoBehaviour
             currentState = lookState.right;
         }
     }
-    void State4()
+    void SwitchState4()
     {
         Vector3 targetDir = (mousePos - transform.position);
         float angle = Vector3.Angle(new Vector3(-1, 0, 0), targetDir);
@@ -165,7 +261,6 @@ public class PlayerController : MonoBehaviour
         {
             angle = (-angle);
         }
-        print(angle);
 
         if (angle > 45)
         {
@@ -174,5 +269,22 @@ public class PlayerController : MonoBehaviour
         {
             currentState = lookState.bottom;
         }
+    }
+
+    void State1()
+    {
+        feet.transform.eulerAngles = new Vector3(0, 45, 0);
+    }
+    void State2()
+    {
+        feet.transform.eulerAngles = new Vector3(0, 90, 0);
+    }
+    void State3()
+    {
+        feet.transform.eulerAngles = new Vector3(0, 180, 0);
+    }
+    void State4()
+    {
+        feet.transform.eulerAngles = new Vector3(0, 270, 0);
     }
 }

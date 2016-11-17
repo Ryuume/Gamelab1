@@ -1,6 +1,11 @@
 fileFormatVersion: 2
+<<<<<<< HEAD:Gaijin/Assets/Nathaly/Particles/Basic Aura/Materials/Aura.mat.meta
 guid: d6965096f4d746540bfde37b00b9b772
 timeCreated: 1479392305
+=======
+guid: cd5bd044885fcb54fb8ddcc6f695da85
+timeCreated: 1479390113
+>>>>>>> 0a314341ad1e4100488b02fdd19242909360b11c:Gaijin/Assets/Nathaly/Particles/Basic Aura/Materials/Aura.mat.meta
 licenseType: Free
 NativeFormatImporter:
   userData: 

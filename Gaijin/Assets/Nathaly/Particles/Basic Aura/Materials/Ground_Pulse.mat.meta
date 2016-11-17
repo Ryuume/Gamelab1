@@ -1,6 +1,11 @@
 fileFormatVersion: 2
+<<<<<<< HEAD:Gaijin/Assets/Nathaly/Particles/Basic Aura/Materials/Ground_Pulse.mat.meta
 guid: 881af51f0bcb13b4ebfe4377e843805d
 timeCreated: 1479392305
+=======
+guid: 6a40318448d4ca4409e1b4e8af633c2b
+timeCreated: 1479390111
+>>>>>>> 0a314341ad1e4100488b02fdd19242909360b11c:Gaijin/Assets/Nathaly/Particles/Basic Aura/Materials/Ground_Pulse.mat.meta
 licenseType: Free
 NativeFormatImporter:
   userData: 

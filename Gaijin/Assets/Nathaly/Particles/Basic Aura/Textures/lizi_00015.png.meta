@@ -1,6 +1,11 @@
 fileFormatVersion: 2
+<<<<<<< HEAD:Gaijin/Assets/Nathaly/Particles/Basic Aura/Textures/lizi_00015.png.meta
 guid: 63592a11c229da44baf076e9cc8d7bd6
 timeCreated: 1479131054
+=======
+guid: d4ee01819e9ca6f48a50e99c2a5e83c4
+timeCreated: 1479390076
+>>>>>>> 0a314341ad1e4100488b02fdd19242909360b11c:Gaijin/Assets/Nathaly/Particles/Basic Aura/Textures/lizi_00015.png.meta
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName: {}

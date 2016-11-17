@@ -1,6 +1,11 @@
 fileFormatVersion: 2
+<<<<<<< HEAD:Gaijin/Assets/Nathaly/Particles/Basic Aura/Materials/Wind.mat.meta
 guid: 2857c11c0bc4a0f45a3a7e52b767151c
 timeCreated: 1479392305
+=======
+guid: ca65f1d6903ae3e448d511a73bebdd35
+timeCreated: 1479390113
+>>>>>>> 0a314341ad1e4100488b02fdd19242909360b11c:Gaijin/Assets/Nathaly/Particles/Basic Aura/Materials/Wind.mat.meta
 licenseType: Free
 NativeFormatImporter:
   userData: 
