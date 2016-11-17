@@ -1,0 +1,124 @@
+fileFormatVersion: 2
+guid: 1e36c6006f390934aadb2bb36ed48674
+timeCreated: 1479130719
+licenseType: Free
+ModelImporter:
+  serializedVersion: 19
+  fileIDToRecycleName:
+    100000: BovenPart1_LP
+    100002: BovenPart2_LP
+    100004: BovenPart3_LP
+    100006: Paal1_LP
+    100008: Paal2_LP
+    100010: SmallPart1_LP
+    100012: SmallPart2_LP
+    100014: SmallPart3_LP
+    100016: SmallPart4_LP
+    100018: //RootNode
+    100020: TussenPart_LP
+    400000: BovenPart1_LP
+    400002: BovenPart2_LP
+    400004: BovenPart3_LP
+    400006: Paal1_LP
+    400008: Paal2_LP
+    400010: SmallPart1_LP
+    400012: SmallPart2_LP
+    400014: SmallPart3_LP
+    400016: SmallPart4_LP
+    400018: //RootNode
+    400020: TussenPart_LP
+    2300000: BovenPart1_LP
+    2300002: BovenPart2_LP
+    2300004: BovenPart3_LP
+    2300006: Paal1_LP
+    2300008: Paal2_LP
+    2300010: SmallPart1_LP
+    2300012: SmallPart2_LP
+    2300014: SmallPart3_LP
+    2300016: SmallPart4_LP
+    2300018: TussenPart_LP
+    3300000: BovenPart1_LP
+    3300002: BovenPart2_LP
+    3300004: BovenPart3_LP
+    3300006: Paal1_LP
+    3300008: Paal2_LP
+    3300010: SmallPart1_LP
+    3300012: SmallPart2_LP
+    3300014: SmallPart3_LP
+    3300016: SmallPart4_LP
+    3300018: TussenPart_LP
+    4300000: BovenPart1_LP
+    4300002: BovenPart2_LP
+    4300004: BovenPart3_LP
+    4300006: Paal1_LP
+    4300008: Paal2_LP
+    4300010: SmallPart1_LP
+    4300012: SmallPart2_LP
+    4300014: TussenPart_LP
+    4300016: SmallPart4_LP
+    4300018: SmallPart3_LP
+    9500000: //RootNode
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
