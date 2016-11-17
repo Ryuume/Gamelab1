@@ -70,11 +70,11 @@ public class PlayerController : MonoBehaviour
 
     void Move()
     {
-        if (Physics.Raycast(transform.position, transform.right, length) == false)
+        if (Physics.Raycast(transform.position, right, length) == false)
         {
             if (Input.GetButton("Right"))
             {
-                print(1);
+
                 //transform.Translate(right * speed * Time.deltaTime);
                 if(xSpeed < 1f)
                 {
@@ -84,11 +84,11 @@ public class PlayerController : MonoBehaviour
         }
 
         //Checkt of er muren aan de linkerkant van de speler zitten, zoniet mag de speler lopen.
-        if (Physics.Raycast(transform.position, -transform.right, length) == false)
+        if (Physics.Raycast(transform.position, left, length) == false)
         {
             if (Input.GetButton("Left"))
             {
-                print(2);
+
                 //transform.Translate(left * speed * Time.deltaTime);
                 if (xSpeed > -1f)
                 {
@@ -98,11 +98,11 @@ public class PlayerController : MonoBehaviour
         }
 
         //Checkt of er muren voor de de speler zitten, zoniet mag de speler lopen.
-        if (Physics.Raycast(transform.position, transform.forward, length) == false)
+        if (Physics.Raycast(transform.position, top, length) == false)
         {
             if (Input.GetButton("Up"))
             {
-                print(3);
+
                 //transform.Translate(top * speed * Time.deltaTime);
                 if (zSpeed < 1f)
                 {
@@ -112,11 +112,11 @@ public class PlayerController : MonoBehaviour
         }
 
         //Checkt of er muren achter de speler zitten, zoniet mag de speler lopen.
-        if (Physics.Raycast(transform.position, -transform.forward, length) == false)
+        if (Physics.Raycast(transform.position, bottom, length) == false)
         {
             if (Input.GetButton("Down"))
             {
-                print(4);
+
                 //transform.Translate(bottom * speed * Time.deltaTime);
                 if (zSpeed > -1f)
                 {
@@ -154,6 +154,7 @@ public class PlayerController : MonoBehaviour
         }
 
         transform.Translate((speed * xSpeed * Time.deltaTime), 0, (speed * zSpeed * Time.deltaTime));
+        //transform.GetComponent<Rigidbody>().velocity = new Vector3((speed * xSpeed * Time.deltaTime), 0, (speed * zSpeed * Time.deltaTime));
     }
 
     public void lookStates()
