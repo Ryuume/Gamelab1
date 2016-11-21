@@ -1,16 +1,62 @@
 fileFormatVersion: 2
-guid: 24a917f814ea39a429aebfb5339ca0af
-timeCreated: 1479472373
+guid: a43d4a8121cb84548bf0d7f54d04cf59
+timeCreated: 1479755855
 licenseType: Free
 ModelImporter:
   serializedVersion: 19
   fileIDToRecycleName:
-    100000: //RootNode
-    400000: //RootNode
-    2300000: //RootNode
-    3300000: //RootNode
-    4300000: Wall Left 1
-    6400000: //RootNode
+    100000: BovenPart1_HP
+    100002: BovenPart2_HP
+    100004: BovenPart3_HP
+    100006: Paal1_HP
+    100008: Paal2_HP
+    100010: SmallPart1_HP
+    100012: SmallPart2_HP
+    100014: SmallPart3_HP
+    100016: SmallPart4_HP
+    100018: //RootNode
+    100020: TussenPart_HP
+    400000: BovenPart1_HP
+    400002: BovenPart2_HP
+    400004: BovenPart3_HP
+    400006: Paal1_HP
+    400008: Paal2_HP
+    400010: SmallPart1_HP
+    400012: SmallPart2_HP
+    400014: SmallPart3_HP
+    400016: SmallPart4_HP
+    400018: //RootNode
+    400020: TussenPart_HP
+    2300000: BovenPart1_HP
+    2300002: BovenPart2_HP
+    2300004: BovenPart3_HP
+    2300006: Paal1_HP
+    2300008: Paal2_HP
+    2300010: SmallPart1_HP
+    2300012: SmallPart2_HP
+    2300014: SmallPart3_HP
+    2300016: SmallPart4_HP
+    2300018: TussenPart_HP
+    3300000: BovenPart1_HP
+    3300002: BovenPart2_HP
+    3300004: BovenPart3_HP
+    3300006: Paal1_HP
+    3300008: Paal2_HP
+    3300010: SmallPart1_HP
+    3300012: SmallPart2_HP
+    3300014: SmallPart3_HP
+    3300016: SmallPart4_HP
+    3300018: TussenPart_HP
+    4300000: BovenPart1_HP
+    4300002: BovenPart2_HP
+    4300004: BovenPart3_HP
+    4300006: Paal1_HP
+    4300008: Paal2_HP
+    4300010: SmallPart1_HP
+    4300012: SmallPart2_HP
+    4300014: SmallPart3_HP
+    4300016: SmallPart4_HP
+    4300018: TussenPart_HP
     9500000: //RootNode
   materials:
     importMaterials: 1
@@ -38,7 +84,7 @@ ModelImporter:
     lODScreenPercentages: []
     globalScale: 1
     meshCompression: 0
-    addColliders: 1
+    addColliders: 0
     importBlendShapes: 1
     swapUVChannels: 0
     generateSecondaryUV: 0
