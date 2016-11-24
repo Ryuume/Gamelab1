@@ -141,7 +141,7 @@ Material:
       second: 0.8
     - first:
         name: _Size
-      second: 2.04
+      second: 2.88
     - first:
         name: _SmoothnessTextureChannel
       second: 0
@@ -160,7 +160,7 @@ Material:
     m_Colors:
     - first:
         name: _Color
-      second: {r: 0.6838235, g: 0.2830655, b: 0.04525303, a: 1}
+      second: {r: 0.25, g: 0.12309838, b: 0.04779412, a: 1}
     - first:
         name: _Color1
       second: {r: 0, g: 0, b: 0, a: 1}

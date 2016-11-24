@@ -81,6 +81,12 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - first:
+        name: _SpecGlossMap
+      second:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     m_Floats:
     - first:
         name: _Amplitude
@@ -141,7 +147,7 @@ Material:
       second: 0.8
     - first:
         name: _Size
-      second: 2.04
+      second: 2.88
     - first:
         name: _SmoothnessTextureChannel
       second: 0
@@ -160,7 +166,7 @@ Material:
     m_Colors:
     - first:
         name: _Color
-      second: {r: 0.6838235, g: 0.3227009, b: 0.04525303, a: 1}
+      second: {r: 0.625, g: 0.557429, b: 0.5055147, a: 1}
     - first:
         name: _Color1
       second: {r: 0, g: 0, b: 0, a: 1}
@@ -173,3 +179,6 @@ Material:
     - first:
         name: _Offset
       second: {r: 0, g: 0, b: 0, a: 0}
+    - first:
+        name: _SpecColor
+      second: {r: 0.2, g: 0.2, b: 0.2, a: 1}
