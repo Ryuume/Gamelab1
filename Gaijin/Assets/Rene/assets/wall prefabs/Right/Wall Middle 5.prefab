@@ -22,6 +22,7 @@ GameObject:
   - 33: {fileID: 33000012646658936}
   - 23: {fileID: 23000012248561400}
   - 95: {fileID: 95000010320125732}
+  - 64: {fileID: 64000011504361892}
   m_Layer: 0
   m_Name: Wall Middle 5
   m_TagString: Untagged
@@ -77,6 +78,18 @@ MeshFilter:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1000010662678742}
+  m_Mesh: {fileID: 4300000, guid: bdf0f2a0f715b974f815c07a6c910ab7, type: 3}
+--- !u!64 &64000011504361892
+MeshCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1000010662678742}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Convex: 0
   m_Mesh: {fileID: 4300000, guid: bdf0f2a0f715b974f815c07a6c910ab7, type: 3}
 --- !u!95 &95000010320125732
 Animator:
