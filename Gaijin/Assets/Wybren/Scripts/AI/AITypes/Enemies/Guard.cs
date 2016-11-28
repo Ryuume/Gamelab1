@@ -30,7 +30,7 @@ public class Guard
         } 
         else
         {
-            Attack();
+            InCombat();
         }    
     }
 
@@ -41,6 +41,11 @@ public class Guard
     }
 
     void InCombat()
+    {
+        State1();
+    }
+    //basic attack state
+    void State1()
     {
         agent.speed = 0;
         Vector3 targetPos = target.position;
@@ -56,6 +61,16 @@ public class Guard
             Debug.Log("attack");
             timer = 0;
         }
+    }
+    //scared state
+    void State2()
+    {
+
+    }
+    //looking for new enemies
+    void State3()
+    {
+
     }
 
     void Attack()

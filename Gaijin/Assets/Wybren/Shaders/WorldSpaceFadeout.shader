@@ -10,6 +10,8 @@
 
 		_NormalMap("Normal", 2D) = "bump" {}
 
+		_Occlusion("Occlusion", 2D) = "white" {}
+
 		_Color1("Bottom Color", Color) = (0,0,0,1)
 			_Color2("Top Color", Color) = (1,1,1,1)
 		_DissolvePercentage("DissolveDistance", Range(0,10)) = 5.19
@@ -158,6 +160,7 @@
 		sampler2D _Metallic;
 		sampler2D _NormalMap;
 		sampler2D _ScreenGradient;
+		sampler2D _Occlusion;
 		
 		fixed4 _Color;
 		float _Scale;
@@ -222,6 +225,8 @@
 
 			fixed4 g = tex2D(_Metallic, IN.uv_MainTex);
 			o.Smoothness = g.rgb * _Glossiness;
+
+			o.Occlusion = tex2D(_Occlusion, IN.uv_MainTex);
 
 			fixed3 n = UnpackNormal(tex2D(_NormalMap, IN.uv_MainTex));
 			o.Normal = n;

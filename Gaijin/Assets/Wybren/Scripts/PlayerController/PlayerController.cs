@@ -23,6 +23,7 @@ public class PlayerController : MonoBehaviour
 
     public float speed, length;
     public float xSpeed, zSpeed;
+    public Animator animator;
 
     public void Start()
     {
@@ -38,6 +39,7 @@ public class PlayerController : MonoBehaviour
     {
         Move();
         lookStates();
+        
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
         Debug.DrawRay(transform.position, top, Color.red);
@@ -76,7 +78,7 @@ public class PlayerController : MonoBehaviour
             {
 
                 //transform.Translate(right * speed * Time.deltaTime);
-                if(xSpeed < 1f)
+                if (xSpeed < 1f)
                 {
                     xSpeed += 0.1f;
                 }
@@ -124,6 +126,7 @@ public class PlayerController : MonoBehaviour
                 }
             }
         }
+
         if (!Input.GetButton("Right") && !Input.GetButton("Left"))
         {
             if(xSpeed > 0f)
@@ -152,6 +155,8 @@ public class PlayerController : MonoBehaviour
                 zSpeed = 0;
             }
         }
+
+       
 
         transform.Translate((speed * xSpeed * Time.deltaTime), 0, (speed * zSpeed * Time.deltaTime));
         //transform.GetComponent<Rigidbody>().velocity = new Vector3((speed * xSpeed * Time.deltaTime), 0, (speed * zSpeed * Time.deltaTime));
@@ -193,7 +198,7 @@ public class PlayerController : MonoBehaviour
     void SwitchState1()
     {
         Vector3 targetDir = (mousePos - transform.position);
-        float angle = Vector3.Angle(new Vector3(0, 0, 1), targetDir);
+        float angle = Vector3.Angle(top, targetDir);
         if(mousePos.x > transform.position.x)
         {
            // print("1");
@@ -213,7 +218,7 @@ public class PlayerController : MonoBehaviour
     void SwitchState2()
     {
         Vector3 targetDir = (mousePos - transform.position);
-        float angle = Vector3.Angle(new Vector3(1, 0, 0), targetDir);
+        float angle = Vector3.Angle(right, targetDir);
         if (mousePos.z < transform.position.z)
         {
             //print("2");
@@ -233,7 +238,7 @@ public class PlayerController : MonoBehaviour
     void SwitchState3()
     {
         Vector3 targetDir = (mousePos - transform.position);
-        float angle = Vector3.Angle(new Vector3(0, 0, -1), targetDir);
+        float angle = Vector3.Angle(bottom, targetDir);
         if (mousePos.x < transform.position.x)
         {
            // print("3");
@@ -253,7 +258,7 @@ public class PlayerController : MonoBehaviour
     void SwitchState4()
     {
         Vector3 targetDir = (mousePos - transform.position);
-        float angle = Vector3.Angle(new Vector3(-1, 0, 0), targetDir);
+        float angle = Vector3.Angle(left, targetDir);
         if (mousePos.z > transform.position.z)
         {
            //print("4");
@@ -274,17 +279,29 @@ public class PlayerController : MonoBehaviour
     void State1()
     {
         feet.transform.eulerAngles = new Vector3(0, 45, 0);
+
+        animator.SetFloat("PosZ", zSpeed);
+        animator.SetFloat("PosX", xSpeed);
     }
     void State2()
     {
-        feet.transform.eulerAngles = new Vector3(0, 90, 0);
+        feet.transform.eulerAngles = new Vector3(0, 135, 0);
+
+        animator.SetFloat("PosZ", xSpeed);
+        animator.SetFloat("PosX", -zSpeed);
     }
     void State3()
     {
-        feet.transform.eulerAngles = new Vector3(0, 180, 0);
+        feet.transform.eulerAngles = new Vector3(0, 225, 0);
+
+        animator.SetFloat("PosZ", -zSpeed);
+        animator.SetFloat("PosX", -xSpeed);
     }
     void State4()
     {
-        feet.transform.eulerAngles = new Vector3(0, 270, 0);
+        feet.transform.eulerAngles = new Vector3(0, 315, 0);
+
+        animator.SetFloat("PosZ", -xSpeed);
+        animator.SetFloat("PosX", zSpeed);
     }
 }

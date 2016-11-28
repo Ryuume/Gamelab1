@@ -7,9 +7,6 @@ public class Archer
 {
     public float speed, damage, fireRate, health, timer, shortestDistance, projectileSpeed = 20f;
 
-    public List<float> distances = new List<float>();
-    public List<Vector3> locations = new List<Vector3>();
-
     int locationIndex;
 
     public Transform manager, target;
@@ -96,59 +93,8 @@ public class Archer
 
         if (recalculatedPath == false && manager.GetComponent<AIManager>().visible == false)
         {
-            locations.Clear();
-
-            latestPos = target.position;
-
-            for (int i = 0; i < 4; i++)
-            {
-                if (!Physics.Raycast(latestPos, directions[i], 6, obstacleMask))
-                {
-                    locations.Add(latestPos + (directions[i] * 6));
-                }
-            }
-
-            if (locations.Count <= 0)
-            {
-                agent.SetDestination(target.position);
-                walkTarget = target.position;
-                agent.speed = speed;
-                recalculatedPath = true;
-            }else
-            {
-                foreach (Vector3 loc in locations)
-                {
-                    float distance = Vector3.Distance(manager.position, loc);
-                    distances.Add(distance);
-                }
-
-                for (int i = 0; i < distances.Count; i++)
-                {
-                    if (i == 0)
-                    {
-                        shortestDistance = distances[i];
-                    }
-                    if (distances[i] < shortestDistance)
-                    {
-                        shortestDistance = distances[i];
-                    }
-                }
-                locationIndex = distances.IndexOf(shortestDistance);
-
-                Vector3 targetPos = latestPos;
-                targetPos.y = manager.position.y;
-                Quaternion targetRotation = Quaternion.LookRotation(targetPos - manager.position);
-                manager.rotation = Quaternion.Slerp(manager.rotation, targetRotation, 2 * Time.deltaTime);
-
-                walkTarget = locations[locationIndex];
-                agent.SetDestination(locations[locationIndex]);
-                agent.speed = speed;
-
-                distances.Clear();
-                locations.Clear();
-
-                recalculatedPath = true;
-            }
+            walkTarget = RecalculatePath();
+            agent.SetDestination(walkTarget);
         }
         if (recalculatedPath == true)
         {
@@ -157,6 +103,57 @@ public class Archer
             {
                 recalculatedPath = false;
             }
+        }
+    }
+
+    public Vector3 RecalculatePath()
+    {
+        List<float> distances = new List<float>();
+        List<Vector3> locations = new List<Vector3>();
+
+        locations.Clear();
+
+        latestPos = target.position;
+
+        for (int i = 0; i < 4; i++)
+        {
+            if (!Physics.Raycast(latestPos, directions[i], 6, obstacleMask))
+            {
+                locations.Add(latestPos + (directions[i] * 6));
+            }
+        }
+
+        if (locations.Count <= 0)
+        {
+            return target.position;
+        }
+        else
+        {
+            foreach (Vector3 loc in locations)
+            {
+                float distance = Vector3.Distance(manager.position, loc);
+                distances.Add(distance);
+            }
+
+            for (int i = 0; i < distances.Count; i++)
+            {
+                if (i == 0)
+                {
+                    shortestDistance = distances[i];
+                }
+                if (distances[i] < shortestDistance)
+                {
+                    shortestDistance = distances[i];
+                }
+            }
+            locationIndex = distances.IndexOf(shortestDistance);
+
+            Vector3 targetPos = latestPos;
+            targetPos.y = manager.position.y;
+            Quaternion targetRotation = Quaternion.LookRotation(targetPos - manager.position);
+            manager.rotation = Quaternion.Slerp(manager.rotation, targetRotation, 2 * Time.deltaTime);
+
+            return locations[locationIndex];
         }
     }
 
