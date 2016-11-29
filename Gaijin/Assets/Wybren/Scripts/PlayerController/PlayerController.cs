@@ -57,13 +57,12 @@ public class PlayerController : MonoBehaviour
         if (Physics.Raycast(ray, out hit, Mathf.Infinity, targetMask))
         {
             Vector3 targetPos = hit.point;
-            targetPos.y = head.position.y;
             Debug.DrawLine(transform.position, targetPos, Color.blue);
             if (Vector3.Distance(transform.position, targetPos) > .5f)
             { 
                 targetPos.y = head.position.y;
-                Quaternion targetRotation = Quaternion.LookRotation(targetPos - head.position);
-                head.rotation = Quaternion.Slerp(head.rotation, targetRotation, 4 * Time.deltaTime);
+                GetComponent<HeadLookController>().target = targetPos;
+                
                 targetPos.y = feet.position.y;
                 mousePos = targetPos;
             }
