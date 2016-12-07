@@ -35,8 +35,19 @@ public class PlayerController : MonoBehaviour
         right = refDir.right;
     }
 
+    void OnAnimatorIK()
+    {
+        if (mousePos != null)
+        {
+            animator.SetLookAtPosition(mousePos);        
+         
+            animator.SetLookAtWeight(1.0f);
+        }
+    }
+
     public void Update()
     {
+        
         Move();
         lookStates();
         
@@ -155,7 +166,13 @@ public class PlayerController : MonoBehaviour
             }
         }
 
-       
+        if(xSpeed > 0 || zSpeed > 0)
+        {
+            animator.SetBool("Moving", true);
+        }else
+        {
+            animator.SetBool("Moving", false);
+        }
 
         transform.Translate((speed * xSpeed * Time.deltaTime), 0, (speed * zSpeed * Time.deltaTime));
         //transform.GetComponent<Rigidbody>().velocity = new Vector3((speed * xSpeed * Time.deltaTime), 0, (speed * zSpeed * Time.deltaTime));
@@ -196,9 +213,11 @@ public class PlayerController : MonoBehaviour
 
     void SwitchState1()
     {
+        var mousePosition = Input.mousePosition;
+        var playerPosition = Camera.main.WorldToScreenPoint(transform.position);
         Vector3 targetDir = (mousePos - transform.position);
         float angle = Vector3.Angle(top, targetDir);
-        if(mousePos.x > transform.position.x)
+        if(mousePosition.x  > playerPosition.x)
         {
            // print("1");
         }else
@@ -206,19 +225,23 @@ public class PlayerController : MonoBehaviour
             angle = (-angle);
         }
 
-        if (angle > 45)
+        animator.SetFloat("Look", angle);
+
+        if (angle > 50)
         {
             currentState = lookState.right;
-        }else if (angle < -45)
+        }else if (angle < -50)
         {
             currentState = lookState.left;
         }
     }
     void SwitchState2()
     {
+        var mousePosition = Input.mousePosition;
+        var playerPosition = Camera.main.WorldToScreenPoint(transform.position);
         Vector3 targetDir = (mousePos - transform.position);
         float angle = Vector3.Angle(right, targetDir);
-        if (mousePos.z < transform.position.z)
+        if (mousePosition.y < playerPosition.y)
         {
             //print("2");
         }else
@@ -226,19 +249,23 @@ public class PlayerController : MonoBehaviour
             angle = (-angle);
         }
 
-        if (angle > 45)
+        animator.SetFloat("Look", angle);
+
+        if (angle > 50)
         {
             currentState = lookState.bottom;
-        }else if (angle < -45)
+        }else if (angle < -50)
         {
             currentState = lookState.top;
         }
     }
     void SwitchState3()
     {
+        var mousePosition = Input.mousePosition;
+        var playerPosition = Camera.main.WorldToScreenPoint(transform.position);
         Vector3 targetDir = (mousePos - transform.position);
         float angle = Vector3.Angle(bottom, targetDir);
-        if (mousePos.x < transform.position.x)
+        if (mousePosition.x < playerPosition.x)
         {
            // print("3");
         }else
@@ -246,19 +273,23 @@ public class PlayerController : MonoBehaviour
             angle = (-angle);
         }
 
-        if (angle > 45)
+        animator.SetFloat("Look", angle);
+
+        if (angle > 50)
         {
             currentState = lookState.left;
-        }else if (angle < -45)
+        }else if (angle < -50)
         {
             currentState = lookState.right;
         }
     }
     void SwitchState4()
     {
+        var mousePosition = Input.mousePosition;
+        var playerPosition = Camera.main.WorldToScreenPoint(transform.position);
         Vector3 targetDir = (mousePos - transform.position);
         float angle = Vector3.Angle(left, targetDir);
-        if (mousePos.z > transform.position.z)
+        if (mousePosition.y > playerPosition.y)
         {
            //print("4");
         }else
@@ -266,10 +297,12 @@ public class PlayerController : MonoBehaviour
             angle = (-angle);
         }
 
-        if (angle > 45)
+        animator.SetFloat("Look", angle);
+
+        if (angle > 50)
         {
             currentState = lookState.top;
-        }else if (angle < -45)
+        }else if (angle < -50)
         {
             currentState = lookState.bottom;
         }
@@ -277,30 +310,68 @@ public class PlayerController : MonoBehaviour
 
     void State1()
     {
-        feet.transform.eulerAngles = new Vector3(0, 45, 0);
+        //feet.transform.rotation = Quaternion.Lerp(feet.transform.rotation, new Quaternion(0, 45, 0, 0), 2);
+        //feet.transform.localEulerAngles = Vector3.Lerp(feet.transform.localEulerAngles, new Vector3(0, 0, 0), 2);
 
         animator.SetFloat("PosZ", zSpeed);
         animator.SetFloat("PosX", xSpeed);
     }
     void State2()
     {
-        feet.transform.eulerAngles = new Vector3(0, 135, 0);
+        //feet.transform.rotation = Quaternion.Lerp(feet.transform.rotation, new Quaternion(0, 135, 0, 0), 2);
+       // feet.transform.localEulerAngles = Vector3.Lerp(feet.transform.localEulerAngles, new Vector3(0, 90, 0), 2);
 
         animator.SetFloat("PosZ", xSpeed);
         animator.SetFloat("PosX", -zSpeed);
     }
     void State3()
     {
-        feet.transform.eulerAngles = new Vector3(0, 225, 0);
+        //feet.transform.rotation = Quaternion.Lerp(feet.transform.rotation, new Quaternion(0, 225, 0, 0), 2);
+        //feet.transform.localEulerAngles = Vector3.Lerp(feet.transform.localEulerAngles, new Vector3(0, 180, 0), 2);
 
         animator.SetFloat("PosZ", -zSpeed);
         animator.SetFloat("PosX", -xSpeed);
     }
     void State4()
     {
-        feet.transform.eulerAngles = new Vector3(0, 315, 0);
+        //feet.transform.rotation = Quaternion.Lerp(feet.transform.rotation, new Quaternion(0, 315, 0, 0), 2);
+        //feet.transform.localEulerAngles = Vector3.Lerp(feet.transform.localEulerAngles, new Vector3(0, 270, 0), 2);
 
         animator.SetFloat("PosZ", -xSpeed);
         animator.SetFloat("PosX", zSpeed);
+    }
+
+    public void TurnRight()
+    {
+       
+        print(1);
+        switch (currentState)
+        {
+            case lookState.top:
+                {
+                    feet.transform.localEulerAngles = new Vector3(0, 0, 0);
+                    print(11);
+                    break;
+                }
+            case lookState.bottom:
+                {
+                    feet.transform.localEulerAngles =  new Vector3(0, 180, 0);
+                    print(13);
+                    break;
+                }
+            case lookState.left:
+                {
+                    feet.transform.localEulerAngles = new Vector3(0, 270, 0);
+                    print(14);
+                    break;
+                }
+            case lookState.right:
+                {
+                    feet.transform.localEulerAngles = new Vector3(0, 90, 0);
+                    print(12);
+                    break;
+                }
+        }
+       
     }
 }
