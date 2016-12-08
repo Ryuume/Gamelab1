@@ -24,6 +24,7 @@ public class PlayerController : MonoBehaviour
     public float speed, length;
     public float xSpeed, zSpeed;
     public Animator animator;
+    bool setRotation = false, rotateRight;
 
     public void Start()
     {
@@ -35,21 +36,16 @@ public class PlayerController : MonoBehaviour
         right = refDir.right;
     }
 
-    void OnAnimatorIK()
+    public void LateUpdate()
     {
-        if (mousePos != null)
-        {
-            animator.SetLookAtPosition(mousePos);        
-         
-            animator.SetLookAtWeight(1.0f);
-        }
+        lookStates();
     }
 
     public void Update()
     {
         
         Move();
-        lookStates();
+        
         
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
@@ -184,26 +180,26 @@ public class PlayerController : MonoBehaviour
         {
             case lookState.top:
                 {
-                    State1();
                     SwitchState1();
+                    State1();
                     break;
                 }
             case lookState.bottom:
                 {
-                    State3();
                     SwitchState3();
+                    State3();
                     break;
                 }
             case lookState.left:
                 {
-                    State4();
                     SwitchState4();
+                    State4();
                     break;
                 }
             case lookState.right:
                 {
-                    State2();
                     SwitchState2();
+                    State2();
                     break;
                 }
         }
@@ -229,9 +225,13 @@ public class PlayerController : MonoBehaviour
 
         if (angle > 50)
         {
+            setRotation = false;
+            rotateRight = true;
             currentState = lookState.right;
         }else if (angle < -50)
         {
+            setRotation = false;
+            rotateRight = false;
             currentState = lookState.left;
         }
     }
@@ -253,9 +253,13 @@ public class PlayerController : MonoBehaviour
 
         if (angle > 50)
         {
+            setRotation = false;
+            rotateRight = true;
             currentState = lookState.bottom;
         }else if (angle < -50)
         {
+            setRotation = false;
+            rotateRight = false;
             currentState = lookState.top;
         }
     }
@@ -277,9 +281,13 @@ public class PlayerController : MonoBehaviour
 
         if (angle > 50)
         {
+            setRotation = false;
+            rotateRight = true;
             currentState = lookState.left;
         }else if (angle < -50)
         {
+            setRotation = false;
+            rotateRight = false;
             currentState = lookState.right;
         }
     }
@@ -301,77 +309,106 @@ public class PlayerController : MonoBehaviour
 
         if (angle > 50)
         {
+            setRotation = false;
+            rotateRight = true;
             currentState = lookState.top;
         }else if (angle < -50)
         {
+            setRotation = false;
+            rotateRight = false;
             currentState = lookState.bottom;
         }
     }
 
     void State1()
     {
-        //feet.transform.rotation = Quaternion.Lerp(feet.transform.rotation, new Quaternion(0, 45, 0, 0), 2);
+        //Quaternion qTo = Quaternion.Euler(0f, 0f, 0f);
+        //feet.transform.rotation = Quaternion.RotateTowards(transform.rotation, qTo, 2 * Time.deltaTime);
         //feet.transform.localEulerAngles = Vector3.Lerp(feet.transform.localEulerAngles, new Vector3(0, 0, 0), 2);
+        if (setRotation == false)
+        {
+            Turn(45);
+        }
+
 
         animator.SetFloat("PosZ", zSpeed);
         animator.SetFloat("PosX", xSpeed);
     }
     void State2()
     {
-        //feet.transform.rotation = Quaternion.Lerp(feet.transform.rotation, new Quaternion(0, 135, 0, 0), 2);
-       // feet.transform.localEulerAngles = Vector3.Lerp(feet.transform.localEulerAngles, new Vector3(0, 90, 0), 2);
+        //Quaternion qTo = Quaternion.Euler(0f, 90f, 0f);
+        //feet.transform.rotation = Quaternion.RotateTowards(transform.rotation, qTo, 2 * Time.deltaTime);
+
+
+        //feet.transform.localEulerAngles = Vector3.Lerp(feet.transform.localEulerAngles, new Vector3(0, 90, 0), 2);
+        if (setRotation == false)
+        {
+            Turn(135);
+        }
 
         animator.SetFloat("PosZ", xSpeed);
         animator.SetFloat("PosX", -zSpeed);
     }
     void State3()
     {
-        //feet.transform.rotation = Quaternion.Lerp(feet.transform.rotation, new Quaternion(0, 225, 0, 0), 2);
+        //Quaternion qTo = Quaternion.Euler(0f, 180f, 0f);
+        //feet.transform.rotation = Quaternion.RotateTowards(transform.rotation, qTo, 2 * Time.deltaTime);
+
+
         //feet.transform.localEulerAngles = Vector3.Lerp(feet.transform.localEulerAngles, new Vector3(0, 180, 0), 2);
+        if (setRotation == false)
+        {
+            Turn(225);
+        }
 
         animator.SetFloat("PosZ", -zSpeed);
         animator.SetFloat("PosX", -xSpeed);
     }
     void State4()
     {
-        //feet.transform.rotation = Quaternion.Lerp(feet.transform.rotation, new Quaternion(0, 315, 0, 0), 2);
+        //Quaternion qTo = Quaternion.Euler(0f, 270f , 0f);
+        //feet.transform.rotation = Quaternion.RotateTowards(transform.rotation, qTo, 2 * Time.deltaTime);
+
         //feet.transform.localEulerAngles = Vector3.Lerp(feet.transform.localEulerAngles, new Vector3(0, 270, 0), 2);
+        if(setRotation == false)
+        {
+            Turn(315);
+        }
+
 
         animator.SetFloat("PosZ", -xSpeed);
         animator.SetFloat("PosX", zSpeed);
     }
 
-    public void TurnRight()
+    void Turn(float DesiredRotation)
     {
-       
-        print(1);
-        switch (currentState)
+        /*
+        if(rotateRight == true)
         {
-            case lookState.top:
-                {
-                    feet.transform.localEulerAngles = new Vector3(0, 0, 0);
-                    print(11);
-                    break;
-                }
-            case lookState.bottom:
-                {
-                    feet.transform.localEulerAngles =  new Vector3(0, 180, 0);
-                    print(13);
-                    break;
-                }
-            case lookState.left:
-                {
-                    feet.transform.localEulerAngles = new Vector3(0, 270, 0);
-                    print(14);
-                    break;
-                }
-            case lookState.right:
-                {
-                    feet.transform.localEulerAngles = new Vector3(0, 90, 0);
-                    print(12);
-                    break;
-                }
+            if(feet.rotation.y < DesiredRotation - 1)
+            {
+                feet.localEulerAngles += new Vector3(0, 90 * 2 * Time.deltaTime, 0);
+            }
+            else if (feet.rotation.y > DesiredRotation)
+            {
+                feet.localEulerAngles = new Vector3(feet.rotation.x, DesiredRotation, feet.rotation.z);
+                setRotation = true;
+            }
+        }else
+        {
+            if (feet.rotation.y > DesiredRotation + 1)
+            {
+                feet.localEulerAngles += new Vector3(0, -90 * Time.deltaTime, 0);
+            }
+            else if (feet.rotation.y > DesiredRotation)
+            {
+                feet.localEulerAngles = new Vector3(feet.rotation.x, DesiredRotation, feet.rotation.z);
+                setRotation = true;
+            }
         }
-       
+        */
+        float newAngle = Mathf.LerpAngle(feet.eulerAngles.y, DesiredRotation, Time.deltaTime * 4);
+
+        feet.eulerAngles = new Vector3(0,newAngle,0);
     }
 }

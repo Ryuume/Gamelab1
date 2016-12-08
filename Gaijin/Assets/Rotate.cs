@@ -6,6 +6,6 @@ public class Rotate : MonoBehaviour {
 	
     public void Turn()
     {
-        GetComponentInParent<PlayerController>().TurnRight();
+        //GetComponentInParent<PlayerController>().TurnRight();
     }
 }

@@ -950,14 +950,7 @@ ModelImporter:
       mirror: 0
       bodyMask: 01000000000000000000000001000000010000000000000000000000000000000000000000000000000000000000000000000000
       curves: []
-      events:
-      - time: 1
-        functionName: Turn
-        data: 
-        objectReferenceParameter: {instanceID: 0}
-        floatParameter: 0
-        intParameter: 0
-        messageOptions: 0
+      events: []
       transformMask:
       - path: 
         weight: 1
@@ -1199,14 +1192,7 @@ ModelImporter:
       mirror: 1
       bodyMask: 01000000000000000000000001000000010000000000000000000000000000000000000000000000000000000000000000000000
       curves: []
-      events:
-      - time: 1
-        functionName: Turn
-        data: 
-        objectReferenceParameter: {instanceID: 0}
-        floatParameter: 0
-        intParameter: 0
-        messageOptions: 0
+      events: []
       transformMask:
       - path: 
         weight: 1
