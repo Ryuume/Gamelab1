@@ -17,6 +17,8 @@ public class PlayerController : MonoBehaviour
     public LayerMask targetMask;
     public Transform refDir, feet, head;
 
+    public float standardRotation;
+
     Vector3 mousePos, top, bottom, left, right;
     enum lookState { top, bottom, left, right }
     lookState currentState;
@@ -24,9 +26,9 @@ public class PlayerController : MonoBehaviour
     public float speed, length;
     public float xSpeed, zSpeed;
     public Animator animator;
-    bool setRotation = false, moving, turnRight, setFloat, isTurning;
+    bool setRotation = false, moving, turnRight, setFloat, isTurning, wielding, inCombat;
 
-    float turnFloat, moveFloat;
+    float moveFloat;
 
     public void Start()
     {
@@ -36,13 +38,6 @@ public class PlayerController : MonoBehaviour
         bottom = -refDir.forward;
         left = -refDir.right;
         right = refDir.right;
-
-        print(Mathf.Epsilon + " Epsilon");
-    }
-
-    public void LateUpdate()
-    {
-        
     }
 
     public void Update()
@@ -54,16 +49,26 @@ public class PlayerController : MonoBehaviour
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
         Debug.DrawRay(transform.position, top, Color.red);
-        Debug.DrawRay(transform.position, bottom, Color.red);
+        Debug.DrawRay(transform.position, bottom, Color.blue);
         Debug.DrawRay(transform.position, left, Color.green);
-        Debug.DrawRay(transform.position, right, Color.green);
+        Debug.DrawRay(transform.position, right, Color.yellow);
 
         Debug.DrawRay(transform.position, new Vector3(1, 0, 0), Color.white);
         Debug.DrawRay(transform.position, new Vector3(-1, 0, 0), Color.white);
         Debug.DrawRay(transform.position, new Vector3(0, 0, 1), Color.white);
         Debug.DrawRay(transform.position, new Vector3(0, 0, -1), Color.white);
 
-
+        if(Input.GetButtonDown("Ready"))
+        {
+            wielding = !wielding;
+            animator.SetBool("Wielding", wielding);
+            animator.SetBool("InCombat", false);
+        }
+        if (wielding == true && Input.GetButtonDown("TempCombat"))
+        {
+            inCombat = !inCombat;
+            animator.SetBool("InCombat", inCombat);
+        }
 
         if (Physics.Raycast(ray, out hit, Mathf.Infinity, targetMask))
         {
@@ -72,7 +77,6 @@ public class PlayerController : MonoBehaviour
             if (Vector3.Distance(transform.position, targetPos) > .5f)
             { 
                 targetPos.y = head.position.y;
-                GetComponent<HeadLookController>().target = targetPos;
                 
                 targetPos.y = feet.position.y;
                 mousePos = targetPos;
@@ -227,7 +231,7 @@ public class PlayerController : MonoBehaviour
             angle = (-angle);
         }
 
-        animator.SetFloat("Look", angle);
+        animator.SetFloat("Rotation", angle);
 
         if (angle > 50)
         {
@@ -257,7 +261,7 @@ public class PlayerController : MonoBehaviour
             angle = (-angle);
         }
 
-        animator.SetFloat("Look", angle);
+        animator.SetFloat("Rotation", angle);
 
         if (angle > 50)
         {
@@ -287,7 +291,7 @@ public class PlayerController : MonoBehaviour
             angle = (-angle);
         }
 
-        animator.SetFloat("Look", angle);
+        animator.SetFloat("Rotation", angle);
 
         if (angle > 50)
         {
@@ -317,7 +321,7 @@ public class PlayerController : MonoBehaviour
             angle = (-angle);
         }
 
-        animator.SetFloat("Look", angle);
+        animator.SetFloat("Rotation", angle);
 
         if (angle > 50)
         {
@@ -338,61 +342,86 @@ public class PlayerController : MonoBehaviour
     {
         if (setRotation != true)
         {
-            Turn(45f);
+            Turn(standardRotation);
         }
         else
         {
-            animator.SetFloat("TurnFloat", 0);
             moveFloat = 1;
-        }
-        
+            Vector3 targetDir = (mousePos - transform.position);
+            float angle = Vector3.Angle(top, targetDir);
 
+            if (Input.mousePosition.x < Camera.main.WorldToScreenPoint(transform.position).x)
+            {
+                angle = (-angle);
+            }
+
+            animator.SetFloat("Look", angle);
+        }
     }
     void State2()
     {
         if (setRotation != true)
         {
-            Turn(135f);
+            Turn(standardRotation + 90);
         }
         else
         {
-            animator.SetFloat("TurnFloat", 0);
             moveFloat = 2;
-        }
-        
+            Vector3 targetDir = (mousePos - transform.position);
+            float angle = Vector3.Angle(right, targetDir);
 
+            if (Input.mousePosition.y > Camera.main.WorldToScreenPoint(transform.position).y)
+            {
+                angle = (-angle);
+            }
+
+            animator.SetFloat("Look", angle);
+        }
     }
     void State3()
     {
         if (setRotation != true)
         {
-            Turn(225f);
+            Turn(standardRotation + 180);
         }
         else
         {
-            animator.SetFloat("TurnFloat", 0);
             moveFloat = 3;
-        }
-        
+            Vector3 targetDir = (mousePos - transform.position);
+            float angle = Vector3.Angle(bottom, targetDir);
 
+            if (Input.mousePosition.x > Camera.main.WorldToScreenPoint(transform.position).x)
+            {
+                angle = (-angle);
+            }
+
+            animator.SetFloat("Look", angle);
+        }
     }
     void State4()
     {
         if (setRotation != true)
         {
-            Turn(315f);
+            Turn(standardRotation + 270);
         }
         else
         {
-            animator.SetFloat("TurnFloat", 0);
             moveFloat = 4;
+            Vector3 targetDir = (mousePos - transform.position);
+            float angle = Vector3.Angle(left, targetDir);
+
+            if (Input.mousePosition.y < Camera.main.WorldToScreenPoint(transform.position).y)
+            {
+                angle = (-angle);
+            }
+
+            animator.SetFloat("Look", angle);
         }
-        
     }
 
     void Turn(float DesiredRotation)
     {
-        if(moving != true || isTurning == true)
+        if(moving != true || isTurning == true || inCombat == true)
         {
             isTurning = true;
             float newAngle = Mathf.LerpAngle(feet.eulerAngles.y, DesiredRotation, Time.deltaTime * 4);
@@ -415,6 +444,11 @@ public class PlayerController : MonoBehaviour
                         float newAngle = Mathf.LerpAngle(feet.eulerAngles.y, DesiredRotation, Time.deltaTime * 4);
                         feet.eulerAngles = new Vector3(0, newAngle, 0);
                     }
+
+                    if(isTurning == true)
+                    {
+                        moveFloat = 1;
+                    }
                     break;
                 }
             case lookState.bottom:
@@ -430,6 +464,10 @@ public class PlayerController : MonoBehaviour
                         moveFloat = 3;
                         float newAngle = Mathf.LerpAngle(feet.eulerAngles.y, DesiredRotation, Time.deltaTime * 4);
                         feet.eulerAngles = new Vector3(0, newAngle, 0);
+                    }
+                    if (isTurning == true)
+                    {
+                        moveFloat = 3;
                     }
                     break;
                 }
@@ -447,6 +485,10 @@ public class PlayerController : MonoBehaviour
                         float newAngle = Mathf.LerpAngle(feet.eulerAngles.y, DesiredRotation, Time.deltaTime * 4);
                         feet.eulerAngles = new Vector3(0, newAngle, 0);
                     }
+                    if (isTurning == true)
+                    {
+                        moveFloat = 4;
+                    }
                     break;
                 }
             case lookState.right:
@@ -462,6 +504,10 @@ public class PlayerController : MonoBehaviour
                         moveFloat = 2;
                         float newAngle = Mathf.LerpAngle(feet.eulerAngles.y, DesiredRotation, Time.deltaTime * 4);
                         feet.eulerAngles = new Vector3(0, newAngle, 0);
+                    }
+                    if (isTurning == true)
+                    {
+                        moveFloat = 2;
                     }
                     break;
                 }
