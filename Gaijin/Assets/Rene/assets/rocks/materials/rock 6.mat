@@ -7,7 +7,7 @@ Material:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_Name: rock 6
-  m_Shader: {fileID: 46, guid: 0000000000000000f000000000000000, type: 0}
+  m_Shader: {fileID: 4800000, guid: 33814fe479ddeb0478eb231102de4b9c, type: 3}
   m_ShaderKeywords: _EMISSION
   m_LightmapFlags: 1
   m_CustomRenderQueue: -1
@@ -52,7 +52,25 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - first:
+        name: _Metallic
+      second:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - first:
         name: _MetallicGlossMap
+      second:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - first:
+        name: _NormalMap
+      second:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - first:
+        name: _Occlusion
       second:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -71,6 +89,9 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Floats:
     - first:
+        name: _Amplitude
+      second: 1
+    - first:
         name: _BumpScale
       second: 1
     - first:
@@ -80,8 +101,17 @@ Material:
         name: _DetailNormalMapScale
       second: 1
     - first:
+        name: _DissolvePercentage
+      second: 5.19
+    - first:
+        name: _DissolvePercentage2
+      second: 11.9
+    - first:
         name: _DstBlend
       second: 0
+    - first:
+        name: _Frequency
+      second: 2
     - first:
         name: _GlossMapScale
       second: 1
@@ -90,6 +120,12 @@ Material:
       second: 0
     - first:
         name: _GlossyReflections
+      second: 1
+    - first:
+        name: _Intensity
+      second: 1
+    - first:
+        name: _Lacunarity
       second: 1
     - first:
         name: _Metallic
@@ -101,8 +137,17 @@ Material:
         name: _OcclusionStrength
       second: 1
     - first:
+        name: _Octaves
+      second: 1
+    - first:
         name: _Parallax
       second: 0.02
+    - first:
+        name: _Persistence
+      second: 0.8
+    - first:
+        name: _Size
+      second: 2.04
     - first:
         name: _SmoothnessTextureChannel
       second: 0
@@ -121,7 +166,16 @@ Material:
     m_Colors:
     - first:
         name: _Color
-      second: {r: 0.33823532, g: 0.32082614, b: 0.32082614, a: 1}
+      second: {r: 0.18382353, g: 0.18382353, b: 0.18382353, a: 1}
+    - first:
+        name: _Color1
+      second: {r: 0, g: 0, b: 0, a: 1}
+    - first:
+        name: _Color2
+      second: {r: 1, g: 1, b: 1, a: 1}
     - first:
         name: _EmissionColor
       second: {r: 0, g: 0, b: 0, a: 1}
+    - first:
+        name: _Offset
+      second: {r: 0, g: 0, b: 0, a: 0}
