@@ -30,6 +30,8 @@ public class PlayerController : MonoBehaviour
 
     float moveFloat;
 
+    AttackController attackController;
+
     public void Start()
     {
         currentState = lookState.top;
@@ -38,6 +40,8 @@ public class PlayerController : MonoBehaviour
         bottom = -refDir.forward;
         left = -refDir.right;
         right = refDir.right;
+
+        attackController = new AttackController(animator, 0.5f, 1f);
     }
 
     public void Update()
@@ -45,6 +49,9 @@ public class PlayerController : MonoBehaviour
         lookStates();
         Move();
         AnimationInput();
+
+        if (inCombat == true)
+            attackController.InCombat();
         
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
@@ -61,6 +68,7 @@ public class PlayerController : MonoBehaviour
         if(Input.GetButtonDown("Ready"))
         {
             wielding = !wielding;
+            animator.SetTrigger("Draw");
             animator.SetBool("Wielding", wielding);
             animator.SetBool("InCombat", false);
         }
