@@ -26,11 +26,16 @@ public class PlayerController : MonoBehaviour
     public float speed, length;
     public float xSpeed, zSpeed;
     public Animator animator;
+
+    public float minDamage, maxDamage;
+    public GameObject katana;
+
     bool setRotation = false, moving, turnRight, setFloat, isTurning, wielding, inCombat;
 
     float moveFloat;
 
     AttackController attackController;
+    int stateNum; //1 = top, 2 = right, 3 = bottom, 4 = left.
 
     public void Start()
     {
@@ -41,7 +46,9 @@ public class PlayerController : MonoBehaviour
         left = -refDir.right;
         right = refDir.right;
 
-        attackController = new AttackController(animator, 0.5f, 1f);
+        katana.GetComponent<Katana>().minDamage = minDamage;
+        katana.GetComponent<Katana>().maxDamage = maxDamage;
+        attackController = new AttackController(animator, 0.4f, 1, katana, transform.gameObject, stateNum, standardRotation, feet.gameObject);
     }
 
     public void Update()
@@ -49,10 +56,9 @@ public class PlayerController : MonoBehaviour
         lookStates();
         Move();
         AnimationInput();
+        attackController.stateNum = stateNum;
 
-        if (inCombat == true)
-            attackController.InCombat();
-        
+
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
         Debug.DrawRay(transform.position, top, Color.red);
@@ -90,6 +96,12 @@ public class PlayerController : MonoBehaviour
                 mousePos = targetPos;
             }
         }
+    }
+
+    public void LateUpdate()
+    {
+        if (inCombat == true)
+            attackController.InCombat();
     }
 
     void Move()
@@ -200,24 +212,28 @@ public class PlayerController : MonoBehaviour
                 {
                     SwitchState1();
                     State1();
+                    stateNum = 1;
                     break;
                 }
             case lookState.bottom:
                 {
                     SwitchState3();
                     State3();
+                    stateNum = 3;
                     break;
                 }
             case lookState.left:
                 {
                     SwitchState4();
                     State4();
+                    stateNum = 4;
                     break;
                 }
             case lookState.right:
                 {
                     SwitchState2();
                     State2();
+                    stateNum = 2;
                     break;
                 }
         }
@@ -427,7 +443,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    void Turn(float DesiredRotation)
+    public void Turn(float DesiredRotation)
     {
         if(moving != true || isTurning == true || inCombat == true)
         {
@@ -442,6 +458,7 @@ public class PlayerController : MonoBehaviour
                 {
                     if (Mathf.RoundToInt(feet.localEulerAngles.y) == 0 || Mathf.RoundToInt(feet.localEulerAngles.y) == 360)
                     {
+                        print("Bla");
                         isTurning = false;
                         setRotation = true;
                         moveFloat = 1;

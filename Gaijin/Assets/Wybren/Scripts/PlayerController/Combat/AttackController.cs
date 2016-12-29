@@ -10,40 +10,80 @@ public class AttackController
     //When hit, sent damage and if stunned.
     //Weapons and abilities use their own trigger or collider to register when they hit an enemy. Same goes for the weapons of the enemies.
 
-        //WOMBO COMBO'S!!!
+    //WOMBO COMBO!!!
 
     Animator animator;
 
-    bool _ACool, _CCool;
+    bool _ACool, _CCool, rotating;
 
-    float _ACoolT, attackDelay, _CCoolT, comboTime;
+    public float _ACoolT, attackDelay, _CCoolT, comboTime, rotationLeft = 0, originalRot, standardRot;
 
-    int _Combo = 1;
+    public int _Combo = 1, stateNum;
 
-    public AttackController (Animator _anim, float _attackDelay, float _comboTime)
+    GameObject katana, player, model;
+
+    public AttackController (Animator _anim, float _attackDelay, float _comboTime, GameObject _Katana, GameObject _player, int _StateNum, float _standardRot, GameObject _playerModel)
     {
         animator = _anim;
         attackDelay = _attackDelay;
         comboTime = _comboTime;
+        katana = _Katana;
+        player = _player;
+        stateNum = _StateNum;
+        standardRot = _standardRot;
+        model = _playerModel;
     }
 
     public void InCombat()
     {
+        if (stateNum == 1)
+            originalRot = standardRot;
+        else if (stateNum == 2)
+            originalRot = standardRot + 90;
+        else if (stateNum == 3)
+            originalRot = standardRot + 180;
+        else if (stateNum == 4)
+            originalRot = standardRot + 270;
+
         Attack();
     }
 
     void Attack()
     {
-        if (Input.GetButtonDown("Fire1") && _ACool != true)
+        if (Input.GetButtonDown("Fire1") && _ACool != true && rotating != true)
         {
             if(_CCool == true)
             {
-                _Combo = Mathf.RoundToInt(Random.Range(1, 3));
+                _Combo = Mathf.CeilToInt(Random.Range(1, 4));
+                if(_Combo == 3)
+                {
+                    if(Mathf.CeilToInt(Random.Range(1, 4)) != 3)
+                    {
+                        _Combo = Mathf.CeilToInt(Random.Range(1, 3));
+                    }
+                }
             }
+            katana.GetComponent<Katana>().doDamage = true;
             animator.SetInteger("Combo", _Combo);
             animator.SetTrigger("Attack");
             _ACool = true;
             _CCool = true;
+        }
+
+        if (_Combo == 3)
+        {
+            rotating = true;
+        }
+
+        if (rotating == true)
+        {
+            Rotate();
+            katana.GetComponent<Katana>().doDamage = true;
+        }
+        else
+        {
+            rotationLeft = 0;
+            katana.GetComponent<Katana>().doDamage = false;
         }
 
         if(_ACool == true)
@@ -54,6 +94,7 @@ public class AttackController
             {
                 _ACoolT = 0;
                 _ACool = false;
+                katana.GetComponent<Katana>().doDamage = false;
             }
         }
 
@@ -72,6 +113,21 @@ public class AttackController
 
     void Abillity()
     {
+        //player.transform.rotation = Quaternion.Euler(0, originalRot + 90, 0);
+    }
 
+    void Rotate()
+    {
+        if(rotationLeft < 360)
+        {
+            Debug.Log(1);
+            rotationLeft += 25;
+            model.transform.rotation = Quaternion.Euler(0, originalRot + rotationLeft, 0);
+        }else
+        {
+            model.transform.rotation = Quaternion.Euler(0, originalRot, 0);
+            rotating = false;
+            Debug.Log("reset");
+        }
     }
 }

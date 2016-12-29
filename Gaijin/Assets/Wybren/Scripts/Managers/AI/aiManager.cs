@@ -123,6 +123,12 @@ public class AIManager : MonoBehaviour
 
     public void Update()
     {
+        if(health == 0 || health < 0)
+        {
+            print("I cri ervytiem");
+            Destroy(gameObject);
+        }
+
         switch (mode)
         {
             //Enemy's

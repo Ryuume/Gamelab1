@@ -205,19 +205,14 @@ ModelImporter:
     bakeSimulation: 0
     resampleCurves: 1
     optimizeGameObjects: 0
-    motionNodeName: Bip001
+    motionNodeName: 
     animationImportErrors: 
     animationImportWarnings: "\nClip 'Take 001' has import animation warnings that
       might lower retargeting quality:\n\t'Bip001 Spine1' has translation animation
       that will be discarded.\n\t'Bip001 R Clavicle' has translation animation that
       will be discarded.\n\t'Bip001 L Clavicle' has translation animation that will
       be discarded.\n\t'Bip001 Neck' has translation animation that will be discarded.\n"
-    animationRetargetingWarnings: "\nRetargeting quality report for clip 'Take 001':\n\tLeftLowerArm
-      average position error 0.1 mm and maximum position error 2.9 mm at time 28:26
-      (84.7%) Frame 866\n\tRightLowerArm average position error 0.1 mm and maximum
-      position error 15.6 mm at time 21: 2 (61.8%) Frame 632\n\tRightHand average
-      position error 0.0 mm and maximum position error 1.1 mm at time 21: 2 (61.8%)
-      Frame 632\n"
+    animationRetargetingWarnings: 
     animationDoRetargetingWarnings: 0
     animationCompression: 3
     animationRotationError: 0.5
@@ -4600,7 +4595,7 @@ ModelImporter:
       loopBlendPositionXZ: 0
       keepOriginalOrientation: 0
       keepOriginalPositionY: 1
-      keepOriginalPositionXZ: 1
+      keepOriginalPositionXZ: 0
       heightFromFeet: 0
       mirror: 0
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
