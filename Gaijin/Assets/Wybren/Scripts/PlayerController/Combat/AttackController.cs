@@ -14,16 +14,16 @@ public class AttackController
 
     Animator animator;
 
-    bool _ACool, _CCool, rotating;
+    bool _ACool, _CCool, rotating, _SCool, _KCool;
 
-    public float _ACoolT, attackDelay, _CCoolT, comboTime, rotationLeft = 0, originalRot, standardRot;
+    public float _ACoolT, attackDelay, _CCoolT, comboTime, rotationLeft = 0, originalRot, standardRot, shurikenCooldown, kusarigamaCooldown, _SCoolT, _KCoolT;
 
-    public int _Combo = 1, stateNum;
+    public int _Combo = 1, stateNum, rotSpeed = 700;
 
-    GameObject katana, player, model;
+    GameObject katana, player, model, kusarigama;
     Transform lHand;
 
-    public AttackController (Animator _anim, float _attackDelay, float _comboTime, GameObject _Katana, GameObject _player, int _StateNum, float _standardRot, GameObject _playerModel, Transform _LHand)
+    public AttackController (Animator _anim, float _attackDelay, float _comboTime, GameObject _Katana, GameObject _player, int _StateNum, float _standardRot, GameObject _playerModel, Transform _LHand, GameObject _Kusarigama, float _ShurikenCooldown, float _KusarigamaCooldown)
     {
         animator = _anim;
         attackDelay = _attackDelay;
@@ -34,6 +34,9 @@ public class AttackController
         standardRot = _standardRot;
         model = _playerModel;
         lHand = _LHand;
+        kusarigama = _Kusarigama;
+        shurikenCooldown = _ShurikenCooldown;
+        kusarigamaCooldown = _KusarigamaCooldown;
     }
 
     public void InCombat()
@@ -63,6 +66,9 @@ public class AttackController
                     if(Mathf.CeilToInt(Random.Range(1, 4)) != 3)
                     {
                         _Combo = Mathf.CeilToInt(Random.Range(1, 3));
+                    }else
+                    {
+                        rotating = true;
                     }
                 }
             }
@@ -71,11 +77,6 @@ public class AttackController
             animator.SetTrigger("Attack");
             _ACool = true;
             _CCool = true;
-        }
-
-        if (_Combo == 3)
-        {
-            rotating = true;
         }
 
         if (rotating == true)
@@ -115,10 +116,41 @@ public class AttackController
 
     void Abillity()
     {
-        if(Input.GetButtonDown("Fire3"))
+        if(Input.GetButtonDown("Fire3") && rotating == false && _ACool == false && _SCool == false)
         {
             player.GetComponent<PlayerController>().katana.transform.parent = lHand;
             animator.SetTrigger("Shuriken");
+            _SCool = true;
+        }
+
+        if(Input.GetButtonDown("Kusarigama") && rotating == false && _ACool == false && _KCool == false)
+        {
+            katana.SetActive(false);
+            kusarigama.SetActive(true);
+            animator.SetTrigger("Kusarigama");
+            rotSpeed = 800;
+            rotating = true;
+            _KCool = true;
+        }
+        if (_SCool == true)
+        {
+            _SCoolT += Time.deltaTime;
+
+            if (_SCoolT > shurikenCooldown)
+            {
+                _SCoolT = 0;
+                _SCool = false;
+            }
+        }
+        if (_KCool == true)
+        {
+            _KCoolT += Time.deltaTime;
+
+            if (_KCoolT > kusarigamaCooldown)
+            {
+                _KCoolT = 0;
+                _KCool = false;
+            }
         }
     }
 
@@ -127,12 +159,13 @@ public class AttackController
         if(rotationLeft < 360)
         {
             Debug.Log(1);
-            rotationLeft += 25;
+            rotationLeft += rotSpeed * Time.deltaTime;
             model.transform.rotation = Quaternion.Euler(0, originalRot + rotationLeft, 0);
         }else
         {
             model.transform.rotation = Quaternion.Euler(0, originalRot, 0);
             katana.GetComponent<Katana>().doDamage = false;
+            rotSpeed = 700;
             rotating = false;
             Debug.Log("reset");
         }

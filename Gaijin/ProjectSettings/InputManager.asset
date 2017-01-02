@@ -390,13 +390,13 @@ InputManager:
     axis: 0
     joyNum: 0
   - serializedVersion: 3
-    m_Name: Shuriken
+    m_Name: Kusarigama
     descriptiveName: 
     descriptiveNegativeName: 
     negativeButton: 
     positiveButton: 
     altNegativeButton: 
-    altPositiveButton: joystick button 1
+    altPositiveButton: f
     gravity: 1000
     dead: 0.001
     sensitivity: 1000

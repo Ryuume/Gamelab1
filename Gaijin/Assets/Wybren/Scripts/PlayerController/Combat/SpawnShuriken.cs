@@ -14,4 +14,10 @@ public class SpawnShuriken : MonoBehaviour {
     {
         player.katana.transform.parent = player.rHand;
     }
+
+    void Disable()
+    {
+        player.kusarigama.SetActive(false);
+        player.katana.SetActive(true);
+    }
 }
