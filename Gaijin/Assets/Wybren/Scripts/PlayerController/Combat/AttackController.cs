@@ -21,8 +21,9 @@ public class AttackController
     public int _Combo = 1, stateNum;
 
     GameObject katana, player, model;
+    Transform lHand;
 
-    public AttackController (Animator _anim, float _attackDelay, float _comboTime, GameObject _Katana, GameObject _player, int _StateNum, float _standardRot, GameObject _playerModel)
+    public AttackController (Animator _anim, float _attackDelay, float _comboTime, GameObject _Katana, GameObject _player, int _StateNum, float _standardRot, GameObject _playerModel, Transform _LHand)
     {
         animator = _anim;
         attackDelay = _attackDelay;
@@ -32,6 +33,7 @@ public class AttackController
         stateNum = _StateNum;
         standardRot = _standardRot;
         model = _playerModel;
+        lHand = _LHand;
     }
 
     public void InCombat()
@@ -46,6 +48,7 @@ public class AttackController
             originalRot = standardRot + 270;
 
         Attack();
+        Abillity();
     }
 
     void Attack()
@@ -83,7 +86,6 @@ public class AttackController
         else
         {
             rotationLeft = 0;
-            katana.GetComponent<Katana>().doDamage = false;
         }
 
         if(_ACool == true)
@@ -113,7 +115,11 @@ public class AttackController
 
     void Abillity()
     {
-        //player.transform.rotation = Quaternion.Euler(0, originalRot + 90, 0);
+        if(Input.GetButtonDown("Fire3"))
+        {
+            player.GetComponent<PlayerController>().katana.transform.parent = lHand;
+            animator.SetTrigger("Shuriken");
+        }
     }
 
     void Rotate()
@@ -126,6 +132,7 @@ public class AttackController
         }else
         {
             model.transform.rotation = Quaternion.Euler(0, originalRot, 0);
+            katana.GetComponent<Katana>().doDamage = false;
             rotating = false;
             Debug.Log("reset");
         }

@@ -15,7 +15,7 @@ public class PlayerController : MonoBehaviour
     RaycastHit hit;
 
     public LayerMask targetMask;
-    public Transform refDir, feet, head;
+    public Transform refDir, feet, head, rHand, lHand;
 
     public float standardRotation;
 
@@ -28,7 +28,7 @@ public class PlayerController : MonoBehaviour
     public Animator animator;
 
     public float minDamage, maxDamage;
-    public GameObject katana;
+    public GameObject katana, shuriken;
 
     bool setRotation = false, moving, turnRight, setFloat, isTurning, wielding, inCombat;
 
@@ -48,7 +48,7 @@ public class PlayerController : MonoBehaviour
 
         katana.GetComponent<Katana>().minDamage = minDamage;
         katana.GetComponent<Katana>().maxDamage = maxDamage;
-        attackController = new AttackController(animator, 0.4f, 1, katana, transform.gameObject, stateNum, standardRotation, feet.gameObject);
+        attackController = new AttackController(animator, 0.4f, 1, katana, transform.gameObject, stateNum, standardRotation, feet.gameObject, lHand);
     }
 
     public void Update()
@@ -558,5 +558,10 @@ public class PlayerController : MonoBehaviour
             animator.SetFloat("PosZ", -xSpeed);
             animator.SetFloat("PosX", zSpeed);
         }
+    }
+
+    public void Shuriken()
+    {
+        Instantiate(shuriken, rHand.position, Quaternion.identity);
     }
 }
