@@ -20,4 +20,9 @@ public class SpawnShuriken : MonoBehaviour {
         player.kusarigama.SetActive(false);
         player.katana.SetActive(true);
     }
+
+    void Smoke()
+    {
+        player.SmokeBomb();
+    }
 }

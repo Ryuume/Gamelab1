@@ -947,8 +947,10 @@ MonoBehaviour:
   katana: {fileID: 0}
   shuriken: {fileID: 0}
   kusarigama: {fileID: 0}
+  smokebomb: {fileID: 0}
   shurikenCooldown: 0
   kusarigamaCooldown: 0
+  smokebombCooldown: 0
 --- !u!4 &72492863
 Transform:
   m_ObjectHideFlags: 0
@@ -1218,7 +1220,6 @@ GameObject:
   - 4: {fileID: 128428952}
   - 33: {fileID: 128428955}
   - 23: {fileID: 128428954}
-  - 64: {fileID: 128428953}
   m_Layer: 0
   m_Name: Handle_HP001
   m_TagString: Player
@@ -1240,19 +1241,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1205910615}
   m_RootOrder: 1
---- !u!64 &128428953
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 64000010808187360, guid: 9228f20cf4ecf0947976b22c017dbf5e,
-    type: 2}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 128428951}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Convex: 0
-  m_Mesh: {fileID: 4300002, guid: 3e41b4e7b199f5340ace467211fde6a1, type: 3}
 --- !u!23 &128428954
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -3007,7 +2995,7 @@ MonoBehaviour:
   speed: 4
   combatSpeed: 5
   damage: 10
-  attackDelay: 1
+  attackDelay: 2
   health: 100
   wanderRadius: 25
   path: {fileID: 1867907200}
@@ -3494,7 +3482,7 @@ MonoBehaviour:
   speed: 4
   combatSpeed: 5
   damage: 10
-  attackDelay: 1
+  attackDelay: 2
   health: 100
   wanderRadius: 25
   path: {fileID: 1867907200}
@@ -4232,8 +4220,10 @@ MonoBehaviour:
   katana: {fileID: 0}
   shuriken: {fileID: 0}
   kusarigama: {fileID: 0}
+  smokebomb: {fileID: 0}
   shurikenCooldown: 0
   kusarigamaCooldown: 0
+  smokebombCooldown: 0
 --- !u!54 &610951075
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -5039,8 +5029,10 @@ MonoBehaviour:
   katana: {fileID: 1205910614}
   shuriken: {fileID: 1000014063047484, guid: 6bd8ba6c0a42e1a468172715e502ac0e, type: 2}
   kusarigama: {fileID: 1849620902}
+  smokebomb: {fileID: 1000014233514258, guid: 3357d0832597723459885b3d024c919c, type: 2}
   shurikenCooldown: 1
   kusarigamaCooldown: 5
+  smokebombCooldown: 2
 --- !u!1 &764957238
 GameObject:
   m_ObjectHideFlags: 0
@@ -9007,7 +8999,6 @@ GameObject:
   - 4: {fileID: 1340786861}
   - 33: {fileID: 1340786864}
   - 23: {fileID: 1340786863}
-  - 64: {fileID: 1340786862}
   m_Layer: 0
   m_Name: Blade_HP001
   m_TagString: Player
@@ -9029,19 +9020,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1205910615}
   m_RootOrder: 0
---- !u!64 &1340786862
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 64000013887319346, guid: 9228f20cf4ecf0947976b22c017dbf5e,
-    type: 2}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1340786860}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Convex: 0
-  m_Mesh: {fileID: 4300000, guid: 3e41b4e7b199f5340ace467211fde6a1, type: 3}
 --- !u!23 &1340786863
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -9733,7 +9711,7 @@ Transform:
     type: 2}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1461849135}
-  m_LocalRotation: {x: -0.25955117, y: 0.65774864, z: 0.2595504, w: 0.65774894}
+  m_LocalRotation: {x: -0.25955114, y: 0.6577486, z: 0.25955036, w: 0.6577489}
   m_LocalPosition: {x: -1.2788514, y: 0.0017710924, z: -0.04111849}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -10968,7 +10946,7 @@ MonoBehaviour:
   speed: 4
   combatSpeed: 5
   damage: 10
-  attackDelay: 1
+  attackDelay: 2
   health: 100
   wanderRadius: 25
   path: {fileID: 1867907200}
@@ -12446,7 +12424,7 @@ MonoBehaviour:
   speed: 4
   combatSpeed: 5
   damage: 10
-  attackDelay: 1
+  attackDelay: 2
   health: 100
   wanderRadius: 25
   path: {fileID: 1867907200}

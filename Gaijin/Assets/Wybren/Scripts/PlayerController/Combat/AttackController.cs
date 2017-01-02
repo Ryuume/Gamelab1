@@ -14,16 +14,16 @@ public class AttackController
 
     Animator animator;
 
-    bool _ACool, _CCool, rotating, _SCool, _KCool;
+    bool _ACool, _CCool, rotating, _SCool, _KCool, _BCool;
 
-    public float _ACoolT, attackDelay, _CCoolT, comboTime, rotationLeft = 0, originalRot, standardRot, shurikenCooldown, kusarigamaCooldown, _SCoolT, _KCoolT;
+    public float _ACoolT, attackDelay, _CCoolT, comboTime, rotationLeft = 0, originalRot, standardRot, shurikenCooldown, kusarigamaCooldown, smokebombCooldown, _SCoolT, _KCoolT, _BCoolT;
 
     public int _Combo = 1, stateNum, rotSpeed = 700;
 
     GameObject katana, player, model, kusarigama;
     Transform lHand;
 
-    public AttackController (Animator _anim, float _attackDelay, float _comboTime, GameObject _Katana, GameObject _player, int _StateNum, float _standardRot, GameObject _playerModel, Transform _LHand, GameObject _Kusarigama, float _ShurikenCooldown, float _KusarigamaCooldown)
+    public AttackController (Animator _anim, float _attackDelay, float _comboTime, GameObject _Katana, GameObject _player, int _StateNum, float _standardRot, GameObject _playerModel, Transform _LHand, GameObject _Kusarigama, float _ShurikenCooldown, float _KusarigamaCooldown, float _SmokebombCoolDown)
     {
         animator = _anim;
         attackDelay = _attackDelay;
@@ -37,6 +37,7 @@ public class AttackController
         kusarigama = _Kusarigama;
         shurikenCooldown = _ShurikenCooldown;
         kusarigamaCooldown = _KusarigamaCooldown;
+        smokebombCooldown = _SmokebombCoolDown;
     }
 
     public void InCombat()
@@ -132,6 +133,15 @@ public class AttackController
             rotating = true;
             _KCool = true;
         }
+
+        if(Input.GetButtonDown("SmokeBomb") && rotating == false && _ACool == false && _BCool == false)
+        {
+            player.GetComponent<PlayerController>().katana.transform.parent = lHand;
+            animator.SetTrigger("Smokebomb");
+            _BCool = true;
+        }
+
+        #region cooldowns
         if (_SCool == true)
         {
             _SCoolT += Time.deltaTime;
@@ -152,13 +162,23 @@ public class AttackController
                 _KCool = false;
             }
         }
+        if (_BCool == true)
+        {
+            _BCoolT += Time.deltaTime;
+
+            if (_BCoolT > smokebombCooldown)
+            {
+                _BCoolT = 0;
+                _BCool = false;
+            }
+        }
+        #endregion
     }
 
     void Rotate()
     {
         if(rotationLeft < 360)
         {
-            Debug.Log(1);
             rotationLeft += rotSpeed * Time.deltaTime;
             model.transform.rotation = Quaternion.Euler(0, originalRot + rotationLeft, 0);
         }else
@@ -167,7 +187,6 @@ public class AttackController
             katana.GetComponent<Katana>().doDamage = false;
             rotSpeed = 700;
             rotating = false;
-            Debug.Log("reset");
         }
     }
 }

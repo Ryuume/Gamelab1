@@ -84,7 +84,6 @@ GameObject:
   - 4: {fileID: 4000010086833362}
   - 33: {fileID: 33000013731888496}
   - 23: {fileID: 23000012017100314}
-  - 64: {fileID: 64000010808187360}
   m_Layer: 0
   m_Name: Handle_HP001
   m_TagString: Player
@@ -546,7 +545,6 @@ GameObject:
   - 4: {fileID: 4000012586368572}
   - 33: {fileID: 33000013561858054}
   - 23: {fileID: 23000014011975386}
-  - 64: {fileID: 64000013887319346}
   m_Layer: 0
   m_Name: Blade_HP001
   m_TagString: Player
@@ -1815,7 +1813,7 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1000011686622330}
-  m_LocalRotation: {x: -0.25955117, y: 0.65774864, z: 0.2595504, w: 0.65774894}
+  m_LocalRotation: {x: -0.25955114, y: 0.6577486, z: 0.25955036, w: 0.6577489}
   m_LocalPosition: {x: -1.2788514, y: 0.0017710924, z: -0.04111849}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2975,30 +2973,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 122
   m_CollisionDetection: 0
---- !u!64 &64000010808187360
-MeshCollider:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1000010231922770}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Convex: 0
-  m_Mesh: {fileID: 4300002, guid: 3e41b4e7b199f5340ace467211fde6a1, type: 3}
---- !u!64 &64000013887319346
-MeshCollider:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1000011606503938}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Convex: 0
-  m_Mesh: {fileID: 4300000, guid: 3e41b4e7b199f5340ace467211fde6a1, type: 3}
 --- !u!65 &65000011527490468
 BoxCollider:
   m_ObjectHideFlags: 1
@@ -3209,8 +3183,10 @@ MonoBehaviour:
   katana: {fileID: 1000010067208842}
   shuriken: {fileID: 1000014063047484, guid: 6bd8ba6c0a42e1a468172715e502ac0e, type: 2}
   kusarigama: {fileID: 1000011484025466}
+  smokebomb: {fileID: 1000014233514258, guid: 3357d0832597723459885b3d024c919c, type: 2}
   shurikenCooldown: 1
   kusarigamaCooldown: 5
+  smokebombCooldown: 2
 --- !u!114 &114000013135182394
 MonoBehaviour:
   m_ObjectHideFlags: 1

@@ -247,4 +247,14 @@ public class AIManager : MonoBehaviour
     {
         Destroy(gameObject);
     }
+
+    public void Hit()
+    {
+        print("hit");
+    }
+
+    public void Stun()
+    {
+        print("Stun");
+    }
 }

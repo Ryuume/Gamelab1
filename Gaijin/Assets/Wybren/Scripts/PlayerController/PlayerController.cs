@@ -29,10 +29,10 @@ public class PlayerController : MonoBehaviour
     public Animator animator;
 
     public float minDamage, maxDamage;
-    public GameObject katana, shuriken, kusarigama;
-    public float shurikenCooldown, kusarigamaCooldown;
+    public GameObject katana, shuriken, kusarigama, smokebomb;
+    public float shurikenCooldown, kusarigamaCooldown, smokebombCooldown;
 
-    bool setRotation = false, moving, turnRight, setFloat, isTurning, wielding, inCombat;
+    bool setRotation = false, moving, isTurning, wielding, inCombat;
 
     float moveFloat;
 
@@ -50,7 +50,7 @@ public class PlayerController : MonoBehaviour
 
         katana.GetComponent<Katana>().minDamage = minDamage;
         katana.GetComponent<Katana>().maxDamage = maxDamage;
-        attackController = new AttackController(animator, 0.4f, 1, katana, transform.gameObject, stateNum, standardRotation, feet.gameObject, lHand, kusarigama, shurikenCooldown, kusarigamaCooldown);
+        attackController = new AttackController(animator, 0.4f, 1, katana, transform.gameObject, stateNum, standardRotation, feet.gameObject, lHand, kusarigama, shurikenCooldown, kusarigamaCooldown, smokebombCooldown);
     }
 
     public void Update()
@@ -262,14 +262,10 @@ public class PlayerController : MonoBehaviour
         if (angle > 50)
         {
             setRotation = false;
-            turnRight = true;
-            setFloat = false;
             currentState = lookState.right;
         }else if (angle < -50)
         {
             setRotation = false;
-            turnRight = false;
-            setFloat = false;
             currentState = lookState.left;
         }
     }
@@ -292,14 +288,10 @@ public class PlayerController : MonoBehaviour
         if (angle > 50)
         {
             setRotation = false;
-            turnRight = true;
-            setFloat = false;
             currentState = lookState.bottom;
         }else if (angle < -50)
         {
             setRotation = false;
-            turnRight = false;
-            setFloat = false;
             currentState = lookState.top;
         }
     }
@@ -322,14 +314,10 @@ public class PlayerController : MonoBehaviour
         if (angle > 50)
         {
             setRotation = false;
-            turnRight = true;
-            setFloat = false;
             currentState = lookState.left;
         }else if (angle < -50)
         {
             setRotation = false;
-            turnRight = false;
-            setFloat = false;
             currentState = lookState.right;
         }
     }
@@ -352,14 +340,10 @@ public class PlayerController : MonoBehaviour
         if (angle > 50)
         {
             setRotation = false;
-            turnRight = true;
-            setFloat = false;
             currentState = lookState.top;
         }else if (angle < -50)
         {
             setRotation = false;
-            turnRight = false;
-            setFloat = false;
             currentState = lookState.bottom;
         }
     }
@@ -565,5 +549,10 @@ public class PlayerController : MonoBehaviour
     public void Shuriken()
     {
         Instantiate(shuriken, rHand.position, Quaternion.identity);
+    }
+
+    public void SmokeBomb()
+    {
+        Instantiate(smokebomb, rHand.position, Quaternion.identity);
     }
 }
