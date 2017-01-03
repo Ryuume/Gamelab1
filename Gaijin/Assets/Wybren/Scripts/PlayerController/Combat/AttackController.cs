@@ -14,16 +14,16 @@ public class AttackController
 
     Animator animator;
 
-    bool _ACool, _CCool, rotating, _SCool, _KCool, _BCool;
+    bool _ACool, _CCool, rotating, _SCool, _KCool, _BCool, _DCool;
 
-    public float _ACoolT, attackDelay, _CCoolT, comboTime, rotationLeft = 0, originalRot, standardRot, shurikenCooldown, kusarigamaCooldown, smokebombCooldown, _SCoolT, _KCoolT, _BCoolT;
+    public float _ACoolT, attackDelay, _CCoolT, comboTime, rotationLeft = 0, originalRot, standardRot, shurikenCooldown, kusarigamaCooldown, smokebombCooldown, dragonCooldown, _SCoolT, _KCoolT, _BCoolT, _DCoolT;
 
     public int _Combo = 1, stateNum, rotSpeed = 700;
 
     GameObject katana, player, model, kusarigama;
     Transform lHand;
 
-    public AttackController (Animator _anim, float _attackDelay, float _comboTime, GameObject _Katana, GameObject _player, int _StateNum, float _standardRot, GameObject _playerModel, Transform _LHand, GameObject _Kusarigama, float _ShurikenCooldown, float _KusarigamaCooldown, float _SmokebombCoolDown)
+    public AttackController (Animator _anim, float _attackDelay, float _comboTime, GameObject _Katana, GameObject _player, int _StateNum, float _standardRot, GameObject _playerModel, Transform _LHand, GameObject _Kusarigama, float _ShurikenCooldown, float _KusarigamaCooldown, float _SmokebombCoolDown, float _DragonCoolDown)
     {
         animator = _anim;
         attackDelay = _attackDelay;
@@ -136,9 +136,15 @@ public class AttackController
 
         if(Input.GetButtonDown("SmokeBomb") && rotating == false && _ACool == false && _BCool == false)
         {
-            player.GetComponent<PlayerController>().katana.transform.parent = lHand;
+            player.GetComponent<PlayerController>().katana.SetActive(false);
             animator.SetTrigger("Smokebomb");
             _BCool = true;
+        }
+
+        if (Input.GetButtonDown("DragonPunch") && rotating == false && _ACool == false && _DCool == false)
+        {
+            animator.SetTrigger("DragonPunch");
+            _DCool = true;
         }
 
         #region cooldowns
@@ -170,6 +176,16 @@ public class AttackController
             {
                 _BCoolT = 0;
                 _BCool = false;
+            }
+        }
+        if (_DCool == true)
+        {
+            _DCoolT += Time.deltaTime;
+
+            if (_DCoolT > dragonCooldown)
+            {
+                _DCoolT = 0;
+                _DCool = false;
             }
         }
         #endregion

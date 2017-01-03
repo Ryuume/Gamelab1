@@ -2986,7 +2986,7 @@ AnimatorState:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_Name: DragonPunch
-  m_Speed: 1
+  m_Speed: 0.5
   m_CycleOffset: 0
   m_Transitions:
   - {fileID: 1101000012138123030}
@@ -2998,7 +2998,7 @@ AnimatorState:
   m_SpeedParameterActive: 0
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
-  m_Motion: {fileID: 0}
+  m_Motion: {fileID: 7400058, guid: 2c13b4e52caca294d8e6cd6c231a25ff, type: 3}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 

@@ -8,6 +8,7 @@ public class Shuriken : MonoBehaviour
     Vector3 mousePos;
 
     public float speed;
+    float t;
 
     void Start()
     {
@@ -26,6 +27,15 @@ public class Shuriken : MonoBehaviour
         Vector3 dir = (mousePos - transform.position);
 
         GetComponent<Rigidbody>().velocity = dir * speed;
+    }
+
+    void Update()
+    {
+        t += Time.deltaTime;
+        if (t > 5f)
+        {
+            Destroy(gameObject);
+        }
     }
 
     void OnTriggerEnter(Collider col)

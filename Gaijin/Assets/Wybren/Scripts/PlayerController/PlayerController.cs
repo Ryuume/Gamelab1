@@ -30,14 +30,15 @@ public class PlayerController : MonoBehaviour
 
     public float minDamage, maxDamage;
     public GameObject katana, shuriken, kusarigama, smokebomb;
-    public float shurikenCooldown, kusarigamaCooldown, smokebombCooldown;
+    public float shurikenCooldown, kusarigamaCooldown, smokebombCooldown, dragonPunchCooldown;
 
     bool setRotation = false, moving, isTurning, wielding, inCombat;
 
     float moveFloat;
 
     AttackController attackController;
-    int stateNum; //1 = top, 2 = right, 3 = bottom, 4 = left.
+    [HideInInspector]
+    public int stateNum; //1 = top, 2 = right, 3 = bottom, 4 = left.
 
     public void Start()
     {
@@ -50,7 +51,7 @@ public class PlayerController : MonoBehaviour
 
         katana.GetComponent<Katana>().minDamage = minDamage;
         katana.GetComponent<Katana>().maxDamage = maxDamage;
-        attackController = new AttackController(animator, 0.4f, 1, katana, transform.gameObject, stateNum, standardRotation, feet.gameObject, lHand, kusarigama, shurikenCooldown, kusarigamaCooldown, smokebombCooldown);
+        attackController = new AttackController(animator, 0.4f, 1, katana, transform.gameObject, stateNum, standardRotation, feet.gameObject, lHand, kusarigama, shurikenCooldown, kusarigamaCooldown, smokebombCooldown, dragonPunchCooldown);
     }
 
     public void Update()
