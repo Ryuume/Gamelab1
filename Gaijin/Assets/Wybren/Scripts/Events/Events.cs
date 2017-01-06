@@ -17,4 +17,7 @@ public class Events : MonoBehaviour {
 
     public eventType type = new eventType();
 
+
+
+
 }
