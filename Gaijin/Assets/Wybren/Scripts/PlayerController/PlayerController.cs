@@ -14,6 +14,8 @@ public class PlayerController : MonoBehaviour
 
     RaycastHit hit;
 
+    public float health;
+
     public LayerMask targetMask;
     public Transform refDir, feet, head, rHand, lHand, pelvis;
 
@@ -56,6 +58,12 @@ public class PlayerController : MonoBehaviour
 
     public void Update()
     {
+        if (health == 0 || health < 0)
+        {
+            print("You Died");
+            Destroy(gameObject);
+        }
+
         lookStates();
         Move();
         AnimationInput();
@@ -555,5 +563,17 @@ public class PlayerController : MonoBehaviour
     public void SmokeBomb()
     {
         Instantiate(smokebomb, rHand.position, Quaternion.identity);
+    }
+
+    public void Hit(float damage)
+    {
+        health -= damage;
+        //animator.SetTrigger("Hit");
+    }
+
+    public void Stun()
+    {
+        print("Stun");
+        animator.SetBool("Stunned", true);
     }
 }

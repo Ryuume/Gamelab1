@@ -18,7 +18,7 @@ public class SmokeBomb : MonoBehaviour
     {
         if(col.tag == "Enemy")
         {
-            col.gameObject.SendMessageUpwards("Stun");
+            col.gameObject.SendMessageUpwards("Smoked");
         }
     }
 }

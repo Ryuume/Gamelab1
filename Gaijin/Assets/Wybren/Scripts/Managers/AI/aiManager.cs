@@ -32,11 +32,16 @@ public class AIManager : MonoBehaviour
     [Header("AI Settings")]
     public float speed;
     public float combatSpeed, damage, attackDelay, health, wanderRadius;
+    public Animator animator;
 
     [Header("Movement Settings")]
     public Transform path;
     public Transform wanderArea;
     public bool loopPath, wanderInArea;
+
+    [Header("Combat Settings")]
+    public GameObject weapon;
+    public float minDamage, maxDamage;
 
     [HideInInspector]
     public bool inCombat;
@@ -44,10 +49,6 @@ public class AIManager : MonoBehaviour
     [Header("Stealth Settings")]
     public float spottingTime;
     public float suspiciousSpottingTime;
-
-    [Header("Ranged Settings")]
-    [Tooltip("Add and arrow or other projectile here so the ranged units know what to shoot.")]
-    public GameObject projectile;
 
     [HideInInspector]
     public Collision collision;
@@ -72,6 +73,7 @@ public class AIManager : MonoBehaviour
             path = transform;
         }
 
+        weapon.SendMessageUpwards("RecieveData", new Vector2(minDamage, maxDamage));
         UnitBehaviour unit = new UnitBehaviour(wanderRadius, speed, transform, path, loopPath);
 
         switch (mode)
@@ -123,11 +125,22 @@ public class AIManager : MonoBehaviour
 
     public void Update()
     {
+        //print(GetComponent<NavMeshAgent>().velocity + " Velocity");
+        if(GetComponent<NavMeshAgent>().velocity.x == 0 && GetComponent<NavMeshAgent>().velocity.z == 0)
+        {
+            animator.SetBool("Moving", false);
+        }else
+        {
+            animator.SetBool("Moving", true);
+        }
+
         if(health == 0 || health < 0)
         {
             print("I cri ervytiem");
             Destroy(gameObject);
         }
+        animator.SetBool("Suspicious", suspicious);
+        animator.SetBool("InCombat", inCombat);
 
         switch (mode)
         {
@@ -248,13 +261,21 @@ public class AIManager : MonoBehaviour
         Destroy(gameObject);
     }
 
-    public void Hit()
+    public void Hit(float damage)
     {
         print("hit");
+        health -= damage;
+        animator.SetTrigger("Hit");
     }
 
     public void Stun()
     {
         print("Stun");
+        animator.SetBool("Stunned", true);
+    }
+
+    public void Smoked()
+    {
+        animator.SetTrigger("Smoke");
     }
 }

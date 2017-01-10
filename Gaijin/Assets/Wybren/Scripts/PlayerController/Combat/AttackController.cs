@@ -119,7 +119,7 @@ public class AttackController
     {
         if(Input.GetButtonDown("Fire3") && rotating == false && _ACool == false && _SCool == false)
         {
-            player.GetComponent<PlayerController>().katana.transform.parent = lHand;
+            katana.SetActive(false);
             animator.SetTrigger("Shuriken");
             _SCool = true;
         }

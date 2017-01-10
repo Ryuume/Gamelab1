@@ -9,6 +9,9 @@ public class Guard
 
     NavMeshAgent agent;
 
+    bool _ACool;
+    float _ACoolT;
+
     public Guard(Transform ai, float combatSpeed, float setDamage, float setFireRate, float setHealth)
     {
         manager = ai;
@@ -54,12 +57,21 @@ public class Guard
 
         // Smoothly rotate towards the target point.
         manager.rotation = Quaternion.Slerp(manager.rotation, targetRotation, 3 * Time.deltaTime);
-        timer += 1 * Time.deltaTime;
-        if (timer > fireRate)
+        if (_ACool != true)
         {
             Attack();
-            Debug.Log("attack");
-            timer = 0;
+            _ACool = true;
+        }
+        else
+        {
+            _ACoolT += Time.deltaTime;
+
+            if (_ACoolT > fireRate)
+            {
+                _ACoolT = 0;
+                _ACool = false;
+                manager.GetComponent<AIManager>().weapon.GetComponent<Katana>().doDamage = false;
+            }
         }
     }
     //scared state
@@ -75,6 +87,9 @@ public class Guard
 
     void Attack()
     {
-
+        Animator animator = manager.GetComponent<AIManager>().animator;
+        manager.GetComponent<AIManager>().weapon.GetComponent<Katana>().doDamage = true;
+        animator.SetInteger("Combo", Mathf.FloorToInt(Random.Range(1, 4)));
+        animator.SetTrigger("Attack");
     }
 }

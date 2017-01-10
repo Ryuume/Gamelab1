@@ -159,14 +159,14 @@ public class Archer
 
     public void Attack()
     {
-        GameObject projectile = manager.GetComponent<AIManager>().projectile;
+        GameObject projectile = manager.GetComponent<AIManager>().weapon;
         Vector3 targetHit = target.position;
         Vector3 source = manager.position;
 
         
         float x = (targetHit - source).magnitude;
-        float y = targetHit.y + x/6;
-        float v = projectileSpeed * x/6;
+        float y = targetHit.y + x/4;
+        float v = projectileSpeed * x/4;
         float g = Physics.gravity.y;
         float v2 = v * v;
         float v4 = v2 * v2;

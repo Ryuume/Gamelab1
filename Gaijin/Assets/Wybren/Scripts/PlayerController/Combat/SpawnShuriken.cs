@@ -13,7 +13,6 @@ public class SpawnShuriken : MonoBehaviour {
     void Reparent()
     {
         player.katana.SetActive(true);
-        player.katana.transform.parent = player.rHand;
     }
 
     void Disable()

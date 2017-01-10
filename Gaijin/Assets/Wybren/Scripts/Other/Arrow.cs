@@ -3,17 +3,29 @@ using System.Collections;
 
 public class Arrow : MonoBehaviour
 {
-	void Update ()
+    [HideInInspector]
+    public float minDamage, maxDamage;
+
+    public void RecieveData(Vector2 damages)
+    {
+        minDamage = damages.x;
+        maxDamage = damages.y;
+    }
+
+    void Update ()
     {
         transform.LookAt(transform.position, GetComponent<Rigidbody>().velocity);
 	}
 
     void OnTriggerEnter(Collider col)
     {
-        if (col.transform.gameObject.tag == "Player")
+        if (col.gameObject.tag == "Player")
         {
-            print("HIT!");
+            float damage = Random.Range(minDamage, maxDamage);
+            print("Arrow hit for " + damage + " damage");
+            col.SendMessageUpwards("Hit", damage);
         }
+        
         if (col.transform.gameObject.tag != "Enemy")
         {
             Destroy(gameObject);

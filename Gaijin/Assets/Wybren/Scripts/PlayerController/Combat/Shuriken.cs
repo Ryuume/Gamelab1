@@ -44,7 +44,7 @@ public class Shuriken : MonoBehaviour
         {
             float damage = Random.Range(10, 20);
             print("Hit for " + damage + " damage");
-            col.gameObject.GetComponent<AIManager>().health -= damage;
+            col.SendMessageUpwards("Hit", damage);
         }
 
         if (col.gameObject.tag != "Player")

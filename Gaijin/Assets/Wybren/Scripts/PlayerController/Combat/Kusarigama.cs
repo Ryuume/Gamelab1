@@ -11,7 +11,7 @@ public class Kusarigama : MonoBehaviour
         {
             float damage = Random.Range(minDamage, maxDamage);
             print("Hit for " + damage + " damage");
-            col.GetComponent<AIManager>().health -= damage;
+            col.SendMessageUpwards("Hit", damage);
         }
     }
 }
