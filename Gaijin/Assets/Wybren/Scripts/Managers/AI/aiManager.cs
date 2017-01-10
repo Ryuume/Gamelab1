@@ -64,6 +64,8 @@ public class AIManager : MonoBehaviour
     Demon dUpdate;
     Npc npcUpdate;
     Ally aUpdate;
+
+    public GameObject projectile;
     
     public void Start()
     {
@@ -73,7 +75,7 @@ public class AIManager : MonoBehaviour
             path = transform;
         }
 
-        weapon.SendMessageUpwards("RecieveData", new Vector2(minDamage, maxDamage));
+        //weapon.SendMessageUpwards("RecieveData", new Vector2(minDamage, maxDamage));
         UnitBehaviour unit = new UnitBehaviour(wanderRadius, speed, transform, path, loopPath);
 
         switch (mode)

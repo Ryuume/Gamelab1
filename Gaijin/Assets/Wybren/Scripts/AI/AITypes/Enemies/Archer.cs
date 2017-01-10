@@ -159,14 +159,22 @@ public class Archer
 
     public void Attack()
     {
-        GameObject projectile = manager.GetComponent<AIManager>().weapon;
+        Animator animator = manager.GetComponent<AIManager>().animator;
+        animator.SetTrigger("Attack");
+    }
+
+    public void Fire()
+    {
+        Debug.Log("FireArrow");
+
+        GameObject projectile = manager.GetComponent<AIManager>().projectile;
         Vector3 targetHit = target.position;
         Vector3 source = manager.position;
 
-        
+
         float x = (targetHit - source).magnitude;
-        float y = targetHit.y + x/4;
-        float v = projectileSpeed * x/4;
+        float y = targetHit.y + x / 5;
+        float v = projectileSpeed * x / 5;
         float g = Physics.gravity.y;
         float v2 = v * v;
         float v4 = v2 * v2;
@@ -178,9 +186,7 @@ public class Archer
         float theta = -Mathf.Atan((v2 - Mathf.Sqrt(fac)) / (g * x)) * Mathf.Rad2Deg;
         while (theta < 0) theta += 362f;
 
-        
-
-        GameObject arrow = (GameObject)MonoBehaviour.Instantiate(projectile, manager.position, Quaternion.identity);
+        GameObject arrow = (GameObject)MonoBehaviour.Instantiate(projectile, manager.GetComponent<AIManager>().weapon.transform.position, Quaternion.identity);
         float distance = Vector3.Distance(manager.position, target.position);
         Vector3 targetPos = target.position + (target.GetComponent<Rigidbody>().velocity / (distance / 3));
         targetPos.y = manager.position.y;

@@ -22,8 +22,8 @@ public class Arrow : MonoBehaviour
         if (col.gameObject.tag == "Player")
         {
             float damage = Random.Range(minDamage, maxDamage);
-            print("Arrow hit for " + damage + " damage");
-            col.SendMessageUpwards("Hit", damage);
+            //print("Arrow hit for " + damage + " damage");
+            col.SendMessageUpwards("Hit", 8);
         }
         
         if (col.transform.gameObject.tag != "Enemy")

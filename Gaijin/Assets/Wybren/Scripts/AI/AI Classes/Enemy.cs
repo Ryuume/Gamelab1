@@ -22,7 +22,7 @@ public class Enemy
     public UnitBehaviour unit;
 
     Guard gUpdate;
-    Archer aUpdate;
+    public Archer aUpdate;
     Scout sUpdate;
     Assasin asUpdate;
     Samurai saUpdate;
