@@ -11,11 +11,10 @@ public class Demon
 
     public UnitBehaviour unit;
 
-    public Demon(Transform ai, float combatSpeed, float setDamage, float setFireRate, float setHealth, UnitBehaviour behaviour)
+    public Demon(Transform ai, float combatSpeed, float setFireRate, float setHealth, UnitBehaviour behaviour)
     {
         manager = ai;
         speed = combatSpeed;
-        damage = setDamage;
         health = setHealth;
         unit = behaviour;
     }

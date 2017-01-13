@@ -11,7 +11,7 @@ public class Ally
     //5. OPTIONAL: Have obstacle scaling like climbing and dropping down from a ledge.
     //6. Make Damage / Health / Speed adaptable by manager.
 
-    public float speed, damage, health;
+    public float speed, health;
 
     public Transform manager;
 
@@ -19,11 +19,10 @@ public class Ally
 
     public UnitBehaviour unit;
 
-    public Ally(Transform ai, float combatSpeed, float setDamage, float setFireRate, float setHealth, UnitBehaviour behaviour)
+    public Ally(Transform ai, float combatSpeed, float setFireRate, float setHealth, UnitBehaviour behaviour)
     {
         manager = ai;
         speed = combatSpeed;
-        damage = setDamage;
         health = setHealth;
         unit = behaviour;
     }

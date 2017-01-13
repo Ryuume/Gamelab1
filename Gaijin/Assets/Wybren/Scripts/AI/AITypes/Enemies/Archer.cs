@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 public class Archer
 {
-    public float speed, damage, fireRate, health, timer, shortestDistance, projectileSpeed = 20f;
+    public float speed, fireRate, health, timer, shortestDistance, projectileSpeed = 20f;
 
     int locationIndex;
 
@@ -21,11 +21,10 @@ public class Archer
 
     LayerMask obstacleMask;
 
-    public Archer(Transform ai, float combatSpeed, float setDamage, float setFireRate, float setHealth)
+    public Archer(Transform ai, float combatSpeed, float setFireRate, float setHealth)
     {
         manager = ai;
         speed = combatSpeed;
-        damage = setDamage;
         fireRate = setFireRate;
         health = setHealth;
 
@@ -55,7 +54,7 @@ public class Archer
             MoveAway();
         }
 
-        if (distanceToTarget < 13 && distanceToTarget > 3)
+        if (distanceToTarget < 13 && distanceToTarget > .5f)
         {
             InCombat();
         }

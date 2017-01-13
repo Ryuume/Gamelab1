@@ -3,7 +3,7 @@ using System.Collections;
 
 public class Guard
 {
-    public float speed, damage, fireRate, health, timer;
+    public float speed, fireRate, health, timer;
 
     public Transform manager, target;
 
@@ -12,11 +12,10 @@ public class Guard
     bool _ACool;
     float _ACoolT;
 
-    public Guard(Transform ai, float combatSpeed, float setDamage, float setFireRate, float setHealth)
+    public Guard(Transform ai, float combatSpeed, float setFireRate, float setHealth)
     {
         manager = ai;
         speed = combatSpeed;
-        damage = setDamage;
         fireRate = setFireRate;
         health = setHealth;
 

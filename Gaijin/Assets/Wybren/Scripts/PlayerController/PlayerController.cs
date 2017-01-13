@@ -569,7 +569,7 @@ public class PlayerController : MonoBehaviour
     public void Hit(float damage)
     {
         health -= damage;
-        //animator.SetTrigger("Hit");
+        animator.SetTrigger("Hit");
     }
 
     public void Stun()

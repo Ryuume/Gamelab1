@@ -7,7 +7,7 @@ public class Scout
     //If the scout misses the player and hits an enemy, the enemy will recieve the damage.
     //If the scout hits a wall, he will crash into it and die.
 
-    public float speed, damage, fireRate, health, timer;
+    public float speed, fireRate, health, timer, timer2;
 
     public Transform manager, target;
 
@@ -15,11 +15,10 @@ public class Scout
 
     public bool charging;
 
-    public Scout(Transform ai, float combatSpeed, float setDamage, float setFireRate, float setHealth)
+    public Scout(Transform ai, float combatSpeed, float setFireRate, float setHealth)
     {
         manager = ai;
         speed = combatSpeed;
-        damage = setDamage;
         fireRate = setFireRate;
         health = setHealth;
 
@@ -30,12 +29,12 @@ public class Scout
     {
         float distanceToTarget = Vector3.Distance(target.position, manager.position);
 
-        if (distanceToTarget > 8 && charging == false)
+        if (distanceToTarget > 6 && charging == false)
         {
-            agent.speed = speed;
+            agent.speed = 5;
             agent.SetDestination(target.position);
         }
-        else if (distanceToTarget < 8 && distanceToTarget > 3 && charging == false && manager.GetComponent<AIManager>().visible == true)
+        else if (distanceToTarget < 7 && distanceToTarget > .5f && charging == false && manager.GetComponent<AIManager>().visible == true)
         {
             Vector3 targetPos = target.position;
             targetPos.y = manager.position.y;
@@ -47,21 +46,54 @@ public class Scout
             if (timer > fireRate)
             {
                 //Charge at player
-                charging = true;
+                
                 manager.LookAt(target.position);
-                manager.GetComponent<Rigidbody>().velocity += manager.forward * 18;
+
+                Animator animator = manager.GetComponent<AIManager>().animator;
+                manager.GetComponent<AIManager>().weapon.SendMessageUpwards("DoDamage");
+                animator.SetTrigger("Attack");
+                Debug.Log("Charge");
+                if(distanceToTarget > .6)
+                {
+                    charging = true;
+                    manager.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
+                    manager.GetComponent<Rigidbody>().velocity += manager.forward * 18;
+                }
+                
                 timer = 0;
             }
         }
 
-        if(charging == true && manager.GetComponent<Rigidbody>().velocity.magnitude < 1)
+        if (charging == true && manager.GetComponent<Rigidbody>().velocity.magnitude > 1)
         {
+            timer2 += Time.deltaTime;
+            if(timer2 > 1f)
+            {
+                charging = false;
+                timer2 = 0;
+                manager.GetComponent<Rigidbody>().velocity = Vector3.zero;
+                manager.GetComponent<AIManager>().weapon.SendMessageUpwards("NoDamage");
+                manager.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionZ;
+                manager.GetComponent<Rigidbody>().freezeRotation = true;
+            }
+        }
+
+        if (charging == true && manager.GetComponent<Rigidbody>().velocity.magnitude < 1)
+        {
+            manager.GetComponent<Rigidbody>().velocity = Vector3.zero;
+            manager.GetComponent<AIManager>().weapon.SendMessageUpwards("NoDamage");
+            manager.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionZ;
+            manager.GetComponent<Rigidbody>().freezeRotation = true;
             charging = false;
         }
 
         if(manager.GetComponent<AIManager>().collision.transform.gameObject.tag == "Player" && charging == true)
         {
             Debug.Log("Hit");
+            manager.GetComponent<Rigidbody>().velocity = Vector3.zero;
+            manager.GetComponent<AIManager>().weapon.SendMessageUpwards("NoDamage");
+            manager.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionZ;
+            manager.GetComponent<Rigidbody>().freezeRotation = true;
             charging = false;
         }
         if (manager.GetComponent<AIManager>().collision.transform.gameObject.tag == "Wall")
@@ -75,6 +107,10 @@ public class Scout
                 if (manager.GetComponent<AIManager>().collision.relativeVelocity.magnitude > 10)
                 {
                     //Debug.Log("Hit wall, I ded.");
+                    manager.GetComponent<Rigidbody>().velocity = Vector3.zero;
+                    manager.GetComponent<AIManager>().weapon.SendMessageUpwards("NoDamage");
+                    manager.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionZ;
+                    manager.GetComponent<Rigidbody>().freezeRotation = true;
                     charging = false;
                     //manager.GetComponent<AIManager>().Destroy();
                 }

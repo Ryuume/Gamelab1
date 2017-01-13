@@ -36,6 +36,7 @@ public class Katana : MonoBehaviour {
                 {
                     float damage = Random.Range(minDamage, maxDamage);
                     print("Enemy hit for " + damage + " damage");
+                    doDamage = false;
                     col.SendMessageUpwards("Hit", damage);
                 }
             }

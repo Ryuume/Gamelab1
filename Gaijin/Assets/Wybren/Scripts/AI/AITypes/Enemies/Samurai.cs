@@ -6,17 +6,16 @@ using System.Collections.Generic;
 
 public class Samurai
 {
-    public float speed, damage, fireRate, health, timer;
+    public float speed, fireRate, health, timer;
 
     public Transform manager, target;
 
     NavMeshAgent agent;
 
-    public Samurai(Transform ai, float combatSpeed, float setDamage, float setFireRate, float setHealth)
+    public Samurai(Transform ai, float combatSpeed, float setFireRate, float setHealth)
     {
         manager = ai;
         speed = combatSpeed;
-        damage = setDamage;
         fireRate = setFireRate;
         health = setHealth;
 

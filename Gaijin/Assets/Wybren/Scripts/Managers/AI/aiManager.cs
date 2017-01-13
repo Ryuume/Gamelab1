@@ -31,7 +31,7 @@ public class AIManager : MonoBehaviour
 
     [Header("AI Settings")]
     public float speed;
-    public float combatSpeed, damage, attackDelay, health, wanderRadius;
+    public float combatSpeed,  wanderRadius;
     public Animator animator;
 
     [Header("Movement Settings")]
@@ -41,7 +41,8 @@ public class AIManager : MonoBehaviour
 
     [Header("Combat Settings")]
     public GameObject weapon;
-    public float minDamage, maxDamage;
+    public GameObject projectile;
+    public float minDamage, maxDamage, attackDelay, health;
 
     [HideInInspector]
     public bool inCombat;
@@ -65,7 +66,7 @@ public class AIManager : MonoBehaviour
     Npc npcUpdate;
     Ally aUpdate;
 
-    public GameObject projectile;
+    
     
     public void Start()
     {
@@ -75,7 +76,7 @@ public class AIManager : MonoBehaviour
             path = transform;
         }
 
-        //weapon.SendMessageUpwards("RecieveData", new Vector2(minDamage, maxDamage));
+        weapon.SendMessageUpwards("RecieveData", new Vector2(minDamage, maxDamage));
         UnitBehaviour unit = new UnitBehaviour(wanderRadius, speed, transform, path, loopPath);
 
         switch (mode)
@@ -83,14 +84,14 @@ public class AIManager : MonoBehaviour
             //Enemy's
             case Mode.enemy:
                 {
-                    Enemy enemy = new Enemy(transform, combatSpeed, damage, attackDelay, health, unit);
+                    Enemy enemy = new Enemy(transform, combatSpeed, attackDelay, health, unit);
                     eUpdate = enemy;
                     break; 
                 }
 
             case Mode.demon:
                 {
-                    Demon demon = new Demon(transform, combatSpeed, damage, attackDelay, health, unit);
+                    Demon demon = new Demon(transform, combatSpeed, attackDelay, health, unit);
                     dUpdate = demon;
                     break;
                 }
@@ -106,7 +107,7 @@ public class AIManager : MonoBehaviour
             //Ally's
             case Mode.ally:
                 {
-                    Ally ally = new Ally(transform, combatSpeed, damage, attackDelay, health, unit);
+                    Ally ally = new Ally(transform, combatSpeed, attackDelay, health, unit);
                     aUpdate = ally;
                     break;
                 }

@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 public class Assasin
 {
-    public float speed, damage, fireRate, health, timer, shortestDistance, projectileSpeed = 20f;
+    public float speed, fireRate, health, timer, shortestDistance, projectileSpeed = 20f;
 
     public List<float> distances = new List<float>();
     public List<Vector3> locations = new List<Vector3>();
@@ -25,11 +25,10 @@ public class Assasin
 
     LayerMask obstacleMask;
 
-    public Assasin(Transform ai, float combatSpeed, float setDamage, float setFireRate, float setHealth)
+    public Assasin(Transform ai, float combatSpeed, float setFireRate, float setHealth)
     {
         manager = ai;
         speed = combatSpeed;
-        damage = setDamage;
         fireRate = setFireRate;
         health = setHealth;
 
@@ -50,7 +49,7 @@ public class Assasin
         //arrow has its own script, which arches the arrow in the direction its moving, and sends a message upward to the object it hits.
         float distanceToTarget = Vector3.Distance(target.position, manager.position);
 
-        if (distanceToTarget > 10)
+        if (distanceToTarget > 8)
         {
             Move();
         }
@@ -59,7 +58,7 @@ public class Assasin
             MoveAway();
         }
 
-        if (distanceToTarget < 13 && distanceToTarget > 3)
+        if (distanceToTarget < 7 && distanceToTarget > .5f)
         {
             InCombat();
         }
@@ -90,8 +89,9 @@ public class Assasin
             timer += 1 * Time.deltaTime;
             if (timer > fireRate)
             {
-                Attack();
-                Debug.Log("attack");
+                manager.LookAt(target.position);
+                Animator animator = manager.GetComponent<AIManager>().animator;
+                animator.SetTrigger("Attack");
                 timer = 0;
             }
         }
@@ -143,6 +143,7 @@ public class Assasin
                 Quaternion targetRotation = Quaternion.LookRotation(targetPos - manager.position);
                 manager.rotation = Quaternion.Slerp(manager.rotation, targetRotation, 2 * Time.deltaTime);
 
+
                 walkTarget = locations[locationIndex];
                 agent.SetDestination(locations[locationIndex]);
                 agent.speed = speed;
@@ -165,6 +166,6 @@ public class Assasin
 
     public void Attack()
     {
-        //Hitscan attack
+        manager.GetComponent<AIManager>().weapon.GetComponent<AssasinShuriken>().SpawnShuriken(manager.GetComponent<AIManager>().projectile, target.position);
     }
 }

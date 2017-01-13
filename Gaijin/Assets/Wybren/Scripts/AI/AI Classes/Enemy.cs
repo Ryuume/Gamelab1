@@ -24,10 +24,10 @@ public class Enemy
     Guard gUpdate;
     public Archer aUpdate;
     Scout sUpdate;
-    Assasin asUpdate;
+    public Assasin asUpdate;
     Samurai saUpdate;
 
-    public Enemy(Transform ai, float combatSpeed, float setDamage, float setFireRate, float setHealth, UnitBehaviour behaviour)
+    public Enemy(Transform ai, float combatSpeed, float setFireRate, float setHealth, UnitBehaviour behaviour)
     {
         manager = ai;
         unit = behaviour;
@@ -36,27 +36,27 @@ public class Enemy
         {
             case AIManager.EnemyType.Guard:
                 {
-                    gUpdate = new Guard(ai, combatSpeed, setDamage, setFireRate, setHealth);
+                    gUpdate = new Guard(ai, combatSpeed, setFireRate, setHealth);
                     break;
                 }
             case AIManager.EnemyType.Archer:
                 {
-                    aUpdate = new Archer(ai, combatSpeed, setDamage, setFireRate, setHealth);
+                    aUpdate = new Archer(ai, combatSpeed, setFireRate, setHealth);
                     break;
                 }
             case AIManager.EnemyType.Scout:
                 {
-                    sUpdate = new Scout(ai, combatSpeed, setDamage, setFireRate, setHealth);
+                    sUpdate = new Scout(ai, combatSpeed, setFireRate, setHealth);
                     break;
                 }
             case AIManager.EnemyType.Assasin:
                 {
-                    asUpdate = new Assasin(ai, combatSpeed, setDamage, setFireRate, setHealth);
+                    asUpdate = new Assasin(ai, combatSpeed, setFireRate, setHealth);
                     break;
                 }
             case AIManager.EnemyType.Samurai:
                 {
-                    saUpdate = new Samurai(ai, combatSpeed, setDamage, setFireRate, setHealth);
+                    saUpdate = new Samurai(ai, combatSpeed, setFireRate, setHealth);
                     break;
                 }
         }

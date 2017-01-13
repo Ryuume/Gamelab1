@@ -10,23 +10,48 @@ public class Shuriken : MonoBehaviour
     public float speed;
     float t;
 
+    float minDamage, maxDamage;
+
+    bool isEnemy;
+    [HideInInspector]
+    public Vector3 target;
+
+    void SetDamage(Vector2 damages)
+    {
+        minDamage = damages.x;
+        maxDamage = damages.y;
+    }
+
+    void RecieveData(Vector3 _Target)
+    {
+        target = _Target;
+        isEnemy = true;
+    }
+
     void Start()
     {
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-
-        if (Physics.Raycast(ray, out hit, Mathf.Infinity, targetMask))
+        if (isEnemy == false)
         {
-            Vector3 targetPos = hit.point;
-            if (Vector3.Distance(transform.position, targetPos) > .5f)
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+
+            if (Physics.Raycast(ray, out hit, Mathf.Infinity, targetMask))
             {
-                targetPos.y = transform.position.y;
-                mousePos = targetPos;
+                Vector3 targetPos = hit.point;
+                if (Vector3.Distance(transform.position, targetPos) > .5f)
+                {
+                    targetPos.y = transform.position.y;
+                    mousePos = targetPos;
+                }
             }
+
+            Vector3 dir = (mousePos - transform.position);
+
+            GetComponent<Rigidbody>().velocity = dir * speed;
+        }else
+        {
+            Vector3 dir = (target - transform.position);
+            GetComponent<Rigidbody>().velocity = dir * 10;
         }
-
-        Vector3 dir = (mousePos - transform.position);
-
-        GetComponent<Rigidbody>().velocity = dir * speed;
     }
 
     void Update()
@@ -40,16 +65,32 @@ public class Shuriken : MonoBehaviour
 
     void OnTriggerEnter(Collider col)
     {
-        if (col.gameObject.tag == "Enemy")
+        if (isEnemy == false)
         {
-            float damage = Random.Range(10, 20);
-            print("Hit for " + damage + " damage");
-            col.SendMessageUpwards("Hit", damage);
-        }
+            if (col.gameObject.tag == "Enemy")
+            {
+                float damage = Random.Range(10, 20);
+                print("Hit for " + damage + " damage");
+                col.SendMessageUpwards("Hit", damage);
+            }
 
-        if (col.gameObject.tag != "Player")
+            if (col.gameObject.tag != "Player")
+            {
+                Destroy(gameObject);
+            }
+        }else
         {
-            Destroy(gameObject);
+            if (col.gameObject.tag == "Player")
+            {
+                float damage = Random.Range(minDamage, maxDamage);
+                print("Hit for " + damage + " damage");
+                col.SendMessageUpwards("Hit", damage);
+            }
+
+            if (col.gameObject.tag != "Enemy")
+            {
+                Destroy(gameObject);
+            }
         }
     }
 
