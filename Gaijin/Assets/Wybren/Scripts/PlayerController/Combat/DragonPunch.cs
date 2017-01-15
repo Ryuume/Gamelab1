@@ -16,7 +16,7 @@ public class DragonPunch : MonoBehaviour {
     void Begin()
     {
         player.GetComponent<PlayerController>().katana.SetActive(false);
-        player.GetComponent<PlayerController>().enabled = false;
+        player.GetComponent<PlayerController>().freeze = true;
     }
 
     void Kneel()
@@ -26,7 +26,7 @@ public class DragonPunch : MonoBehaviour {
 
     void Stand()
     {
-        model.position = new Vector3(model.position.x, normalHeight, model.position.z);
+        player.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
     }
 
     void Jump()
@@ -56,7 +56,9 @@ public class DragonPunch : MonoBehaviour {
     void End()
     {
         //player.GetComponent<PlayerController>().katana.transform.parent = player.GetComponent<PlayerController>().rHand;
-        player.GetComponent<PlayerController>().enabled = true;
+        player.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionZ;
+        player.GetComponent<Rigidbody>().freezeRotation = true;
+        player.GetComponent<PlayerController>().freeze = false;
         player.GetComponent<PlayerController>().katana.SetActive(true);
     }
 }

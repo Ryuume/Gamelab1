@@ -26,11 +26,11 @@ public class Guard
     {
         float distanceToTarget = Vector3.Distance(target.position, manager.position);
 
-        if (distanceToTarget > 3)
+        if (distanceToTarget > 2)
         {
             Move();
-        } 
-        else
+        }
+        else if (distanceToTarget < 2) 
         {
             InCombat();
         }    

@@ -1,47 +1,60 @@
 ﻿using UnityEngine;
 using System.Collections;
-using UnityEditor;
+using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
     //TODO
-    //1. Get mouse position in worldspace. +++
-    //2. Calculate at what angle the mouse is compared to the player.
-    //3. Have four states of movement, which call different animations (movement stays the same).
-    //4. Switch through states based on 2 and call necessary animations.
-    //5. Call all necessary animations.
-    //6. Have health, and such as variables.
     //7. Register hits, death and such and play animations based on this.
 
-    RaycastHit hit;
-
-    public float health;
-
+    [Header("Player Attributes")]
+    #region Neccesary Variables
     public LayerMask targetMask;
-    public Transform refDir, feet, head, rHand, lHand, pelvis;
-
+    public Transform refDir, feet, head, rHand, pelvis;
     public float standardRotation;
+    public Animator animator;
+    [HideInInspector]
+    public int stateNum; //1 = top, 2 = right, 3 = bottom, 4 = left.
+    #endregion
 
+    [Header("Movement Settings")]
+    #region Movement Variables
+    public float speed;
+    public float length;
+    [HideInInspector]
+    public float xSpeed, zSpeed;
+    [HideInInspector]
+    public bool freeze;
+    #endregion
+
+    [Header("Combat Settings")]
+    #region Combat Variables
+    public float health;
+    public float healthRegenTime, minDamage, maxDamage;
+    public GameObject katana, shuriken, kusarigama, smokebomb;
+    public float shurikenCooldown, kusarigamaCooldown, smokebombCooldown, dragonPunchRegen, hitCooldown;
+    //[HideInInspector]
+    public bool dragonPunchActive;
+    #endregion
+
+    [Header("UI Settings")]
+    #region UI Variables
+    public Image healthBar;
+    public Image dragonBarL, dragonBarR;
+    public GameObject dragonPopup;
+    public Image katanaImg, kusarigamaImg, shurikenImg, smokeImg;
+    #endregion
+
+    #region Script Variables
+    RaycastHit hit;
     Vector3 mousePos, top, bottom, left, right;
     enum lookState { top, bottom, left, right }
     lookState currentState;
-
-    public float speed, length;
-    [HideInInspector]
-    public float xSpeed, zSpeed;
-    public Animator animator;
-
-    public float minDamage, maxDamage;
-    public GameObject katana, shuriken, kusarigama, smokebomb;
-    public float shurikenCooldown, kusarigamaCooldown, smokebombCooldown, dragonPunchCooldown;
-
-    bool setRotation = false, moving, isTurning, wielding, inCombat;
-
-    float moveFloat;
-
+    bool setRotation = false, moving, isTurning, wielding, inCombat, wasHit, regenDragonPunch;
+    float moveFloat, hitTimer, regenHealth = 100;
+    public float dragonPunchCharge = 100;
     AttackController attackController;
-    [HideInInspector]
-    public int stateNum; //1 = top, 2 = right, 3 = bottom, 4 = left.
+    #endregion
 
     public void Start()
     {
@@ -54,7 +67,7 @@ public class PlayerController : MonoBehaviour
 
         katana.GetComponent<Katana>().minDamage = minDamage;
         katana.GetComponent<Katana>().maxDamage = maxDamage;
-        attackController = new AttackController(animator, 0.4f, 1, katana, transform.gameObject, stateNum, standardRotation, feet.gameObject, lHand, kusarigama, shurikenCooldown, kusarigamaCooldown, smokebombCooldown, dragonPunchCooldown);
+        attackController = new AttackController(animator, 0.4f, 1, katana, transform.gameObject, stateNum, standardRotation, feet.gameObject, kusarigama, shurikenCooldown, kusarigamaCooldown, smokebombCooldown, katanaImg, kusarigamaImg, shurikenImg, smokeImg);
     }
 
     public void Update()
@@ -65,25 +78,74 @@ public class PlayerController : MonoBehaviour
             Destroy(gameObject);
         }
 
+        if (dragonPunchActive == true)
+        {
+            dragonBarL.fillAmount = Mathf.Lerp(dragonBarL.fillAmount, (dragonPunchCharge / 100), 2 * Time.deltaTime);
+            dragonBarR.fillAmount = Mathf.Lerp(dragonBarL.fillAmount, (dragonPunchCharge / 100), 2 * Time.deltaTime);
+
+            if (dragonBarL.fillAmount < 0.1 || regenDragonPunch == true)
+            {
+                dragonPopup.SetActive(false);
+                regenDragonPunch = true;
+                dragonPunchCharge += dragonPunchRegen * Time.deltaTime;
+            }
+            if (dragonBarL.fillAmount > 0.99 || dragonBarL.fillAmount == 1)
+            {
+                dragonPopup.gameObject.SetActive(true);
+                regenDragonPunch = false;
+                dragonPunchCharge = 100;
+            }
+        }
+
+        if(freeze != true)
+        {
+            SecondaryUpdate();
+        }
+    }
+
+    void SecondaryUpdate()
+    {
+        healthBar.fillAmount = Mathf.Lerp(healthBar.fillAmount, (health / 100), 2 * Time.deltaTime);
+
+        if (wasHit == true)
+        {
+            hitTimer += Time.deltaTime;
+            if (hitTimer > hitCooldown)
+            {
+                print("lewl");
+                wasHit = false;
+            }
+        }
+        else
+        {
+            if (health < 25 || health == 25)
+            {
+                regenHealth = 25;
+            }
+            else if (health < 50 || health == 50)
+            {
+                regenHealth = 50;
+            }
+            else if (health < 75 || health == 75)
+            {
+                regenHealth = 75;
+            }
+            else if (health < 100 || health == 100)
+            {
+                regenHealth = 100;
+            }
+            health = Mathf.Lerp(health, regenHealth, healthRegenTime * Time.deltaTime);
+        }
+
         lookStates();
         Move();
         AnimationInput();
         attackController.stateNum = stateNum;
-
+        attackController.InCombat();
 
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
-        Debug.DrawRay(transform.position, top, Color.red);
-        Debug.DrawRay(transform.position, bottom, Color.blue);
-        Debug.DrawRay(transform.position, left, Color.green);
-        Debug.DrawRay(transform.position, right, Color.yellow);
-
-        Debug.DrawRay(transform.position, new Vector3(1, 0, 0), Color.white);
-        Debug.DrawRay(transform.position, new Vector3(-1, 0, 0), Color.white);
-        Debug.DrawRay(transform.position, new Vector3(0, 0, 1), Color.white);
-        Debug.DrawRay(transform.position, new Vector3(0, 0, -1), Color.white);
-
-        if(Input.GetButtonDown("Ready"))
+        if (Input.GetButtonDown("Ready"))
         {
             wielding = !wielding;
             animator.SetTrigger("Draw");
@@ -101,19 +163,13 @@ public class PlayerController : MonoBehaviour
             Vector3 targetPos = hit.point;
             Debug.DrawLine(transform.position, targetPos, Color.blue);
             if (Vector3.Distance(transform.position, targetPos) > .5f)
-            { 
+            {
                 targetPos.y = head.position.y;
-                
+
                 targetPos.y = feet.position.y;
                 mousePos = targetPos;
             }
         }
-    }
-
-    public void LateUpdate()
-    {
-        if (inCombat == true)
-            attackController.InCombat();
     }
 
     void Move()
@@ -569,6 +625,8 @@ public class PlayerController : MonoBehaviour
     public void Hit(float damage)
     {
         health -= damage;
+        wasHit = true;
+        hitTimer = 0f;
         animator.SetTrigger("Hit");
     }
 

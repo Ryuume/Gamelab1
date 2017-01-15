@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 public class AttackController
 {
@@ -16,14 +17,15 @@ public class AttackController
 
     bool _ACool, _CCool, rotating, _SCool, _KCool, _BCool, _DCool;
 
-    public float _ACoolT, attackDelay, _CCoolT, comboTime, rotationLeft = 0, originalRot, standardRot, shurikenCooldown, kusarigamaCooldown, smokebombCooldown, dragonCooldown, _SCoolT, _KCoolT, _BCoolT, _DCoolT;
+    public float _ACoolT, attackDelay, _CCoolT, comboTime, rotationLeft = 0, originalRot, standardRot, shurikenCooldown, kusarigamaCooldown, smokebombCooldown, _SCoolT, _KCoolT, _BCoolT, _DCoolT;
 
     public int _Combo = 1, stateNum, rotSpeed = 700;
 
     GameObject katana, player, model, kusarigama;
-    Transform lHand;
 
-    public AttackController (Animator _anim, float _attackDelay, float _comboTime, GameObject _Katana, GameObject _player, int _StateNum, float _standardRot, GameObject _playerModel, Transform _LHand, GameObject _Kusarigama, float _ShurikenCooldown, float _KusarigamaCooldown, float _SmokebombCoolDown, float _DragonCoolDown)
+    Image katanaImg, kusarigamaImg, shurikenImg, smokeImg;
+
+    public AttackController (Animator _anim, float _attackDelay, float _comboTime, GameObject _Katana, GameObject _player, int _StateNum, float _standardRot, GameObject _playerModel, GameObject _Kusarigama, float _ShurikenCooldown, float _KusarigamaCooldown, float _SmokebombCoolDown, Image _katanaImg, Image _kusarigamaImg, Image _shurikenImg, Image _SmokeImg)
     {
         animator = _anim;
         attackDelay = _attackDelay;
@@ -33,11 +35,14 @@ public class AttackController
         stateNum = _StateNum;
         standardRot = _standardRot;
         model = _playerModel;
-        lHand = _LHand;
         kusarigama = _Kusarigama;
         shurikenCooldown = _ShurikenCooldown;
         kusarigamaCooldown = _KusarigamaCooldown;
         smokebombCooldown = _SmokebombCoolDown;
+        katanaImg = _katanaImg;
+        kusarigamaImg = _kusarigamaImg;
+        shurikenImg = _shurikenImg;
+        smokeImg = _SmokeImg;
     }
 
     public void InCombat()
@@ -93,8 +98,9 @@ public class AttackController
         if(_ACool == true)
         {
             _ACoolT += Time.deltaTime;
+            katanaImg.fillAmount = _ACoolT / attackDelay;
 
-            if(_ACoolT > attackDelay)
+            if (_ACoolT > attackDelay)
             {
                 _ACoolT = 0;
                 _ACool = false;
@@ -141,16 +147,17 @@ public class AttackController
             _BCool = true;
         }
 
-        if (Input.GetButtonDown("DragonPunch") && rotating == false && _ACool == false && _DCool == false)
+        if (Input.GetButtonDown("DragonPunch") && rotating == false && _ACool == false && player.GetComponent<PlayerController>().dragonPunchActive == true && player.GetComponent<PlayerController>().dragonPunchCharge == 100) 
         {
+            player.GetComponent<PlayerController>().dragonPunchCharge = 0;
             animator.SetTrigger("DragonPunch");
-            _DCool = true;
         }
 
         #region cooldowns
         if (_SCool == true)
         {
             _SCoolT += Time.deltaTime;
+            shurikenImg.fillAmount = _SCoolT / shurikenCooldown;
 
             if (_SCoolT > shurikenCooldown)
             {
@@ -161,6 +168,7 @@ public class AttackController
         if (_KCool == true)
         {
             _KCoolT += Time.deltaTime;
+            kusarigamaImg.fillAmount = _KCoolT / kusarigamaCooldown;
 
             if (_KCoolT > kusarigamaCooldown)
             {
@@ -171,21 +179,12 @@ public class AttackController
         if (_BCool == true)
         {
             _BCoolT += Time.deltaTime;
+            smokeImg.fillAmount = _BCoolT / smokebombCooldown;
 
             if (_BCoolT > smokebombCooldown)
             {
                 _BCoolT = 0;
                 _BCool = false;
-            }
-        }
-        if (_DCool == true)
-        {
-            _DCoolT += Time.deltaTime;
-
-            if (_DCoolT > dragonCooldown)
-            {
-                _DCoolT = 0;
-                _DCool = false;
             }
         }
         #endregion

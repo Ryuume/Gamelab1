@@ -23,7 +23,7 @@ public class Arrow : MonoBehaviour
         {
             float damage = Random.Range(minDamage, maxDamage);
             //print("Arrow hit for " + damage + " damage");
-            col.SendMessageUpwards("Hit", 8);
+            col.SendMessageUpwards("Hit", damage);
         }
         
         if (col.transform.gameObject.tag != "Enemy")
