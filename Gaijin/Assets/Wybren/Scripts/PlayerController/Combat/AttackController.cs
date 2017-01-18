@@ -62,7 +62,7 @@ public class AttackController
 
     void Attack()
     {
-        if (Input.GetButtonDown("Fire1") && _ACool != true && rotating != true)
+        if (Input.GetButtonDown("Fire1") && _ACool != true && rotating != true && player.GetComponent<PlayerController>().inCombat == true)
         {
             if(_CCool == true)
             {
@@ -123,14 +123,14 @@ public class AttackController
 
     void Abillity()
     {
-        if(Input.GetButtonDown("Fire3") && rotating == false && _ACool == false && _SCool == false)
+        if(Input.GetButtonDown("Fire3") && rotating == false && _ACool == false && _SCool == false && player.GetComponent<PlayerController>().inCombat == true)
         {
             katana.SetActive(false);
             animator.SetTrigger("Shuriken");
             _SCool = true;
         }
 
-        if(Input.GetButtonDown("Kusarigama") && rotating == false && _ACool == false && _KCool == false)
+        if(Input.GetButtonDown("Kusarigama") && rotating == false && _ACool == false && _KCool == false && player.GetComponent<PlayerController>().inCombat == true)
         {
             katana.SetActive(false);
             kusarigama.SetActive(true);
@@ -140,7 +140,7 @@ public class AttackController
             _KCool = true;
         }
 
-        if(Input.GetButtonDown("SmokeBomb") && rotating == false && _ACool == false && _BCool == false)
+        if(Input.GetButtonDown("SmokeBomb") && rotating == false && _ACool == false && _BCool == false && player.GetComponent<PlayerController>().inCombat == true)
         {
             player.GetComponent<PlayerController>().katana.SetActive(false);
             animator.SetTrigger("Smokebomb");

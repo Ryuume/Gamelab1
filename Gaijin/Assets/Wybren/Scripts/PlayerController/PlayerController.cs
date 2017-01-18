@@ -23,7 +23,7 @@ public class PlayerController : MonoBehaviour
     public float length;
     [HideInInspector]
     public float xSpeed, zSpeed;
-    [HideInInspector]
+    //[HideInInspector]
     public bool freeze;
     #endregion
 
@@ -50,7 +50,9 @@ public class PlayerController : MonoBehaviour
     Vector3 mousePos, top, bottom, left, right;
     enum lookState { top, bottom, left, right }
     lookState currentState;
-    bool setRotation = false, moving, isTurning, wielding, inCombat, wasHit, regenDragonPunch;
+    bool setRotation = false, moving, isTurning, wasHit, regenDragonPunch, dead;
+    [HideInInspector]
+    public bool wielding = false, inCombat;
     float moveFloat, hitTimer, regenHealth = 100;
     public float dragonPunchCharge = 100;
     AttackController attackController;
@@ -72,10 +74,13 @@ public class PlayerController : MonoBehaviour
 
     public void Update()
     {
-        if (health == 0 || health < 0)
+        if (health == 0 && dead != true || health < 0 && dead != true)
         {
             print("You Died");
-            Destroy(gameObject);
+            freeze = true;
+            dead = true;
+            animator.SetTrigger("Death");
+            //Destroy(gameObject);
         }
 
         if (dragonPunchActive == true)
@@ -141,6 +146,7 @@ public class PlayerController : MonoBehaviour
         Move();
         AnimationInput();
         attackController.stateNum = stateNum;
+
         attackController.InCombat();
 
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -149,14 +155,10 @@ public class PlayerController : MonoBehaviour
         {
             wielding = !wielding;
             animator.SetTrigger("Draw");
-            animator.SetBool("Wielding", wielding);
-            animator.SetBool("InCombat", false);
         }
-        if (wielding == true && Input.GetButtonDown("TempCombat"))
-        {
-            inCombat = !inCombat;
-            animator.SetBool("InCombat", inCombat);
-        }
+
+        animator.SetBool("Wielding", wielding);
+        animator.SetBool("InCombat", inCombat);
 
         if (Physics.Raycast(ray, out hit, Mathf.Infinity, targetMask))
         {
@@ -624,10 +626,13 @@ public class PlayerController : MonoBehaviour
 
     public void Hit(float damage)
     {
-        health -= damage;
-        wasHit = true;
-        hitTimer = 0f;
-        animator.SetTrigger("Hit");
+        if (dead != true)
+        {
+            health -= damage;
+            wasHit = true;
+            hitTimer = 0f;
+            animator.SetTrigger("Hit");
+        }
     }
 
     public void Stun()

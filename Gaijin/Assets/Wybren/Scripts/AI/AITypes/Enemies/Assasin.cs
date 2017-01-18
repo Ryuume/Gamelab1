@@ -87,7 +87,7 @@ public class Assasin
             recalculatedPath = false;
 
             timer += 1 * Time.deltaTime;
-            if (timer > fireRate)
+            if (timer > fireRate && manager.GetComponent<AIManager>().dead != true)
             {
                 manager.LookAt(target.position);
                 Animator animator = manager.GetComponent<AIManager>().animator;

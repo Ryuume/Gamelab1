@@ -83,7 +83,7 @@ public class Archer
             recalculatedPath = false;
 
             timer += 1 * Time.deltaTime;
-            if (timer > fireRate)
+            if (timer > fireRate && manager.GetComponent<AIManager>().dead != true)
             {
                 Attack();
                 timer = 0;

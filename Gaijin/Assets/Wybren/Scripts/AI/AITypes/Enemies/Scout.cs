@@ -43,7 +43,7 @@ public class Scout
 
             timer += 1 * Time.deltaTime;
 
-            if (timer > fireRate)
+            if (timer > fireRate && manager.GetComponent<AIManager>().dead != true)
             {
                 //Charge at player
                 

@@ -56,7 +56,7 @@ public class Guard
 
         // Smoothly rotate towards the target point.
         manager.rotation = Quaternion.Slerp(manager.rotation, targetRotation, 3 * Time.deltaTime);
-        if (_ACool != true)
+        if (_ACool != true && manager.GetComponent<AIManager>().dead != true)
         {
             Attack();
             _ACool = true;

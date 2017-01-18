@@ -187,6 +187,7 @@ GameObject:
   - 4: {fileID: 4000011378260002}
   - 95: {fileID: 95000013710693490}
   - 114: {fileID: 114000012209221758}
+  - 114: {fileID: 114000012153234668}
   m_Layer: 0
   m_Name: Enemy_Archer
   m_TagString: Untagged
@@ -1675,7 +1676,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1000011644416408}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 33.78, y: 0, z: -16.739998}
+  m_LocalPosition: {x: 28.97, y: 0, z: -16.739998}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children:
@@ -2245,6 +2246,18 @@ MonoBehaviour:
   edgeResolveIterations: 4
   draw: 1
   viewMeshFilter: {fileID: 33000014072865064}
+--- !u!114 &114000012153234668
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1000010786339306}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bf59986b98391dc4c9a47abff50215bd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  prefab: {fileID: 1000011644416408}
 --- !u!114 &114000012209221758
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2300,10 +2313,7 @@ MonoBehaviour:
   priority: 0
   pathType: 0
   speed: 3
-  combatSpeed: 5
-  damage: 10
-  attackDelay: 3
-  health: 100
+  combatSpeed: 6
   wanderRadius: 25
   animator: {fileID: 95000013710693490}
   path: {fileID: 0}
@@ -2311,8 +2321,13 @@ MonoBehaviour:
   loopPath: 1
   wanderInArea: 0
   weapon: {fileID: 1000011915304210}
+  projectile: {fileID: 1000010899694434, guid: 15fda5739dc597e48bd96b6877c8eb57, type: 2}
   minDamage: 5
   maxDamage: 7
+  attackDelay: 2
+  health: 100
+  suspiciousHelpRadius: 5
+  combatHelpRadius: 15
   inCombat: 0
   spottingTime: 2
   suspiciousSpottingTime: 1
@@ -2324,7 +2339,8 @@ MonoBehaviour:
   suspiciousCooldown: 0
   combatCooldown: 0
   target: {fileID: 0}
-  projectile: {fileID: 1000010899694434, guid: 15fda5739dc597e48bd96b6877c8eb57, type: 2}
+  freeze: 0
+  dead: 0
 --- !u!136 &136000011317816728
 CapsuleCollider:
   m_ObjectHideFlags: 1
@@ -2428,7 +2444,7 @@ SkinnedMeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: aee4bcf5aab468d45bc9ea70facf5ee0, type: 2}
+  - {fileID: 2100000, guid: 68273ded6c6c4114a8a44e485aecbc95, type: 2}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_ProbeAnchor: {fileID: 0}

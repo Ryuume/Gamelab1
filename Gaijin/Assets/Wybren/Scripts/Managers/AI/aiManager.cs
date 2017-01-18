@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 [RequireComponent (typeof (NavMeshAgent))]
 public class AIManager : MonoBehaviour
@@ -42,7 +43,7 @@ public class AIManager : MonoBehaviour
     [Header("Combat Settings")]
     public GameObject weapon;
     public GameObject projectile;
-    public float minDamage, maxDamage, attackDelay, health;
+    public float minDamage, maxDamage, attackDelay, health, suspiciousHelpRadius, combatHelpRadius;
 
     [HideInInspector]
     public bool inCombat;
@@ -66,7 +67,9 @@ public class AIManager : MonoBehaviour
     Npc npcUpdate;
     Ally aUpdate;
 
-    
+    [HideInInspector]
+    public bool freeze, dead;
+    IEnumerator savedNumerator;
     
     public void Start()
     {
@@ -128,129 +131,170 @@ public class AIManager : MonoBehaviour
 
     public void Update()
     {
-        //print(GetComponent<NavMeshAgent>().velocity + " Velocity");
-        if(GetComponent<NavMeshAgent>().velocity.x == 0 && GetComponent<NavMeshAgent>().velocity.z == 0)
+        if (health == 0 && dead != true || health < 0 && dead != true)
         {
-            animator.SetBool("Moving", false);
-        }else
-        {
-            animator.SetBool("Moving", true);
-        }
-
-        if(health == 0 || health < 0)
-        {
+            /*
+            dead = true;
+            freeze = true;
+            StopCoroutine(savedNumerator);
+            animator.SetTrigger("Death");
             print("I cri ervytiem");
+            GameObject.Find("GameManager").GetComponent<CombatManager>().EnemyDeath(this);
+            */
             Destroy(gameObject);
         }
-        animator.SetBool("Suspicious", suspicious);
-        animator.SetBool("InCombat", inCombat);
 
-        switch (mode)
+        if (freeze != true)
         {
-            //Enemy's
-            case Mode.enemy:
-                {
-                    if (visible == true)
+            //print(GetComponent<NavMeshAgent>().velocity + " Velocity");
+            if (GetComponent<NavMeshAgent>().velocity.x == 0 && GetComponent<NavMeshAgent>().velocity.z == 0)
+            {
+                animator.SetBool("Moving", false);
+            }
+            else
+            {
+                animator.SetBool("Moving", true);
+            }
+
+            
+            animator.SetBool("Suspicious", suspicious);
+            animator.SetBool("InCombat", inCombat);
+
+            switch (mode)
+            {
+                //Enemy's
+                case Mode.enemy:
                     {
-                        eUpdate.visible = true;
-                        GetComponent<NavMeshAgent>().speed = 0;
-                        float targetDistance = Vector3.Distance(target.position, transform.position);
-
-                        if (seenTime > (spottingTime * targetDistance / 6) && suspicious == false)
+                        if (visible == true)
                         {
-                            print("I saw something");
+                            eUpdate.visible = true;
+                            GetComponent<NavMeshAgent>().speed = 0;
+                            float targetDistance = Vector3.Distance(target.position, transform.position);
 
-                            NavMeshHit hit;
-                            NavMesh.SamplePosition(target.position, out hit, 10, 1);
-                            eUpdate.sTarget = hit.position;
-
-                            eUpdate.unit.target = null;
-                            eUpdate.unit.randomTarget = Vector3.zero;
-
-                            suspicious = true;
-                        }
-                        if(suspicious == true)
-                        {
-                            if(seenWhilstSuspicious > (suspiciousSpottingTime * targetDistance / 3) && inCombat == false)
+                            if (seenTime > (spottingTime * targetDistance / 6) && suspicious == false)
                             {
-                                print("I see him!");
-                                eUpdate.target = target;
-                                GetComponent<FieldOfView>().draw = false;
-                                GetComponent<AreaOfView>().draw = false;
-                                inCombat = true;
+                                print("I saw something");
+
+                                NavMeshHit hit;
+                                NavMesh.SamplePosition(target.position, out hit, 10, 1);
+                                eUpdate.sTarget = hit.position;
+
+                                Collider[] allColliders = Physics.OverlapSphere(transform.position, suspiciousHelpRadius);
+                                List<AIManager> _AIList = new List<AIManager>();
+                                foreach (Collider _AI in allColliders)
+                                {
+                                    if (_AI.tag == "Enemy")
+                                    {
+                                        _AIList.Add(_AI.GetComponent<AIManager>());
+                                    }
+                                }
+                                _AIList.Add(this);
+                                GameObject.Find("GameManager").GetComponent<CombatManager>().Suspicious(_AIList, hit.position);
+
+                                eUpdate.unit.target = null;
+                                eUpdate.unit.randomTarget = Vector3.zero;
+
+                                suspicious = true;
+                            }
+                            if (suspicious == true)
+                            {
+                                if (seenWhilstSuspicious > (suspiciousSpottingTime * targetDistance / 3) && inCombat == false)
+                                {
+                                    print("I see him!");
+                                    eUpdate.target = target;
+
+                                    Collider[] allColliders = Physics.OverlapSphere(transform.position, combatHelpRadius);
+                                    List<AIManager> _AIList = new List<AIManager>();
+                                    foreach (Collider _AI in allColliders)
+                                    {
+                                        if (_AI.tag == "Enemy")
+                                        {
+                                            _AIList.Add(_AI.GetComponent<AIManager>());
+                                        }
+                                    }
+                                    GameObject.Find("GameManager").GetComponent<CombatManager>().SpottedPlayer(_AIList, target);
+
+                                    GetComponent<FieldOfView>().draw = false;
+                                    GetComponent<AreaOfView>().draw = false;
+                                    inCombat = true;
+                                }
                             }
                         }
-                    }
-                    else
-                    {
-                        eUpdate.visible = false;
-                        GetComponent<NavMeshAgent>().speed = speed;
+                        else
+                        {
+                            eUpdate.visible = false;
+                            GetComponent<NavMeshAgent>().speed = speed;
 
-                        if (seenTime > 0)
-                        {
-                            seenTime -= Time.deltaTime * 1;
-                        }
-                        if (seenWhilstSuspicious > 0)
-                        {
-                            seenWhilstSuspicious -= Time.deltaTime * 1;
-                        } 
-                        if (suspicious == true && inCombat == false)
-                        {
-                            suspiciousCooldown += Time.deltaTime * 1;
-                            if (suspiciousCooldown > 12)
+                            if (seenTime > 0)
                             {
-                                print("I must be imagining things");
-                                suspiciousCooldown = 0;
-                                suspicious = false;
+                                seenTime -= Time.deltaTime * 1;
+                            }
+                            if (seenWhilstSuspicious > 0)
+                            {
+                                seenWhilstSuspicious -= Time.deltaTime * 1;
+                            }
+                            if (suspicious == true && inCombat == false)
+                            {
+                                suspiciousCooldown += Time.deltaTime * 1;
+                                if (suspiciousCooldown > 12)
+                                {
+                                    print("I must be imagining things");
+                                    suspiciousCooldown = 0;
+                                    suspicious = false;
+                                }
                             }
                         }
+                        break;
                     }
-                    break;
-                }
+            }
         } 
     }
 
     public void FixedUpdate()
     {
-        switch (mode)
+        if (freeze != true || dead != true)
         {
-             //Enemy's
-             case Mode.enemy:
-                {
-                    eUpdate.Active();
-                    eUpdate.suspicious = suspicious;
-                    eUpdate.inCombat = inCombat;
-                    break;
-                }
+            switch (mode)
+            {
+                //Enemy's
+                case Mode.enemy:
+                    {
+                        eUpdate.Active();
+                        eUpdate.suspicious = suspicious;
+                        eUpdate.inCombat = inCombat;
+                        break;
+                    }
 
-            case Mode.demon:
-                {
-                    dUpdate.Active();
-                    dUpdate.suspicious = suspicious;
-                    dUpdate.inCombat = inCombat;
-                    break;
-                }
+                case Mode.demon:
+                    {
+                        dUpdate.Active();
+                        dUpdate.suspicious = suspicious;
+                        dUpdate.inCombat = inCombat;
+                        break;
+                    }
 
-            //Npc's
-            case Mode.npc:
-                {
-                    npcUpdate.Active();
-                    npcUpdate.inCombat = inCombat;
-                    break;
-                }
+                //Npc's
+                case Mode.npc:
+                    {
+                        npcUpdate.Active();
+                        npcUpdate.inCombat = inCombat;
+                        break;
+                    }
 
-            //Ally's
-            case Mode.ally:
-                {
-                    aUpdate.Active();
-                    aUpdate.inCombat = inCombat;
-                    break;
-                }
+                //Ally's
+                case Mode.ally:
+                    {
+                        aUpdate.Active();
+                        aUpdate.inCombat = inCombat;
+                        break;
+                    }
+            }
         }
     }
 
     public void StartAICoroutine(IEnumerator coroutineMethod)
     {
+        savedNumerator = coroutineMethod;
         StartCoroutine(coroutineMethod);
     }
 
@@ -266,19 +310,32 @@ public class AIManager : MonoBehaviour
 
     public void Hit(float damage)
     {
-        print("hit");
-        health -= damage;
-        animator.SetTrigger("Hit");
+        if (dead != true || freeze != true)
+        {
+            print("hit");
+            health -= damage;
+            if(health > 0)
+            {
+                animator.SetTrigger("Hit");
+            }
+        }
     }
 
     public void Stun()
     {
-        print("Stun");
-        animator.SetBool("Stunned", true);
+        if (dead != true)
+        {
+            print("Stun");
+            animator.SetBool("Stunned", true);
+        }
     }
 
     public void Smoked()
     {
-        animator.SetTrigger("Smoke");
+        if (dead != true)
+        {
+            animator.SetTrigger("Smoke");
+            freeze = true;
+        }
     }
 }

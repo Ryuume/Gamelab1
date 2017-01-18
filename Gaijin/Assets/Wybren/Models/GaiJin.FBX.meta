@@ -6054,7 +6054,14 @@ ModelImporter:
       mirror: 0
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
-      events: []
+      events:
+      - time: 0.532017
+        functionName: SetDeath
+        data: 
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
       transformMask:
       - path: 
         weight: 1
@@ -7325,6 +7332,38 @@ ModelImporter:
         functionName: End
         data: 
         objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 0.19179624
+        functionName: Ground
+        data: 
+        objectReferenceParameter: {fileID: 1000011919020468, guid: a52f079592499e0438e34254cb9ac7ec,
+          type: 2}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 0.2089797
+        functionName: ChargeStay
+        data: 
+        objectReferenceParameter: {fileID: 1000012274234002, guid: 68a0305659a61204e8c6e80c82efe66e,
+          type: 2}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 0.35809323
+        functionName: ChargeCircle
+        data: 
+        objectReferenceParameter: {fileID: 1000013371959496, guid: 552be5fce0a1ef1428d43c230f2a1197,
+          type: 2}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 0.79212856
+        functionName: Tatsu
+        data: 
+        objectReferenceParameter: {fileID: 1000011791768800, guid: 084e23fdbc7a3df40b43c25f26de0641,
+          type: 2}
         floatParameter: 0
         intParameter: 0
         messageOptions: 0

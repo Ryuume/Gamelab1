@@ -6,7 +6,9 @@ public class DragonPunch : MonoBehaviour {
     float normalHeight;
 
     public GameObject player;
-    public Transform model;
+    public Transform model, handL, handR;
+
+    public float jumpUp, jumpForward;
 
     void Start()
     {
@@ -26,39 +28,55 @@ public class DragonPunch : MonoBehaviour {
 
     void Stand()
     {
-        player.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
+        player.GetComponent<Rigidbody>().isKinematic = false;
     }
 
     void Jump()
     {
         if (player.GetComponent<PlayerController>().stateNum == 1)
         {
-            player.GetComponent<Rigidbody>().velocity = new Vector3(7, 12, -7);
+            player.GetComponent<Rigidbody>().velocity = new Vector3(jumpForward, jumpUp, -jumpForward);
         }
         else if (player.GetComponent<PlayerController>().stateNum == 2)
         {
-            player.GetComponent<Rigidbody>().velocity = new Vector3(-7, 12, -7);
+            player.GetComponent<Rigidbody>().velocity = new Vector3(-jumpForward, jumpUp, -jumpForward);
         }else if (player.GetComponent<PlayerController>().stateNum == 3)
         {
-            player.GetComponent<Rigidbody>().velocity = new Vector3(-7, 12, 7);
+            player.GetComponent<Rigidbody>().velocity = new Vector3(-jumpForward, jumpUp, jumpForward);
         }
         else if (player.GetComponent<PlayerController>().stateNum == 4)
         {
-            player.GetComponent<Rigidbody>().velocity = new Vector3(7, 12, 7);
+            player.GetComponent<Rigidbody>().velocity = new Vector3(jumpForward, jumpUp, jumpForward);
         }
     }
 
-    void SpawnEffect()
+    void Ground(GameObject effect)
     {
+        Instantiate(effect, new Vector3(model.position.x, 1, model.position.z), Quaternion.identity);
+    }
 
+    void ChargeStay(GameObject effect)
+    {
+        Instantiate(effect, handL.position, Quaternion.identity);
+        Instantiate(effect, handR.position, Quaternion.identity);
+    }
+
+    void ChargeCircle(GameObject effect)
+    {
+        Instantiate(effect, new Vector3(model.position.x, 1, model.position.z), Quaternion.identity);
+    }
+
+    void Tatsu(GameObject effect)
+    {
+        Instantiate(effect, new Vector3(model.position.x, 1, model.position.z), model.rotation);
     }
 
     void End()
     {
         //player.GetComponent<PlayerController>().katana.transform.parent = player.GetComponent<PlayerController>().rHand;
-        player.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionZ;
-        player.GetComponent<Rigidbody>().freezeRotation = true;
+        
         player.GetComponent<PlayerController>().freeze = false;
         player.GetComponent<PlayerController>().katana.SetActive(true);
+        player.GetComponent<Rigidbody>().isKinematic = true;
     }
 }

@@ -96,6 +96,7 @@ GameObject:
   - 4: {fileID: 4000013279350324}
   - 95: {fileID: 95000011210351350}
   - 114: {fileID: 114000010164208806}
+  - 114: {fileID: 114000013124853446}
   m_Layer: 0
   m_Name: Enemy_Assassin
   m_TagString: Enemy
@@ -2250,7 +2251,7 @@ MonoBehaviour:
   allyType: 0
   priority: 0
   pathType: 0
-  speed: 3
+  speed: 4
   combatSpeed: 6
   wanderRadius: 25
   animator: {fileID: 95000011210351350}
@@ -2264,6 +2265,8 @@ MonoBehaviour:
   maxDamage: 8
   attackDelay: 1.5
   health: 100
+  suspiciousHelpRadius: 5
+  combatHelpRadius: 15
   inCombat: 0
   spottingTime: 2
   suspiciousSpottingTime: 1
@@ -2275,6 +2278,8 @@ MonoBehaviour:
   suspiciousCooldown: 0
   combatCooldown: 0
   target: {fileID: 0}
+  freeze: 0
+  dead: 0
 --- !u!114 &114000011615893488
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2325,6 +2330,18 @@ MonoBehaviour:
   edgeResolveIterations: 4
   viewMeshFilter: {fileID: 33000013858243206}
   draw: 1
+--- !u!114 &114000013124853446
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1000010400521002}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bf59986b98391dc4c9a47abff50215bd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  prefab: {fileID: 1000011044693786}
 --- !u!114 &114000013548595416
 MonoBehaviour:
   m_ObjectHideFlags: 1
