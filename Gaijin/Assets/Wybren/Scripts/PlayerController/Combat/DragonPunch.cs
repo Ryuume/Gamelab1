@@ -60,7 +60,7 @@ public class DragonPunch : MonoBehaviour {
             }
             else if (player.GetComponent<PlayerController>().stateNum == 2)
             {
-                player.GetComponent<Rigidbody>().velocity = new Vector3(0, jumpUp, jumpZ);
+                player.GetComponent<Rigidbody>().velocity = new Vector3(0, jumpUp, -jumpZ);
             }
             else if (player.GetComponent<PlayerController>().stateNum == 3)
             {
@@ -68,7 +68,7 @@ public class DragonPunch : MonoBehaviour {
             }
             else if (player.GetComponent<PlayerController>().stateNum == 4)
             {
-                player.GetComponent<Rigidbody>().velocity = new Vector3(0, jumpUp, -jumpZ);
+                player.GetComponent<Rigidbody>().velocity = new Vector3(0, jumpUp, jumpZ);
             }
         }
     }
