@@ -20,6 +20,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 4000013977918174}
   - 95: {fileID: 95000011067338132}
+  - 64: {fileID: 64000011405740972}
   m_Layer: 0
   m_Name: Crate_LP
   m_TagString: Untagged
@@ -37,6 +38,7 @@ GameObject:
   - 4: {fileID: 4000011663721418}
   - 33: {fileID: 33000011094191616}
   - 23: {fileID: 23000013437032250}
+  - 64: {fileID: 64000010308828644}
   m_Layer: 0
   m_Name: Crate_LP
   m_TagString: Untagged
@@ -174,6 +176,30 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1000013196815028}
   m_Mesh: {fileID: 4300002, guid: 38725efa6922b3e4892099a99e626a32, type: 3}
+--- !u!64 &64000010308828644
+MeshCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1000013095893534}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Convex: 0
+  m_Mesh: {fileID: 4300000, guid: 38725efa6922b3e4892099a99e626a32, type: 3}
+--- !u!64 &64000011405740972
+MeshCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1000011277603842}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Convex: 0
+  m_Mesh: {fileID: 0}
 --- !u!95 &95000011067338132
 Animator:
   serializedVersion: 3
