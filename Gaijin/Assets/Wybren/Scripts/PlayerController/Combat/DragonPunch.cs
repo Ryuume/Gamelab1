@@ -9,6 +9,7 @@ public class DragonPunch : MonoBehaviour {
     public Transform model, handL, handR;
 
     public float jumpUp, jumpX = 7f, jumpZ = 7f;
+    public bool straightMovement = false;
 
     void Start()
     {
@@ -28,25 +29,47 @@ public class DragonPunch : MonoBehaviour {
 
     void Stand()
     {
-        player.GetComponent<Rigidbody>().isKinematic = false;
+
     }
 
     void Jump()
     {
-        if (player.GetComponent<PlayerController>().stateNum == 1)
+        if (straightMovement == false)
         {
-            player.GetComponent<Rigidbody>().velocity = new Vector3(jumpX, jumpUp, -jumpZ);
-        }
-        else if (player.GetComponent<PlayerController>().stateNum == 2)
+            if (player.GetComponent<PlayerController>().stateNum == 1)
+            {
+                player.GetComponent<Rigidbody>().velocity = new Vector3(jumpX, jumpUp, -jumpZ);
+            }
+            else if (player.GetComponent<PlayerController>().stateNum == 2)
+            {
+                player.GetComponent<Rigidbody>().velocity = new Vector3(-jumpX, jumpUp, -jumpZ);
+            }
+            else if (player.GetComponent<PlayerController>().stateNum == 3)
+            {
+                player.GetComponent<Rigidbody>().velocity = new Vector3(-jumpX, jumpUp, jumpZ);
+            }
+            else if (player.GetComponent<PlayerController>().stateNum == 4)
+            {
+                player.GetComponent<Rigidbody>().velocity = new Vector3(jumpX, jumpUp, jumpZ);
+            }
+        }else
         {
-            player.GetComponent<Rigidbody>().velocity = new Vector3(-jumpX, jumpUp, -jumpZ);
-        }else if (player.GetComponent<PlayerController>().stateNum == 3)
-        {
-            player.GetComponent<Rigidbody>().velocity = new Vector3(-jumpX, jumpUp, jumpZ);
-        }
-        else if (player.GetComponent<PlayerController>().stateNum == 4)
-        {
-            player.GetComponent<Rigidbody>().velocity = new Vector3(jumpX, jumpUp, jumpZ);
+            if (player.GetComponent<PlayerController>().stateNum == 1)
+            {
+                player.GetComponent<Rigidbody>().velocity = new Vector3(jumpX, jumpUp, 0);
+            }
+            else if (player.GetComponent<PlayerController>().stateNum == 2)
+            {
+                player.GetComponent<Rigidbody>().velocity = new Vector3(0, jumpUp, jumpZ);
+            }
+            else if (player.GetComponent<PlayerController>().stateNum == 3)
+            {
+                player.GetComponent<Rigidbody>().velocity = new Vector3(-jumpX, jumpUp, 0);
+            }
+            else if (player.GetComponent<PlayerController>().stateNum == 4)
+            {
+                player.GetComponent<Rigidbody>().velocity = new Vector3(0, jumpUp, -jumpZ);
+            }
         }
     }
 
@@ -77,6 +100,5 @@ public class DragonPunch : MonoBehaviour {
         
         player.GetComponent<PlayerController>().freeze = false;
         player.GetComponent<PlayerController>().katana.SetActive(true);
-        player.GetComponent<Rigidbody>().isKinematic = true;
     }
 }
