@@ -2338,12 +2338,12 @@ MonoBehaviour:
   speed: 4
   combatSpeed: 6
   wanderRadius: 25
-  animator: {fileID: 95000010091142766}
+  animator: {fileID: 0}
   path: {fileID: 0}
   wanderArea: {fileID: 0}
   loopPath: 1
   wanderInArea: 0
-  weapon: {fileID: 1000012496185710}
+  weapon: {fileID: 0}
   projectile: {fileID: 57579680, guid: 15fda5739dc597e48bd96b6877c8eb57, type: 2}
   minDamage: 10
   maxDamage: 15
