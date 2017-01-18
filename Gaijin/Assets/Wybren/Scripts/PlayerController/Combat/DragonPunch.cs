@@ -8,7 +8,7 @@ public class DragonPunch : MonoBehaviour {
     public GameObject player;
     public Transform model, handL, handR;
 
-    public float jumpUp, jumpForward;
+    public float jumpUp, jumpX = 7f, jumpZ = 7f;
 
     void Start()
     {
@@ -35,18 +35,18 @@ public class DragonPunch : MonoBehaviour {
     {
         if (player.GetComponent<PlayerController>().stateNum == 1)
         {
-            player.GetComponent<Rigidbody>().velocity = new Vector3(jumpForward, jumpUp, -jumpForward);
+            player.GetComponent<Rigidbody>().velocity = new Vector3(jumpX, jumpUp, -jumpZ);
         }
         else if (player.GetComponent<PlayerController>().stateNum == 2)
         {
-            player.GetComponent<Rigidbody>().velocity = new Vector3(-jumpForward, jumpUp, -jumpForward);
+            player.GetComponent<Rigidbody>().velocity = new Vector3(-jumpX, jumpUp, -jumpZ);
         }else if (player.GetComponent<PlayerController>().stateNum == 3)
         {
-            player.GetComponent<Rigidbody>().velocity = new Vector3(-jumpForward, jumpUp, jumpForward);
+            player.GetComponent<Rigidbody>().velocity = new Vector3(-jumpX, jumpUp, jumpZ);
         }
         else if (player.GetComponent<PlayerController>().stateNum == 4)
         {
-            player.GetComponent<Rigidbody>().velocity = new Vector3(jumpForward, jumpUp, jumpForward);
+            player.GetComponent<Rigidbody>().velocity = new Vector3(jumpX, jumpUp, jumpZ);
         }
     }
 
