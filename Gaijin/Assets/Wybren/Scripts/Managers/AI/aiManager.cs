@@ -133,15 +133,14 @@ public class AIManager : MonoBehaviour
     {
         if (health == 0 && dead != true || health < 0 && dead != true)
         {
-            /*
+
             dead = true;
             freeze = true;
             StopCoroutine(savedNumerator);
             animator.SetTrigger("Death");
             print("I cri ervytiem");
-            */
             GameObject.Find("GameManager").GetComponent<CombatManager>().EnemyDeath(this);
-            Destroy(gameObject);
+            //Destroy(gameObject);
         }
 
         if (freeze != true)

@@ -15,5 +15,7 @@ public class Death : MonoBehaviour {
     void Delete()
     {
         prefab.GetComponent<AIManager>().enabled = false;
+        prefab.GetComponent<NavMeshAgent>().enabled = false;
+        prefab.GetComponent<AreaOfView>().enabled = false;
     }
 }
