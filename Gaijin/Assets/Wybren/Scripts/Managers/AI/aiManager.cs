@@ -139,8 +139,8 @@ public class AIManager : MonoBehaviour
             StopCoroutine(savedNumerator);
             animator.SetTrigger("Death");
             print("I cri ervytiem");
-            GameObject.Find("GameManager").GetComponent<CombatManager>().EnemyDeath(this);
             */
+            GameObject.Find("GameManager").GetComponent<CombatManager>().EnemyDeath(this);
             Destroy(gameObject);
         }
 
