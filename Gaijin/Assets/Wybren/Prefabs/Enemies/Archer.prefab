@@ -2295,6 +2295,7 @@ MonoBehaviour:
   edgeResolveIterations: 4
   viewMeshFilter: {fileID: 33000010611596692}
   draw: 1
+  turn: 1
 --- !u!114 &114000014288676322
 MonoBehaviour:
   m_ObjectHideFlags: 1

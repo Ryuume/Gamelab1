@@ -26,7 +26,7 @@ public class AreaOfView : MonoBehaviour
     Mesh viewMesh;
 
     [HideInInspector]
-    public bool draw = true;
+    public bool draw = true, turn = true;
 
     AIManager manager;
 
@@ -75,7 +75,10 @@ public class AreaOfView : MonoBehaviour
                     Quaternion targetRotation = Quaternion.LookRotation(targetPos - transform.position);
 
                     // Smoothly rotate towards the target point.
-                    transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, 7 * Time.deltaTime);
+                    if (turn == true)
+                    {
+                        transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, 7 * Time.deltaTime);
+                    }
                 }
             }
         }
