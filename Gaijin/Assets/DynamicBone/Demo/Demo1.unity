@@ -356,35 +356,49 @@ MonoBehaviour:
   m_UpdateRate: 60
   m_Damping: 0.2
   m_DampingDistrib:
+    serializedVersion: 2
     m_Curve: []
     m_PreInfinity: 2
     m_PostInfinity: 2
+    m_RotationOrder: 4
   m_Elasticity: 0.1
   m_ElasticityDistrib:
+    serializedVersion: 2
     m_Curve: []
     m_PreInfinity: 2
     m_PostInfinity: 2
+    m_RotationOrder: 4
   m_Stiffness: 0.8
   m_StiffnessDistrib:
+    serializedVersion: 2
     m_Curve: []
     m_PreInfinity: 2
     m_PostInfinity: 2
+    m_RotationOrder: 4
   m_Inert: 0.5
   m_InertDistrib:
+    serializedVersion: 2
     m_Curve: []
     m_PreInfinity: 2
     m_PostInfinity: 2
+    m_RotationOrder: 4
   m_Radius: 0
   m_RadiusDistrib:
+    serializedVersion: 2
     m_Curve: []
     m_PreInfinity: 2
     m_PostInfinity: 2
+    m_RotationOrder: 4
   m_EndLength: 0
   m_EndOffset: {x: -0.1, y: -0.1, z: 0.3}
   m_Gravity: {x: 0, y: 0, z: 0}
   m_Force: {x: 0, y: 0, z: 0}
   m_Colliders: []
   m_Exclusions: []
+  m_FreezeAxis: 0
+  m_DistantDisable: 0
+  m_ReferenceObject: {fileID: 0}
+  m_DistanceToObject: 20
 --- !u!114 &143600405
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -400,26 +414,35 @@ MonoBehaviour:
   m_UpdateRate: 60
   m_Damping: 0.2
   m_DampingDistrib:
+    serializedVersion: 2
     m_Curve: []
     m_PreInfinity: 2
     m_PostInfinity: 2
+    m_RotationOrder: 4
   m_Elasticity: 0.1
   m_ElasticityDistrib:
+    serializedVersion: 2
     m_Curve: []
     m_PreInfinity: 2
     m_PostInfinity: 2
+    m_RotationOrder: 4
   m_Stiffness: 0.8
   m_StiffnessDistrib:
+    serializedVersion: 2
     m_Curve: []
     m_PreInfinity: 2
     m_PostInfinity: 2
+    m_RotationOrder: 4
   m_Inert: 0.5
   m_InertDistrib:
+    serializedVersion: 2
     m_Curve: []
     m_PreInfinity: 2
     m_PostInfinity: 2
+    m_RotationOrder: 4
   m_Radius: 0
   m_RadiusDistrib:
+    serializedVersion: 2
     m_Curve:
     - time: 0.28642094
       value: 0.8996325
@@ -428,12 +451,17 @@ MonoBehaviour:
       tangentMode: 1
     m_PreInfinity: 2
     m_PostInfinity: 2
+    m_RotationOrder: 4
   m_EndLength: 0
   m_EndOffset: {x: 0.1, y: -0.1, z: 0.3}
   m_Gravity: {x: 0, y: 0, z: 0}
   m_Force: {x: 0, y: 0, z: 0}
   m_Colliders: []
   m_Exclusions: []
+  m_FreezeAxis: 0
+  m_DistantDisable: 0
+  m_ReferenceObject: {fileID: 0}
+  m_DistanceToObject: 20
 --- !u!114 &143600406
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -449,26 +477,35 @@ MonoBehaviour:
   m_UpdateRate: 60
   m_Damping: 0.2
   m_DampingDistrib:
+    serializedVersion: 2
     m_Curve: []
     m_PreInfinity: 2
     m_PostInfinity: 2
+    m_RotationOrder: 4
   m_Elasticity: 0.05
   m_ElasticityDistrib:
+    serializedVersion: 2
     m_Curve: []
     m_PreInfinity: 2
     m_PostInfinity: 2
+    m_RotationOrder: 4
   m_Stiffness: 0.7
   m_StiffnessDistrib:
+    serializedVersion: 2
     m_Curve: []
     m_PreInfinity: 2
     m_PostInfinity: 2
+    m_RotationOrder: 4
   m_Inert: 0.5
   m_InertDistrib:
+    serializedVersion: 2
     m_Curve: []
     m_PreInfinity: 2
     m_PostInfinity: 2
+    m_RotationOrder: 4
   m_Radius: 0.05
   m_RadiusDistrib:
+    serializedVersion: 2
     m_Curve:
     - time: 0.004166667
       value: 1.0124999
@@ -482,6 +519,7 @@ MonoBehaviour:
       tangentMode: 10
     m_PreInfinity: 2
     m_PostInfinity: 2
+    m_RotationOrder: 4
   m_EndLength: 0
   m_EndOffset: {x: 0, y: 0, z: 0}
   m_Gravity: {x: 0, y: -0.002, z: 0}
@@ -490,6 +528,10 @@ MonoBehaviour:
   - {fileID: 94102370}
   - {fileID: 838898607}
   m_Exclusions: []
+  m_FreezeAxis: 0
+  m_DistantDisable: 0
+  m_ReferenceObject: {fileID: 0}
+  m_DistanceToObject: 20
 --- !u!1 &155639258
 GameObject:
   m_ObjectHideFlags: 0
