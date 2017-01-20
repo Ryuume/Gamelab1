@@ -2441,6 +2441,7 @@ MonoBehaviour:
   edgeResolveIterations: 4
   viewMeshFilter: {fileID: 33000012825835956}
   draw: 1
+  turn: 1
 --- !u!136 &136000011161216024
 CapsuleCollider:
   m_ObjectHideFlags: 1

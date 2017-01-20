@@ -133,13 +133,12 @@ public class AIManager : MonoBehaviour
     {
         if (health == 0 && dead != true || health < 0 && dead != true)
         {
-
+            GameObject.Find("GameManager").GetComponent<CombatManager>().EnemyDeath(this);
             dead = true;
             freeze = true;
             StopCoroutine(savedNumerator);
             animator.SetTrigger("Death");
             print("I cri ervytiem");
-            GameObject.Find("GameManager").GetComponent<CombatManager>().EnemyDeath(this);
             //Destroy(gameObject);
         }
 
@@ -208,7 +207,10 @@ public class AIManager : MonoBehaviour
                                     {
                                         if (_AI.tag == "Enemy")
                                         {
-                                            _AIList.Add(_AI.GetComponent<AIManager>());
+                                            if (_AI.GetComponent<AIManager>().dead != true)
+                                            {
+                                                _AIList.Add(_AI.GetComponent<AIManager>());
+                                            }
                                         }
                                     }
                                     GameObject.Find("GameManager").GetComponent<CombatManager>().SpottedPlayer(_AIList, target);
