@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
-using System.Collections;
+using System.Collections.Generic;
+using UnityEngine.UI;
 
 public class QuestManager : MonoBehaviour
 {
@@ -12,14 +13,39 @@ public class QuestManager : MonoBehaviour
     //Update questbook in the menu.
     //Save data of position in story.
 
-    void Update()
-    {
+    public List<QuestEvent> allObjectives = new List<QuestEvent>();
+    public GameObject objectiveScroll, scrollText, objectiveText;
+    public float visibleTime;
 
+    float timer;
+    bool active;
+    
+
+    public void Update()
+    {
+        if(active == true)
+        {
+            timer += Time.deltaTime;
+            if(timer > visibleTime)
+            {
+                timer = 0;
+                active = false;
+                objectiveScroll.SetActive(false);
+            }
+        }
     }
 
-    public void UpdateQuestState()
+    public void UpdateQuestState(string newObjective, QuestEvent triggeredEvent)
     {
-        //Update quest state
-        //Save position in story
+        active = true;
+        objectiveScroll.SetActive(true);
+        scrollText.GetComponent<Text>().text = newObjective;
+        objectiveText.GetComponent<Text>().text = newObjective;
+        triggeredEvent.enabled = false;
+        allObjectives.Remove(triggeredEvent);
+        if (allObjectives.Count > 0)
+        {
+            allObjectives[0].enabled = true;
+        }
     }
 }

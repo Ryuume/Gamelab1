@@ -13,11 +13,14 @@ public class Events : MonoBehaviour {
     //-Trap (Spikes, door closing, ect)
     //-Sound effect (Play music, sound, ect)
 
-    public enum eventType { Checkpoint, Ambush, MoveCam, Cutscene, Trap, SoundEffect};
+    public enum eventType { Ambush, MoveCam, Cutscene, SoundEffect};
 
     public eventType type = new eventType();
 
 
+    void OnTriggerEnter()
+    {
 
+    }
 
 }
