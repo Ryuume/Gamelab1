@@ -133,7 +133,7 @@ public class AIManager : MonoBehaviour
     {
         if (health == 0 && dead != true || health < 0 && dead != true)
         {
-            GameObject.Find("GameManager").GetComponent<CombatManager>().EnemyDeath(this);
+            GameObject.FindGameObjectWithTag("GameManager").GetComponent<CombatManager>().EnemyDeath(this);
             dead = true;
             freeze = true;
             StopCoroutine(savedNumerator);
@@ -187,7 +187,7 @@ public class AIManager : MonoBehaviour
                                     }
                                 }
                                 _AIList.Add(this);
-                                GameObject.Find("GameManager").GetComponent<CombatManager>().Suspicious(_AIList, hit.position);
+                                GameObject.FindGameObjectWithTag("GameManager").GetComponent<CombatManager>().Suspicious(_AIList, hit.position);
 
                                 eUpdate.unit.target = null;
                                 eUpdate.unit.randomTarget = Vector3.zero;
@@ -213,7 +213,7 @@ public class AIManager : MonoBehaviour
                                             }
                                         }
                                     }
-                                    GameObject.Find("GameManager").GetComponent<CombatManager>().SpottedPlayer(_AIList, target);
+                                    GameObject.FindGameObjectWithTag("GameManager").GetComponent<CombatManager>().SpottedPlayer(_AIList, target);
 
                                     GetComponent<FieldOfView>().draw = false;
                                     GetComponent<AreaOfView>().draw = false;

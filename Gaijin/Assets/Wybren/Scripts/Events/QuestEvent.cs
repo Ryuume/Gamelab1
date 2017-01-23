@@ -17,10 +17,13 @@ public class QuestEvent : MonoBehaviour
         manager = GameObject.Find("GameManager").GetComponent<QuestManager>();
     }
 
-    public void OnTriggerEnter()
+    public void OnTriggerEnter(Collider col)
     {
-        manager.UpdateQuestState(NewObjective, this);
-        Destroy(gameObject);
+        if (col.tag == "Player")
+        {
+            manager.UpdateQuestState(NewObjective, this);
+            Destroy(gameObject);
+        }
     }
 
 }

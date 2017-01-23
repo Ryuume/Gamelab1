@@ -8,6 +8,7 @@ TagManager:
   - Fire
   - Wall
   - Enemy
+  - GameManager
   layers:
   - Default
   - TransparentFX
