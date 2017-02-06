@@ -64,7 +64,8 @@ public class AttackController
     {
         if (Input.GetButtonDown("Fire1") && _ACool != true && rotating != true && player.GetComponent<PlayerController>().inCombat == true)
         {
-            if(_CCool == true)
+            player.GetComponent<PlayerController>().katana.SendMessageUpwards("PlaySound");
+            if (_CCool == true)
             {
                 _Combo = Mathf.CeilToInt(Random.Range(1, 4));
                 if(_Combo == 3)

@@ -90,5 +90,6 @@ public class Guard
         manager.GetComponent<AIManager>().weapon.GetComponent<Katana>().doDamage = true;
         animator.SetInteger("Combo", Mathf.FloorToInt(Random.Range(1, 4)));
         animator.SetTrigger("Attack");
+        manager.GetComponent<AIManager>().weapon.SendMessageUpwards("PlaySound");
     }
 }

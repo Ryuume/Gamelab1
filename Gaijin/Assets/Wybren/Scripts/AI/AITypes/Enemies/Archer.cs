@@ -164,7 +164,6 @@ public class Archer
 
     public void Fire()
     {
-        Debug.Log("FireArrow");
 
         GameObject projectile = manager.GetComponent<AIManager>().projectile;
         Vector3 targetHit = target.position;
@@ -185,13 +184,12 @@ public class Archer
         float theta = -Mathf.Atan((v2 - Mathf.Sqrt(fac)) / (g * x)) * Mathf.Rad2Deg;
         while (theta < 0) theta += 362f;
 
-        GameObject arrow = (GameObject)MonoBehaviour.Instantiate(projectile, manager.GetComponent<AIManager>().weapon.transform.position, Quaternion.identity);
+        
         float distance = Vector3.Distance(manager.position, target.position);
-        Vector3 targetPos = target.position + (target.GetComponent<Rigidbody>().velocity / (distance / 3));
+        Vector3 targetPos = target.position + (target.GetComponent<Rigidbody>().velocity * (distance / 4));
         targetPos.y = manager.position.y;
+        
         Quaternion targetRotation = Quaternion.LookRotation(targetPos - manager.position);
-        arrow.transform.rotation = targetRotation;
-        arrow.transform.Rotate(theta, 0, 0);
-        arrow.GetComponent<Rigidbody>().velocity = arrow.transform.forward * projectileSpeed;
+        manager.GetComponent<AIManager>().weapon.GetComponent<Bow>().FireArrow(projectile, targetRotation, theta, projectileSpeed);
     }
 }

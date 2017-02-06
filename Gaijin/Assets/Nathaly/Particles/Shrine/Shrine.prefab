@@ -92,6 +92,8 @@ GameObject:
   - 33: {fileID: 33000010578769632}
   - 23: {fileID: 23000013162764390}
   - 64: {fileID: 64000013156982212}
+  - 114: {fileID: 114000010511086898}
+  - 135: {fileID: 135000011188049116}
   m_Layer: 0
   m_Name: Shrine
   m_TagString: Untagged
@@ -176,10 +178,10 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1000013473683046}
-  m_LocalRotation: {x: 0, y: 0.7071068, z: 0.7071068, w: 0}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: 0.3383036, y: 0.6209274, z: 0.6209273, w: -0.33830348}
+  m_LocalPosition: {x: -34.76, y: 28.7, z: 7.98}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_LocalEulerAnglesHint: {x: -90, y: 180, z: 0}
+  m_LocalEulerAnglesHint: {x: -90.019, y: 180, z: 57.033997}
   m_Children:
   - {fileID: 4000011272144058}
   - {fileID: 4000014259011994}
@@ -355,6 +357,31 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
+--- !u!114 &114000010511086898
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1000013473683046}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8f6f2aad195bcd14fa387caa74712c86, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  usePopup: {fileID: 0}
+  particle: {fileID: 1000013627967386}
+--- !u!135 &135000011188049116
+SphereCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1000013473683046}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 4.62
+  m_Center: {x: 0.0007953048, y: -0.2936588, z: 1.5003399}
 --- !u!198 &198000011182417808
 ParticleSystem:
   m_ObjectHideFlags: 1

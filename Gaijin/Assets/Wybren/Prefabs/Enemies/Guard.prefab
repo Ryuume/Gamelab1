@@ -553,6 +553,7 @@ GameObject:
   - 95: {fileID: 95000013271862244}
   - 65: {fileID: 65000012460677516}
   - 114: {fileID: 114000012244976678}
+  - 82: {fileID: 82000011174583284}
   m_Layer: 0
   m_Name: Katana
   m_TagString: Player
@@ -1222,7 +1223,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1000014075490370}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children:
@@ -1727,7 +1728,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1000013439270456}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 19.482513, y: 0, z: -1.5540619}
+  m_LocalPosition: {x: 8.515205, y: -5.6058035, z: 10.514023}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children:
@@ -2411,6 +2412,80 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 97.92273, y: 2.1825016, z: 3.6890006}
   m_Center: {x: 18.461441, y: -0.03415077, z: -1.0659356}
+--- !u!82 &82000011174583284
+AudioSource:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1000011811098076}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 0
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    - time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
 --- !u!95 &95000012374915964
 Animator:
   serializedVersion: 3
@@ -2546,6 +2621,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   doDamage: 0
   isEnemy: 0
+  swooshClips:
+  - {fileID: 8300000, guid: fde403fa80a8e214a8738b2e569de5ca, type: 3}
+  - {fileID: 8300000, guid: 3acec88ddb6d2d34dbb96f23613ace2f, type: 3}
+  - {fileID: 8300000, guid: 61f97f9124ba16c4a9af958f19fdf652, type: 3}
+  - {fileID: 8300000, guid: 37765f0d222e5c54aba96acd88249fa6, type: 3}
+  hitClips:
+  - {fileID: 8300000, guid: b7ef612e3689bf443b648f783804f6cf, type: 3}
+  - {fileID: 8300000, guid: f8f1455d0dd423b4f94bfb00cc19dc40, type: 3}
   minDamage: 0
   maxDamage: 0
 --- !u!114 &114000013015589896
@@ -2597,7 +2680,7 @@ MonoBehaviour:
   path: {fileID: 0}
   wanderArea: {fileID: 0}
   loopPath: 1
-  wanderInArea: 0
+  wanderInArea: 1
   weapon: {fileID: 1000011811098076}
   projectile: {fileID: 57579680, guid: 15fda5739dc597e48bd96b6877c8eb57, type: 2}
   minDamage: 5
@@ -2619,6 +2702,7 @@ MonoBehaviour:
   target: {fileID: 0}
   freeze: 0
   dead: 0
+  dataSet: 0
 --- !u!136 &136000010787437004
 CapsuleCollider:
   m_ObjectHideFlags: 1

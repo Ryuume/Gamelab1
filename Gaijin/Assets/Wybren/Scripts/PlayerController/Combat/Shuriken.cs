@@ -16,6 +16,12 @@ public class Shuriken : MonoBehaviour
     [HideInInspector]
     public Vector3 target;
 
+    public void PlaySound()
+    {
+
+    }
+
+
     void SetDamage(Vector2 damages)
     {
         minDamage = damages.x;

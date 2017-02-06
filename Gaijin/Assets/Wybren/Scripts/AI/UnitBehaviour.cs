@@ -49,7 +49,7 @@ public class UnitBehaviour
 
                         if (distanceToTarget < 1.5)
                         {
-                            if (target.GetComponent<Node>().waitTime != 0.0)
+                            if (target.GetComponent<Node>().waitTime != 0.0 && target.GetComponent<Node>() != null)
                             {
                                 waiting = true;
                                 yield return new WaitForSeconds(target.GetComponent<Node>().waitTime);

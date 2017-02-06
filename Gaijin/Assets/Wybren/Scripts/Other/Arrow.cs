@@ -25,7 +25,9 @@ public class Arrow : MonoBehaviour
             //print("Arrow hit for " + damage + " damage");
             col.SendMessageUpwards("Hit", damage);
         }
-        
+
+        GetComponent<AudioSource>().Play();
+
         if (col.transform.gameObject.tag != "Enemy")
         {
             Destroy(gameObject);

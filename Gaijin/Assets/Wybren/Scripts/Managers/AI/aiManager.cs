@@ -68,11 +68,20 @@ public class AIManager : MonoBehaviour
     Ally aUpdate;
 
     [HideInInspector]
-    public bool freeze, dead;
+    public bool freeze, dead, dataSet;
     IEnumerator savedNumerator;
     
     public void Start()
     {
+        if (dataSet == false)
+        {
+            SetData();
+        }
+    }
+
+    public void SetData()
+    {
+
         GetComponent<NavMeshAgent>().speed = speed;
         if(path == null)
         {
@@ -114,7 +123,8 @@ public class AIManager : MonoBehaviour
                     aUpdate = ally;
                     break;
                 }
-      }
+        }
+        dataSet = true;
     }
 
     public void CountUp()

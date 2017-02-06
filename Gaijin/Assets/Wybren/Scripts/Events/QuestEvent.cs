@@ -8,7 +8,6 @@ public class QuestEvent : MonoBehaviour
     //TODO
     //Send data to Quest when triggered
 
-    public int levelNumber;
     public string NewObjective;
     QuestManager manager;
 

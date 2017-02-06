@@ -14,6 +14,11 @@ public class SmokeBomb : MonoBehaviour
         }
     }
 
+    public void PlaySound()
+    {
+
+    }
+
 	void OnTriggerEnter(Collider col)
     {
         if(col.tag == "Enemy")

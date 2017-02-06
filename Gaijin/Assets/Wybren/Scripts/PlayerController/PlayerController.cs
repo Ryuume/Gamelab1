@@ -9,7 +9,7 @@ public class PlayerController : MonoBehaviour
 
     [Header("Player Attributes")]
     #region Neccesary Variables
-    public LayerMask targetMask;
+    public LayerMask targetMask, ignoreMask;
     public Transform refDir, feet, head, rHand, pelvis;
     public float standardRotation;
     public Animator animator;

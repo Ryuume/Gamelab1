@@ -1,11 +1,40 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Shrine : MonoBehaviour {
+public class Shrine : MonoBehaviour
+{
+    public GameObject usePopup, particle;
+    bool used = false;
 
-	//todo
-    //radius around shrine
-    //when in radius, tooltip that says: Press E to interact
-    //when E is pressed, heal player for *said* amount of health.
-    //when used, either do a cooldown on reuse, or disable use completly.
+
+
+    public void OnTriggerStay(Collider col)
+    {
+        if(col.tag == "Player")
+        {
+            if (col.GetComponent<PlayerController>() != null)
+            {
+                if (col.GetComponent<PlayerController>().health < 100)
+                {
+                    usePopup.SetActive(true);
+                    if (Input.GetButtonDown("Use") && used == false)
+                    {
+                        print("use");
+                        usePopup.SetActive(false);
+                        used = true;
+                        particle.SetActive(false);
+                        col.GetComponent<PlayerController>().health = 100;
+                    }
+                }
+            }
+        }
+    }
+
+    public void OnTriggerExit(Collider col)
+    {
+        if (col.tag == "Player")
+        {
+            usePopup.SetActive(false);
+        }
+    }
 }

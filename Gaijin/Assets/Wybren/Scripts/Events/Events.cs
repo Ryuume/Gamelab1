@@ -32,6 +32,7 @@ public class Events : MonoBehaviour {
 
     [Header("LoadLevel")]
     public int levelNum;
+    public GameObject loadScreen;
 
     [Header("SoundEffect")]
     public AudioClip soundEffect;
@@ -70,22 +71,25 @@ public class Events : MonoBehaviour {
 
     void Ambush()
     {
+        isActive = false;
         List<AIManager> _AIList = new List<AIManager>();
 
         for(int i = 0; i < spawnEnemies.Count; i++)
         {
+
             Vector3 point = (Random.insideUnitSphere * spawnRadius) + spawnPosition.position;
             GameObject enemy = (GameObject)Instantiate(spawnEnemies[i], point, Quaternion.identity);
             AIManager _AI = enemy.GetComponent<AIManager>();
+            _AI.SetData();
             _AI.suspicious = true;
             _AI.eUpdate.sTarget = player.position;
+            _AI.eUpdate.unit.waiting = true;
             _AI.eUpdate.unit.target = null;
             _AI.eUpdate.unit.randomTarget = Vector3.zero;
             _AIList.Add(_AI);
         }
 
         GameObject.FindGameObjectWithTag("GameManager").GetComponent<CombatManager>().SpottedPlayer(_AIList, player);
-        isActive = false;
     }
 
     void MoveCam()
@@ -95,6 +99,7 @@ public class Events : MonoBehaviour {
 
     void LoadLevel()
     {
+        loadScreen.SetActive(true);
         SceneManager.LoadScene(levelNum);
         isActive = false;
     }
